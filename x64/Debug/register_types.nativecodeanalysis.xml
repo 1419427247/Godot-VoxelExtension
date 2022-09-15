@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\</FILEPATH>
+      <FILENAME>color.hpp</FILENAME>
+      <LINE>178</LINE>
+      <COLUMN>51</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。</DESCRIPTION>
+    <FUNCTION>godot::Color::srgb_to_linear</FUNCTION>
+    <DECORATED>?srgb_to_linear@Color@godot@@QEBA?AV12@XZ</DECORATED>
+    <FUNCLINE>174</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\</FILEPATH>
+      <FILENAME>color.hpp</FILENAME>
+      <LINE>177</LINE>
+      <COLUMN>51</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。</DESCRIPTION>
+    <FUNCTION>godot::Color::srgb_to_linear</FUNCTION>
+    <DECORATED>?srgb_to_linear@Color@godot@@QEBA?AV12@XZ</DECORATED>
+    <FUNCLINE>174</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\</FILEPATH>
+      <FILENAME>color.hpp</FILENAME>
+      <LINE>176</LINE>
+      <COLUMN>51</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。</DESCRIPTION>
+    <FUNCTION>godot::Color::srgb_to_linear</FUNCTION>
+    <DECORATED>?srgb_to_linear@Color@godot@@QEBA?AV12@XZ</DECORATED>
+    <FUNCLINE>174</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
