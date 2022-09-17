@@ -159,7 +159,6 @@ void BasicsPerset::draw_brick_up_mesh(Array& arrays, int index, const Vector3i& 
 
 void BasicsPerset::draw_brick_down_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation)
 {
-	Array vertex;
 	vertex.push_back(Variant(_brick_vertexs[0]));
 	vertex.push_back(Variant(_brick_vertexs[3]));
 	vertex.push_back(Variant(_brick_vertexs[7]));

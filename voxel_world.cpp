@@ -53,7 +53,7 @@ void VoxelWorld::set_device_persets(Array value) {
 	device_persets = value;
 }
 
-void VoxelWorld::set_voxel(const int type, const int id, const Vector3i& position, const Vector3i& rotation)
+void VoxelWorld::set_voxel(const int type, const int id, const Vector3i& position, const int flag)
 {
 	if (position.x < 0 || position.x >= world_size.x ||
 		position.y < 0 || position.y >= world_size.y ||
