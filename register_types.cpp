@@ -2,8 +2,9 @@
 
 #include "chunk.h"
 #include "voxel_world.h"
-#include "basics_perset.h"
 #include "material_perset.h"
+#include "basics_perset.h"
+#include "mesh_perset.h"
 
 extern "C" {
 	GDNativeBool GDN_EXPORT voxel_library_init(const GDNativeInterface* p_interface, const GDNativeExtensionClassLibraryPtr p_library, GDNativeInitialization* r_initialization) {
@@ -25,8 +26,9 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 	ClassDB::register_class<VoxelWorld>();
 	ClassDB::register_class<Chunk>();
 
-	ClassDB::register_class<BasicsPerset>();
 	ClassDB::register_class<MaterialPerset>();
+	ClassDB::register_class<BasicsPerset>();
+	ClassDB::register_class<MeshPerset>();
 }
 
 void uninitialize_voxel_module(ModuleInitializationLevel p_level)

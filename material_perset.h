@@ -35,31 +35,31 @@ public:
 	MaterialPerset();
 	~MaterialPerset();
 
-	int get_id();
-	String get_name();
-	Color get_albedo();
-	Ref<Texture2D> get_albedo_texture();
-	float get_metallic();
-	Ref<Texture2D> get_metallic_texture();
-	float get_roughness();
-	Ref<Texture2D> get_roughness_texture();
-	float get_height();
-	Ref<Texture2D> get_height_texture();
-	Vector2 get_uv();
-	Vector2 get_offset();
+	int get_id() const;
+	String get_name() const;
+	Color get_albedo() const;
+	Ref<Texture2D> get_albedo_texture() const;
+	float get_metallic() const;
+	Ref<Texture2D> get_metallic_texture() const;
+	float get_roughness() const;
+	Ref<Texture2D> get_roughness_texture() const;
+	float get_height() const;
+	Ref<Texture2D> get_height_texture() const;
+	Vector2 get_uv() const;
+	Vector2 get_offset() const;
 
-	void set_id(int value);
-	void set_name(String value);
-	void set_albedo(Color value);
-	void set_albedo_texture(Ref<Texture2D> value);
-	void set_metallic(float value);
-	void set_metallic_texture(Ref<Texture2D> value);
-	void set_roughness(float value);
-	void set_roughness_texture(Ref<Texture2D> value);
-	void set_height(float value);
-	void set_height_texture(Ref<Texture2D> value);
-	void set_uv(Vector2 value);
-	void set_offset(Vector2 value);
+	void set_id(const int value);
+	void set_name(const String& value);
+	void set_albedo(const Color& value);
+	void set_albedo_texture(const Ref<Texture2D>& value);
+	void set_metallic(const float value);
+	void set_metallic_texture(const Ref<Texture2D>& value);
+	void set_roughness(const float value);
+	void set_roughness_texture(const Ref<Texture2D>& value);
+	void set_height(const float value);
+	void set_height_texture(const Ref<Texture2D>& value);
+	void set_uv(const Vector2& value);
+	void set_offset(const Vector2& value);
 
 	static Ref<MaterialPerset> instantiate(int id, String name, Ref<Shader> shader,Dictionary parameter);
 

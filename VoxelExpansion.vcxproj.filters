@@ -30,6 +30,9 @@
     <ClInclude Include="material_perset.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="mesh_perset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="register_types.cpp">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="material_perset.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh_perset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

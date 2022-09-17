@@ -12,15 +12,18 @@ class BasicsPerset : public RefCounted
 {
 	GDCLASS(BasicsPerset, RefCounted);
 public:
-	enum MeshType {
-		BRICK = 0,
-		HALF_BRICK = 1,
+
+	enum MeshKey {
+		UP = 0,
+		DOWN = 1,
+		FRONT = 2,
+		BACK = 3,
+		LEFT = 4,
+		RIGHT = 5,
 	};
 
 	int id;
 	String name;
-	int mesh_type;
-	Color color;
 	Dictionary materials;
 
 	BasicsPerset();
@@ -28,36 +31,24 @@ public:
 
 	int get_id() const;
 	String get_name() const;
-	int get_mesh_type() const;
-	Color get_color() const;
 	Dictionary get_materials() const;
 
-	void set_id(int value);
-	void set_name(String value);
-	void set_mesh_type(int value);
-	void set_color(Color value);
-	void set_materials(Dictionary value);
+	void set_id(const int& value);
+	void set_name(const String& value);
+	void set_materials(const Dictionary& value);
 
+	int get_material_id(const int& key) const;
 
-	int get_material_id(String key) const;
+	static Ref<BasicsPerset> instantiate(const int& id,const String& name, const Dictionary& materials);
+	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
 
-	static Ref<BasicsPerset> instantiate(int id, String name, int mesh_type, Color color, Dictionary materials);
-	static Vector3 get_triangle_normal(Vector3 a, Vector3 b, Vector3 c);
-
-	static void draw_brick_front_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation);
-	static void draw_brick_back_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation);
-	static void draw_brick_left_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation);
-	static void draw_brick_right_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation);
-	static void draw_brick_up_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation);
-	static void draw_brick_down_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation);
+	static void draw_mesh(const int& mesh_key,const Array& arrays, const Vector3& position, const Vector3& rotation);
 
 protected:
 	static void _bind_methods();
-
-	static void _rotate_mesh(Array& vertexs, const Vector3i& rotation);
-	static void _draw_brick_mesh(Array& vertexs, Array& arrays, const int index, const Vector3& position, const Vector3i& rotation);
+	static Vector3 _rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
 };
 
-VARIANT_ENUM_CAST(BasicsPerset, MeshType);
+VARIANT_ENUM_CAST(BasicsPerset, MeshKey);
 
 #endif // !BASIC_PERSET_H

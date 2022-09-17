@@ -6,7 +6,7 @@
 #include <godot_cpp/classes/collision_shape3d.hpp>
 #include <godot_cpp/classes/area3d.hpp>
 #include <godot_cpp/classes/static_body3d.hpp>
-
+#include <godot_cpp/classes/concave_polygon_shape3d.hpp>
 
 using namespace godot;
 
@@ -24,7 +24,7 @@ class Chunk : public Node3D
 	};
 
 private:
-	VoxelWorld* woxel_world;
+	VoxelWorld* voxel_world;
 
 	int state;
 	Vector3i chunk_position;
@@ -40,28 +40,29 @@ private:
 	Array mesh_arrays;
 	PackedVector3Array trigger_faces;
 
-	void instantiate_mesh_array(int index);
-	void generate_brick_mesh(Ref<BasicsPerset> basics_perset,const Vector3i& relative_position, const Vector3i& rotation);
 public:
 	Chunk();
 	~Chunk();
 
-	void set_chunk_position(Vector3i value);
-	Vector3i get_chunk_position();
+	void set_chunk_position(const Vector3i& value);
+	Vector3i get_chunk_position() const;
 
-	void set_voxel(const int type, const int id, const Vector3i& position, const Vector3i& rotation);
+	void set_voxel(const int& type, const int& id, const Vector3i& position, const Vector3i& rotation);
 	int get_voxel_type(const Vector3i& position) const;
 	int get_voxel_id(const Vector3i& position) const;
 	Vector3i get_voxel_rotation(const Vector3i& position) const;
+	Vector3i get_voxel_position(const Vector3& position, const Vector3& normal) const;
+
 
 	void generate_mesh();
 	void generate_collider();
 	void generate_trigger();
 
 protected:
+	Array get_mesh_array(const int& index);
+	void draw_mesh(const Ref<BasicsPerset>& basics_perset, const Vector3i& relative_position, const Vector3i& rotation);
 	static void _bind_methods();
 	void _notification(int p_what);
 };
 
 #endif
-

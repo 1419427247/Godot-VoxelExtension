@@ -22,38 +22,38 @@ Vector3i VoxelWorld::get_chunk_count() {
 Vector3i VoxelWorld::get_world_size() {
 	return world_size;
 }
-void VoxelWorld::set_chunk_size(int value) {
+void VoxelWorld::set_chunk_size(const int& value) {
 	this->chunk_size = value;
 }
-void VoxelWorld::set_chunk_count(Vector3i value) {
+void VoxelWorld::set_chunk_count(const Vector3i& value) {
 	this->chunk_count = value;
 }
 
 
-Array VoxelWorld::get_material_persets() {
+Array VoxelWorld::get_material_persets() const {
 	return material_persets;
 }
 
-Array VoxelWorld::get_basics_persets() {
+Array VoxelWorld::get_basics_persets()const {
 	return basics_persets;
 }
 
-Array VoxelWorld::get_device_persets() {
+Array VoxelWorld::get_device_persets()const {
 	return device_persets;
 }
-void VoxelWorld::set_material_persets(Array value) {
+void VoxelWorld::set_material_persets(const Array& value) {
 	material_persets = value;
 }
 
-void VoxelWorld::set_basics_persets(Array value) {
+void VoxelWorld::set_basics_persets(const Array& value) {
 	basics_persets = value;
 }
 
-void VoxelWorld::set_device_persets(Array value) {
+void VoxelWorld::set_device_persets(const Array& value) {
 	device_persets = value;
 }
 
-void VoxelWorld::set_voxel(const int type, const int id, const Vector3i& position, const int flag)
+void VoxelWorld::set_voxel(const int& type, const int& id, const Vector3i& position, const Vector3i& rotation)
 {
 	if (position.x < 0 || position.x >= world_size.x ||
 		position.y < 0 || position.y >= world_size.y ||
@@ -88,53 +88,16 @@ Vector3i VoxelWorld::get_voxel_rotation(const Vector3i& position) const
 	return 90 * Vector3i((voxels[index + 1] >> 4) & 0b00000011, (voxels[index + 1] >> 2) & 0b00000011, (voxels[index + 1]) & 0b00000011);
 }
 
-Vector3i VoxelWorld::get_voxel_position_by_point(const Vector3& position, const Vector3& normal) const
+
+
+Vector3i VoxelWorld::get_voxel_relative_position(const Vector3i& position, const Vector3& direction, const Vector3i& rotation) const
 {
-	Vector3 _position = position;
-	if (normal.y == 1) {
-		_position.y -= 0.05;
-	}
-	else if (normal.y == -1) {
-		_position.y += 0.05;
-	}
-	else if (normal.x == 1) {
-		_position.x -= 0.05;
-	}
-	else if (normal.x == -1) {
-		_position.x += 0.05;
-	}
-	else if (normal.z == 1) {
-		_position.z -= 0.05;
-	}
-	else if (normal.z == -1) {
-		_position.z += 0.05;
-	}
-	return Vector3i(_position.round());
+	Vector3 result = direction;
+	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+	return position + Vector3i(result);
 }
-
-Vector3i VoxelWorld::get_voxel_relative_position(const Vector3i& position, const Vector3i& direction, const Vector3i& rotation) const
-{
-	static Vector3i memorandum[] = {
-		Vector3i(-1, -1, -1), Vector3i(0, -1, -1),
-		Vector3i(1, -1, -1), Vector3i(-1, 0, -1),
-		Vector3i(0, 0, -1), Vector3i(1, 0, -1),
-		Vector3i(-1, 1, -1), Vector3i(0, 1, -1),
-		Vector3i(1, 1, -1), Vector3i(-1, -1, 0),
-		Vector3i(0, -1, 0), Vector3i(1, -1, 0),
-		Vector3i(-1, 0, 0), Vector3i(0, 0, 0),
-		Vector3i(1, 0, 0), Vector3i(-1, 1, 0),
-		Vector3i(0, 1, 0), Vector3i(1, 1, 0),
-		Vector3i(-1, -1, 1), Vector3i(0, -1, 1),
-		Vector3i(1, -1, 1), Vector3i(-1, 0, 1),
-		Vector3i(0, 0, 1), Vector3i(1, 0, 1),
-		Vector3i(-1, 1, 1), Vector3i(0, 1, 1),
-		Vector3i(1, 1, 1),
-	};
-	return position + memorandum[(direction.x + 1) + (direction.y + 1) * 3 + (direction.z + 1) * 9];
-}
-
-
-
 
 void VoxelWorld::_bind_methods()
 {
@@ -162,32 +125,20 @@ void VoxelWorld::_bind_methods()
 
 	ClassDB::add_property("VoxelWorld", PropertyInfo(Variant::INT, "chunk_size"), "set_chunk_size", "get_chunk_size");
 	ClassDB::add_property("VoxelWorld", PropertyInfo(Variant::VECTOR3I, "chunk_count"), "set_chunk_count", "get_chunk_count");
-	
+
 	ClassDB::add_property("VoxelWorld", PropertyInfo(Variant::ARRAY, "material_persets"), "set_material_persets", "get_material_persets");
 	ClassDB::add_property("VoxelWorld", PropertyInfo(Variant::ARRAY, "basics_persets"), "set_basics_persets", "get_basics_persets");
 	ClassDB::add_property("VoxelWorld", PropertyInfo(Variant::ARRAY, "device_persets"), "set_device_persets", "get_device_persets");
-}
 
-void add(Array& arr) {
-	
-	//PackedVector3Array pack = arr[0];
-	//pack.push_back(Vector3i(1, 2, 3));
+	BIND_ENUM_CONSTANT(EMPTY);
+	BIND_ENUM_CONSTANT(BASICS);
+	BIND_ENUM_CONSTANT(MESH);
+	BIND_ENUM_CONSTANT(DEVICE);
 }
 
 void VoxelWorld::_notification(int p_what) {
 	if (p_what == NOTIFICATION_ENTER_TREE)
 	{
-		Array kkk;
-		kkk.resize(1);
-		kkk[0] = PackedVector3Array();
-		((PackedVector3Array*)(&kkk[0]))->push_back(Vector3i(1, 2, 3));
-		UtilityFunctions::print(kkk);
-		((PackedVector3Array)(kkk[0])).push_back(Vector3i(1, 2, 3));
-		UtilityFunctions::print(kkk);
-		PackedVector3Array packed_vector3_array = kkk[0];
-		packed_vector3_array.push_back(Vector3i(1, 2, 3));
-		UtilityFunctions::print(kkk);
-
 		this->world_size = chunk_count * chunk_size;
 		this->voxels.resize(2 * world_size.x * world_size.y * world_size.z);
 	}

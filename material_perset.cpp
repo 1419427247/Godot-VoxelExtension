@@ -8,55 +8,65 @@ MaterialPerset::~MaterialPerset() {
 
 }
 
-int MaterialPerset::get_id() { return id; }
-String MaterialPerset::get_name() { return name; }
-Color MaterialPerset::get_albedo() { return albedo; }
-Ref<Texture2D> MaterialPerset::get_albedo_texture() { return albedo_texture; }
-float MaterialPerset::get_metallic() { return metallic; }
-Ref<Texture2D> MaterialPerset::get_metallic_texture() { return metallic_texture; }
-float MaterialPerset::get_roughness() { return roughness; }
-Ref<Texture2D> MaterialPerset::get_roughness_texture() { return roughness_texture; }
-float MaterialPerset::get_height() { return height; }
-Ref<Texture2D> MaterialPerset::get_height_texture() { return height_texture; }
-Vector2 MaterialPerset::get_uv() { return uv; }
-Vector2 MaterialPerset::get_offset() { return offset; }
+int MaterialPerset::get_id() const { return id; }
+String MaterialPerset::get_name() const { return name; }
+Color MaterialPerset::get_albedo() const { return albedo; }
+Ref<Texture2D> MaterialPerset::get_albedo_texture() const { return albedo_texture; }
+float MaterialPerset::get_metallic() const { return metallic; }
+Ref<Texture2D> MaterialPerset::get_metallic_texture() const { return metallic_texture; }
+float MaterialPerset::get_roughness() const { return roughness; }
+Ref<Texture2D> MaterialPerset::get_roughness_texture() const { return roughness_texture; }
+float MaterialPerset::get_height() const { return height; }
+Ref<Texture2D> MaterialPerset::get_height_texture() const { return height_texture; }
+Vector2 MaterialPerset::get_uv() const { return uv; }
+Vector2 MaterialPerset::get_offset() const { return offset; }
 
-void MaterialPerset::set_id(int  value) {
+void MaterialPerset::set_id(const int value) {
 	id = value;
 }
-void MaterialPerset::set_name(String  value) {
+void MaterialPerset::set_name(const String& value) {
 	name = value;
 }
 
-void MaterialPerset::set_albedo(Color  value) {
+void MaterialPerset::set_albedo(const Color& value) {
 	albedo = value;
+	instance->set_shader_parameter(StringName("albedo"), value);
 }
-void MaterialPerset::set_albedo_texture(Ref<Texture2D> value) {
-	value.reference_ptr(albedo_texture);
+void MaterialPerset::set_albedo_texture(const Ref<Texture2D>& value) {
+	albedo_texture = (Texture2D*)value.ptr();
+	instance->set_shader_parameter(StringName("albedo_texture"), value);
 }
-void MaterialPerset::set_metallic(float value) {
+void MaterialPerset::set_metallic(const float value) {
 	metallic = value;
+	instance->set_shader_parameter(StringName("metallic"), value);
 }
-void MaterialPerset::set_metallic_texture(Ref<Texture2D> value) {
-	value.reference_ptr(metallic_texture);
+void MaterialPerset::set_metallic_texture(const Ref<Texture2D>& value) {
+	metallic_texture = (Texture2D*)value.ptr();
+	instance->set_shader_parameter(StringName("metallic_texture"), value);
 }
-void MaterialPerset::set_roughness(float  value) {
+void MaterialPerset::set_roughness(const float  value) {
 	roughness = value;
+	instance->set_shader_parameter(StringName("roughness"), value);
 }
-void MaterialPerset::set_roughness_texture(Ref<Texture2D> value) {
-	value.reference_ptr(roughness_texture);
+void MaterialPerset::set_roughness_texture(const Ref<Texture2D>& value) {
+	roughness_texture = (Texture2D*)value.ptr();
+	instance->set_shader_parameter(StringName("roughness_texture"), value);
 }
-void MaterialPerset::set_height(float  value) {
+void MaterialPerset::set_height(const float  value) {
 	height = value;
+	instance->set_shader_parameter(StringName("height"), value);
 }
-void MaterialPerset::set_height_texture(Ref<Texture2D> value) {
-	value.reference_ptr(height_texture);
+void MaterialPerset::set_height_texture(const Ref<Texture2D>& value) {
+	height_texture = (Texture2D*)value.ptr();
+	instance->set_shader_parameter(StringName("height_texture"), value);
 }
-void MaterialPerset::set_uv(Vector2  value) {
+void MaterialPerset::set_uv(const Vector2& value) {
 	uv = value;
+	instance->set_shader_parameter(StringName("uv"), value);
 }
-void MaterialPerset::set_offset(Vector2  value) {
+void MaterialPerset::set_offset(const Vector2& value) {
 	offset = value;
+	instance->set_shader_parameter(StringName("offset"), value);
 }
 
 Ref<MaterialPerset> MaterialPerset::instantiate(int id, String name, Ref<Shader> shader, Dictionary parameter) {
@@ -67,6 +77,17 @@ Ref<MaterialPerset> MaterialPerset::instantiate(int id, String name, Ref<Shader>
 
 	material_perset->instance = memnew(ShaderMaterial());
 	material_perset->instance->set_shader(shader);
+
+	material_perset->set_albedo((Color)parameter.get("albedo", 0));
+	material_perset->set_albedo_texture((Ref<Texture2D>)parameter.get("albedo_texture", nullptr));
+	material_perset->set_metallic(parameter.get("metallic", 0));
+	material_perset->set_metallic_texture(parameter.get("metallic_texture", nullptr));
+	material_perset->set_roughness(parameter.get("roughness", 0));
+	material_perset->set_roughness_texture(parameter.get("roughness_texture", nullptr));
+	material_perset->set_height(parameter.get("height", 0));
+	material_perset->set_height_texture(parameter.get("height_texture", nullptr));
+	material_perset->set_uv(parameter.get("uv", Vector2(1, 1)));
+	material_perset->set_offset(parameter.get("offset", Vector2(1, 1)));
 	return material_perset;
 }
 

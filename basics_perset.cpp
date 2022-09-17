@@ -18,230 +18,145 @@ String BasicsPerset::get_name() const
 	return name;
 }
 
-int BasicsPerset::get_mesh_type() const
-{
-	return mesh_type;
-}
-
-Color BasicsPerset::get_color() const
-{
-	return color;
-}
-
 Dictionary BasicsPerset::get_materials() const
 {
 	return materials;
 }
 
-void BasicsPerset::set_id(int value)
+void BasicsPerset::set_id(const int& value)
 {
 	this->id = value;
 }
 
-void BasicsPerset::set_name(String value)
+void BasicsPerset::set_name(const String& value)
 {
 	this->name = value;
 }
 
-void BasicsPerset::set_mesh_type(int value)
-{
-	this->mesh_type = value;
-}
-
-void BasicsPerset::set_color(Color value)
-{
-	this->color = value;
-}
-
-void BasicsPerset::set_materials(Dictionary value)
+void BasicsPerset::set_materials(const Dictionary& value)
 {
 	this->materials = value;
 }
 
-int BasicsPerset::get_material_id(String key) const
+int BasicsPerset::get_material_id(const int& key) const
 {
 	return materials.get(key, 0);
 }
 
-
-Ref<BasicsPerset> BasicsPerset::instantiate(int id, String name, int mesh_type, Color color, Dictionary materials)
+Ref<BasicsPerset> BasicsPerset::instantiate(const int& id, const String& name, const Dictionary& materials)
 {
 	Ref<BasicsPerset> basics_perset;
 	basics_perset.instantiate();
 	basics_perset->id = id;
 	basics_perset->name = name;
-	basics_perset->mesh_type = mesh_type;
-	basics_perset->color = color;
 	basics_perset->materials = materials;
 	return basics_perset;
 }
 
-Vector3 BasicsPerset::get_triangle_normal(Vector3 a, Vector3 b, Vector3 c)
+Vector3 BasicsPerset::get_triangle_normal(const Vector3& a,const Vector3& b,const Vector3& c)
 {
 	return (c - a).cross(b - a);
 }
 
-static Vector3 _brick_vertexs[] = {
-	Vector3(0.5, -0.5, -0.5),
-	Vector3(0.5, 0.5, -0.5),
-	Vector3(-0.5, 0.5, -0.5),
-	Vector3(-0.5, -0.5, -0.5),
-	Vector3(0.5, -0.5, 0.5),
-	Vector3(0.5, 0.5, 0.5),
-	Vector3(-0.5, 0.5, 0.5),
-	Vector3(-0.5, -0.5, 0.5),
-};
-
-static Vector2 _brick_uvs[] = {
+static Vector2 uvs[] = {
 	Vector2(0, 0), Vector2(1, 0), Vector2(1, 1),
 	Vector2(0, 0), Vector2(1, 1), Vector2(0, 1),
 };
 
-void BasicsPerset::draw_brick_front_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation)
+static Vector3 brick_up_vertexs[] = {
+	Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),
+	Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),Vector3(-0.5, 0.5, 0.5),
+};
+static Vector3 brick_down_vertexs[] = {
+	Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),
+	Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(0.5, -0.5, 0.5),
+};
+static Vector3 brick_front_vertexs[] = {
+	Vector3(0.5, 0.5, -0.5),Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),
+	Vector3(0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(0.5, -0.5, -0.5),
+};
+static Vector3 brick_back_vertexs[] = {
+	Vector3(-0.5, 0.5, 0.5),Vector3(0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),
+	Vector3(-0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
+};
+static Vector3 brick_left_vertexs[] = {
+	Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, 0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
+	Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(-0.5, -0.5, -0.5),
+};
+static Vector3 brick_right_vertexs[] = {
+	Vector3(0.5, 0.5, 0.5),Vector3(0.5, 0.5, -0.5),Vector3(0.5, -0.5, -0.5),
+	Vector3(0.5, 0.5, 0.5),Vector3(0.5, -0.5, -0.5),Vector3(0.5, -0.5, 0.5),
+};
+
+static Vector3* brick_vertexs[] = {
+	brick_up_vertexs,
+	brick_down_vertexs,
+	brick_front_vertexs,
+	brick_back_vertexs,
+	brick_left_vertexs,
+	brick_right_vertexs
+};
+void BasicsPerset::draw_mesh(const int& mesh_key,const Array& arrays, const Vector3& position, const Vector3& rotation)
 {
-	Array vertex;
-	vertex.push_back(Variant(_brick_vertexs[3]));
-	vertex.push_back(Variant(_brick_vertexs[1]));
-	vertex.push_back(Variant(_brick_vertexs[2]));
-	vertex.push_back(Variant(_brick_vertexs[3]));
-	vertex.push_back(Variant(_brick_vertexs[1]));
-	vertex.push_back(Variant(_brick_vertexs[0]));
-	_draw_brick_mesh(vertex, arrays, index, position, rotation);
-}
+	Vector3* vertexs = brick_vertexs[mesh_key];
+	Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
+	Array array_normal = arrays[Mesh::ARRAY_NORMAL];
+	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
 
-void BasicsPerset::draw_brick_back_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation)
-{
-	Array vertex;
-	vertex.push_back(Variant(_brick_vertexs[6]));
-	vertex.push_back(Variant(_brick_vertexs[5]));
-	vertex.push_back(Variant(_brick_vertexs[4]));
-	vertex.push_back(Variant(_brick_vertexs[6]));
-	vertex.push_back(Variant(_brick_vertexs[4]));
-	vertex.push_back(Variant(_brick_vertexs[7]));
-	_draw_brick_mesh(vertex, arrays, index, position, rotation);
-}
-
-void BasicsPerset::draw_brick_left_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation)
-{
-	Array vertex;
-	vertex.push_back(Variant(_brick_vertexs[2]));
-	vertex.push_back(Variant(_brick_vertexs[6]));
-	vertex.push_back(Variant(_brick_vertexs[7]));
-	vertex.push_back(Variant(_brick_vertexs[2]));
-	vertex.push_back(Variant(_brick_vertexs[7]));
-	vertex.push_back(Variant(_brick_vertexs[3]));
-	_draw_brick_mesh(vertex, arrays, index, position, rotation);
-}
-
-void BasicsPerset::draw_brick_right_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation)
-{
-	Array vertex;
-	vertex.push_back(Variant(_brick_vertexs[5]));
-	vertex.push_back(Variant(_brick_vertexs[1]));
-	vertex.push_back(Variant(_brick_vertexs[0]));
-	vertex.push_back(Variant(_brick_vertexs[5]));
-	vertex.push_back(Variant(_brick_vertexs[0]));
-	vertex.push_back(Variant(_brick_vertexs[4]));
-	_draw_brick_mesh(vertex, arrays, index, position, rotation);
-}
-
-void BasicsPerset::draw_brick_up_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation)
-{
-	Array vertex;
-	vertex.push_back(Variant(_brick_vertexs[2]));
-	vertex.push_back(Variant(_brick_vertexs[1]));
-	vertex.push_back(Variant(_brick_vertexs[5]));
-	vertex.push_back(Variant(_brick_vertexs[2]));
-	vertex.push_back(Variant(_brick_vertexs[5]));
-	vertex.push_back(Variant(_brick_vertexs[6]));
-	_draw_brick_mesh(vertex, arrays, index, position, rotation);
-}
-
-void BasicsPerset::draw_brick_down_mesh(Array& arrays, int index, const Vector3i& position, const Vector3i& rotation)
-{
-	vertex.push_back(Variant(_brick_vertexs[0]));
-	vertex.push_back(Variant(_brick_vertexs[3]));
-	vertex.push_back(Variant(_brick_vertexs[7]));
-	vertex.push_back(Variant(_brick_vertexs[0]));
-	vertex.push_back(Variant(_brick_vertexs[7]));
-	vertex.push_back(Variant(_brick_vertexs[4]));
-	_draw_brick_mesh(vertex, arrays, index, position, rotation);
-}
-
-void BasicsPerset::_bind_methods()
-{
-	ClassDB::bind_method(D_METHOD("set_id", "value"), &BasicsPerset::set_id);
-	ClassDB::bind_method(D_METHOD("set_name", "value"), &BasicsPerset::set_name);
-	ClassDB::bind_method(D_METHOD("set_mesh_type", "value"), &BasicsPerset::set_mesh_type);
-	ClassDB::bind_method(D_METHOD("set_color", "value"), &BasicsPerset::set_color);
-	ClassDB::bind_method(D_METHOD("set_materials", "value"), &BasicsPerset::set_materials);
-
-	ClassDB::bind_method(D_METHOD("get_id"), &BasicsPerset::get_id);
-	ClassDB::bind_method(D_METHOD("get_name"), &BasicsPerset::get_name);
-	ClassDB::bind_method(D_METHOD("get_mesh_type"), &BasicsPerset::get_mesh_type);
-	ClassDB::bind_method(D_METHOD("get_color"), &BasicsPerset::get_color);
-	ClassDB::bind_method(D_METHOD("get_materials"), &BasicsPerset::get_materials);
-
-	ClassDB::bind_method(D_METHOD("get_material_id", "id"), &BasicsPerset::get_material_id);
-
-	ClassDB::bind_static_method("BasicsPerset", D_METHOD("instantiate", "id", "name", "mesh_type", "color", "materials"), &BasicsPerset::instantiate);
-	ClassDB::bind_static_method("BasicsPerset", D_METHOD("get_triangle_normal", "a", "b", "c"), &BasicsPerset::get_triangle_normal);
-
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::INT, "id"), "set_id", "get_id");
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::INT, "mesh_type"), "set_mesh_type", "get_mesh_type");
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::COLOR, "color"), "set_color", "get_color");
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::DICTIONARY, "materials"), "set_materials", "get_materials");
-}
-
-void BasicsPerset::_rotate_mesh(Array& vertexs, const Vector3i& rotation)
-{
-	if (rotation.x != 0) {
-		for (size_t i = 0; i < vertexs.size(); i++)
-		{
-			vertexs[i] = static_cast<Vector3>(vertexs[i]).rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-		}
-	}
-	if (rotation.y != 0) {
-		for (size_t i = 0; i < vertexs.size(); i++)
-		{
-			vertexs[i] = static_cast<Vector3>(vertexs[i]).rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-		}
-	}
-	if (rotation.z != 0) {
-		for (size_t i = 0; i < vertexs.size(); i++)
-		{
-			vertexs[i] = static_cast<Vector3>(vertexs[i]).rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-		}
-	}
-}
-
-void BasicsPerset::_draw_brick_mesh(Array& vertexs, Array& arrays, const int index, const Vector3& position, const Vector3i& rotation)
-{
-	_rotate_mesh(vertexs, rotation);
-
-	PackedVector3Array* array_vertex = &(PackedVector3Array)(((Array)arrays[index])[Mesh::ARRAY_VERTEX]);
-	PackedVector3Array* array_normal = &(PackedVector3Array)(((Array)arrays[index])[Mesh::ARRAY_NORMAL]);
-	PackedVector2Array* array_tex_uv = &(PackedVector2Array)(((Array)arrays[index])[Mesh::ARRAY_TEX_UV]);
-
-	for (size_t i = 0; i < vertexs.size(); i++)
+	for (size_t i = 0; i < 6; i++)
 	{
-		Vector3 value = static_cast<Vector3>(vertexs[i]) + position;
-		array_vertex->push_back(value);
+		array_vertex.push_back(_rotate_vertex(vertexs[i], rotation) + position);
 	}
 
 	Vector3 normal_1 = get_triangle_normal(vertexs[0], vertexs[1], vertexs[2]);
 	Vector3 normal_2 = get_triangle_normal(vertexs[3], vertexs[4], vertexs[5]);
 
-	array_normal->push_back(normal_1);
-	array_normal->push_back(normal_1);
-	array_normal->push_back(normal_1);
-	array_normal->push_back(normal_2);
-	array_normal->push_back(normal_2);
-	array_normal->push_back(normal_2);
+	array_normal.push_back(normal_1);
+	array_normal.push_back(normal_1);
+	array_normal.push_back(normal_1);
+	array_normal.push_back(normal_2);
+	array_normal.push_back(normal_2);
+	array_normal.push_back(normal_2);
 
-	for (size_t i = 0; i < sizeof(_brick_uvs) / sizeof(Vector2); i++)
+	for (size_t i = 0; i < 6; i++)
 	{
-		array_tex_uv->push_back(_brick_uvs[i]);
+		array_tex_uv.push_back(uvs[i]);
 	}
+}
+
+
+void BasicsPerset::_bind_methods()
+{
+	ClassDB::bind_method(D_METHOD("set_id", "value"), &BasicsPerset::set_id);
+	ClassDB::bind_method(D_METHOD("set_name", "value"), &BasicsPerset::set_name);
+	ClassDB::bind_method(D_METHOD("set_materials", "value"), &BasicsPerset::set_materials);
+
+	ClassDB::bind_method(D_METHOD("get_id"), &BasicsPerset::get_id);
+	ClassDB::bind_method(D_METHOD("get_name"), &BasicsPerset::get_name);
+	ClassDB::bind_method(D_METHOD("get_materials"), &BasicsPerset::get_materials);
+
+	ClassDB::bind_method(D_METHOD("get_material_id", "id"), &BasicsPerset::get_material_id);
+
+	ClassDB::bind_static_method("BasicsPerset", D_METHOD("instantiate", "id", "name", "materials"), &BasicsPerset::instantiate);
+	ClassDB::bind_static_method("BasicsPerset", D_METHOD("get_triangle_normal", "a", "b", "c"), &BasicsPerset::get_triangle_normal);
+
+	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::INT, "id"), "set_id", "get_id");
+	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
+	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::DICTIONARY, "materials"), "set_materials", "get_materials");
+
+	BIND_ENUM_CONSTANT(UP);
+	BIND_ENUM_CONSTANT(DOWN);
+	BIND_ENUM_CONSTANT(FRONT);
+	BIND_ENUM_CONSTANT(BACK);
+	BIND_ENUM_CONSTANT(LEFT);
+	BIND_ENUM_CONSTANT(RIGHT);
+}
+
+Vector3 BasicsPerset::_rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
+{
+	Vector3 result = vertex;
+	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+	return result;
 }
