@@ -20,6 +20,9 @@ private:
 	Color albedo;
 	Texture2D* albedo_texture;
 
+	float normal;
+	Texture2D* normal_texture;
+
 	float metallic;
 	Texture2D* metallic_texture;
 
@@ -39,6 +42,8 @@ public:
 	String get_name() const;
 	Color get_albedo() const;
 	Ref<Texture2D> get_albedo_texture() const;
+	float get_normal() const;
+	Ref<Texture2D> get_normal_texture() const;
 	float get_metallic() const;
 	Ref<Texture2D> get_metallic_texture() const;
 	float get_roughness() const;
@@ -52,6 +57,8 @@ public:
 	void set_name(const String& value);
 	void set_albedo(const Color& value);
 	void set_albedo_texture(const Ref<Texture2D>& value);
+	void set_normal(const float value);
+	void set_normal_texture(const Ref<Texture2D>& value);
 	void set_metallic(const float value);
 	void set_metallic_texture(const Ref<Texture2D>& value);
 	void set_roughness(const float value);

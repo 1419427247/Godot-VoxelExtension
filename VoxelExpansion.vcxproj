@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="basics_perset.h" />
     <ClInclude Include="chunk.h" />
+    <ClInclude Include="device.h" />
     <ClInclude Include="material_perset.h" />
     <ClInclude Include="mesh_perset.h" />
     <ClInclude Include="register_types.h" />
@@ -140,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="basics_perset.cpp" />
     <ClCompile Include="chunk.cpp" />
+    <ClCompile Include="device.cpp" />
     <ClCompile Include="material_perset.cpp" />
     <ClCompile Include="mesh_perset.cpp" />
     <ClCompile Include="register_types.cpp" />

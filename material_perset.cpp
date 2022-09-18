@@ -12,6 +12,12 @@ int MaterialPerset::get_id() const { return id; }
 String MaterialPerset::get_name() const { return name; }
 Color MaterialPerset::get_albedo() const { return albedo; }
 Ref<Texture2D> MaterialPerset::get_albedo_texture() const { return albedo_texture; }
+float MaterialPerset::get_normal() const {
+	return normal;
+}
+Ref<Texture2D> MaterialPerset::get_normal_texture() const {
+	return normal_texture;
+}
 float MaterialPerset::get_metallic() const { return metallic; }
 Ref<Texture2D> MaterialPerset::get_metallic_texture() const { return metallic_texture; }
 float MaterialPerset::get_roughness() const { return roughness; }
@@ -27,7 +33,6 @@ void MaterialPerset::set_id(const int value) {
 void MaterialPerset::set_name(const String& value) {
 	name = value;
 }
-
 void MaterialPerset::set_albedo(const Color& value) {
 	albedo = value;
 	instance->set_shader_parameter(StringName("albedo"), value);
@@ -35,6 +40,14 @@ void MaterialPerset::set_albedo(const Color& value) {
 void MaterialPerset::set_albedo_texture(const Ref<Texture2D>& value) {
 	albedo_texture = (Texture2D*)value.ptr();
 	instance->set_shader_parameter(StringName("albedo_texture"), value);
+}
+void MaterialPerset::set_normal(const float value) {
+	normal = value;
+	instance->set_shader_parameter(StringName("normal"), value);
+}
+void MaterialPerset::set_normal_texture(const Ref<Texture2D>& value) {
+	normal_texture = (Texture2D*)value.ptr();
+	instance->set_shader_parameter(StringName("normal_texture"), value);
 }
 void MaterialPerset::set_metallic(const float value) {
 	metallic = value;
@@ -96,6 +109,8 @@ void MaterialPerset::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_name", "value"), &MaterialPerset::set_name);
 	ClassDB::bind_method(D_METHOD("set_albedo", "value"), &MaterialPerset::set_albedo);
 	ClassDB::bind_method(D_METHOD("set_albedo_texture", "value"), &MaterialPerset::set_albedo_texture);
+	ClassDB::bind_method(D_METHOD("set_normal"), &MaterialPerset::set_normal);
+	ClassDB::bind_method(D_METHOD("set_normal_texture"), &MaterialPerset::set_normal_texture);
 	ClassDB::bind_method(D_METHOD("set_metallic", "value"), &MaterialPerset::set_metallic);
 	ClassDB::bind_method(D_METHOD("set_metallic_texture", "value"), &MaterialPerset::set_metallic_texture);
 	ClassDB::bind_method(D_METHOD("set_roughness", "value"), &MaterialPerset::set_roughness);
@@ -109,6 +124,8 @@ void MaterialPerset::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_name"), &MaterialPerset::get_name);
 	ClassDB::bind_method(D_METHOD("get_albedo"), &MaterialPerset::get_albedo);
 	ClassDB::bind_method(D_METHOD("get_albedo_texture"), &MaterialPerset::get_albedo_texture);
+	ClassDB::bind_method(D_METHOD("get_normal"), &MaterialPerset::get_normal);
+	ClassDB::bind_method(D_METHOD("get_normal_texture"), &MaterialPerset::get_normal_texture);
 	ClassDB::bind_method(D_METHOD("get_metallic"), &MaterialPerset::get_metallic);
 	ClassDB::bind_method(D_METHOD("get_metallic_texture"), &MaterialPerset::get_metallic_texture);
 	ClassDB::bind_method(D_METHOD("get_roughness"), &MaterialPerset::get_roughness);

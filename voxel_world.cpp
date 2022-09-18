@@ -120,7 +120,6 @@ void VoxelWorld::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_voxel_type", "position"), &VoxelWorld::get_voxel_type);
 	ClassDB::bind_method(D_METHOD("get_voxel_id", "position"), &VoxelWorld::get_voxel_id);
 	ClassDB::bind_method(D_METHOD("get_voxel_rotation", "position"), &VoxelWorld::get_voxel_rotation);
-	ClassDB::bind_method(D_METHOD("get_voxel_position_by_point", "position", "normal"), &VoxelWorld::get_voxel_position_by_point);
 	ClassDB::bind_method(D_METHOD("get_voxel_relative_position", "position", "direction", "rotation"), &VoxelWorld::get_voxel_relative_position);
 
 	ClassDB::add_property("VoxelWorld", PropertyInfo(Variant::INT, "chunk_size"), "set_chunk_size", "get_chunk_size");

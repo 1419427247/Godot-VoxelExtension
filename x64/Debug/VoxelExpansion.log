@@ -68,25 +68,25 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godo
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(200,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(158,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(159,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(160,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(161,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl BasicsPerset::* )(int)”转换为“void (__cdecl godot::___UnexistingClass::* )(int)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl BasicsPerset::* )(const int &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const int &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<BasicsPerset,int>(void (__cdecl BasicsPerset::* )(int))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(131): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl BasicsPerset::* )(int),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<BasicsPerset,const int&>(void (__cdecl BasicsPerset::* )(const int &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(130): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl BasicsPerset::* )(const int &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl BasicsPerset::* )(int)
+              M=void (__cdecl BasicsPerset::* )(const int &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<int>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const int &>::MethodBindT”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl BasicsPerset::* )(const godot::String &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::String &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<BasicsPerset,const godot::String&>(void (__cdecl BasicsPerset::* )(const godot::String &))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(132): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl BasicsPerset::* )(const godot::String &),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(131): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl BasicsPerset::* )(const godot::String &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
@@ -96,7 +96,7 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl BasicsPerset::* )(const godot::Dictionary &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::Dictionary &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<BasicsPerset,const godot::Dictionary&>(void (__cdecl BasicsPerset::* )(const godot::Dictionary &))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(133): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl BasicsPerset::* )(const godot::Dictionary &),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(132): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl BasicsPerset::* )(const godot::Dictionary &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
@@ -114,7 +114,7 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=int
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(135): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl BasicsPerset::* )(void) const,>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(134): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl BasicsPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
@@ -134,7 +134,7 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=godot::String
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(136): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::String(__cdecl BasicsPerset::* )(void) const,>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(135): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::String(__cdecl BasicsPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
@@ -152,31 +152,31 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=godot::Dictionary
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(137): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Dictionary(__cdecl BasicsPerset::* )(void) const,>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(136): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Dictionary(__cdecl BasicsPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
               M=godot::Dictionary (__cdecl BasicsPerset::* )(void) const
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Dictionary>::MethodBindTRC”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl BasicsPerset::* )(int) const”转换为“int (__cdecl godot::___UnexistingClass::* )(int) const”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl BasicsPerset::* )(const int &) const”转换为“int (__cdecl godot::___UnexistingClass::* )(const int &) const”
           with
           [
               R=int
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<BasicsPerset,int,int>(R (__cdecl BasicsPerset::* )(int) const)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<BasicsPerset,int,const int&>(R (__cdecl BasicsPerset::* )(const int &) const)”的引用
           with
           [
               R=int
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(139): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl BasicsPerset::* )(int) const,>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\basics_perset.cpp(138): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl BasicsPerset::* )(const int &) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=int (__cdecl BasicsPerset::* )(int) const
+              M=int (__cdecl BasicsPerset::* )(const int &) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<int,int>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<int,const int &>::MethodBindTRC”: 没有合适的默认构造函数可用
   chunk.cpp
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,35): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,26): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
@@ -297,54 +297,140 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godo
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(93,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(120,50): warning C4267: “参数”: 从“size_t”转换到“const int32_t”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(151,23): warning C4018: “<”: 有符号/无符号不匹配
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(153,6): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(154,32): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(158,90): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(184,50): warning C4267: “参数”: 从“size_t”转换到“const int32_t”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl Chunk::* )(godot::Vector3i)”转换为“void (__cdecl godot::___UnexistingClass::* )(godot::Vector3i)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(45,27): warning C4305: “-=”: 从“double”到“real_t”截断
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(48,27): warning C4305: “+=”: 从“double”到“real_t”截断
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(51,27): warning C4305: “-=”: 从“double”到“real_t”截断
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(54,27): warning C4305: “+=”: 从“double”到“real_t”截断
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(57,27): warning C4305: “-=”: 从“double”到“real_t”截断
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(60,27): warning C4305: “+=”: 从“double”到“real_t”截断
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(75,50): warning C4267: “参数”: 从“size_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(106,23): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(108,6): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(109,32): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(113,90): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(139,50): warning C4267: “参数”: 从“size_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl Chunk::* )(const godot::Vector3i &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::Vector3i &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<Chunk,godot::Vector3i>(void (__cdecl Chunk::* )(godot::Vector3i))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(273): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl Chunk::* )(godot::Vector3i),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<Chunk,const godot::Vector3i&>(void (__cdecl Chunk::* )(const godot::Vector3i &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(298): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl Chunk::* )(const godot::Vector3i &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl Chunk::* )(godot::Vector3i)
+              M=void (__cdecl Chunk::* )(const godot::Vector3i &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<godot::Vector3i>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const godot::Vector3i &>::MethodBindT”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl Chunk::* )(void)”转换为“godot::Vector3i (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl Chunk::* )(void) const”转换为“godot::Vector3i (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=godot::Vector3i
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<Chunk,godot::Vector3i,>(R (__cdecl Chunk::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<Chunk,godot::Vector3i,>(R (__cdecl Chunk::* )(void) const)”的引用
           with
           [
               R=godot::Vector3i
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(275): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl Chunk::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(300): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl Chunk::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=godot::Vector3i (__cdecl Chunk::* )(void)
+              M=godot::Vector3i (__cdecl Chunk::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<godot::Vector3i>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Vector3i>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl Chunk::* )(const godot::Vector3 &,const godot::Vector3 &) const”转换为“godot::Vector3i (__cdecl godot::___UnexistingClass::* )(const godot::Vector3 &,const godot::Vector3 &) const”
+          with
+          [
+              R=godot::Vector3i
+          ]
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<Chunk,godot::Vector3i,const godot::Vector3&,const godot::Vector3&>(R (__cdecl Chunk::* )(const godot::Vector3 &,const godot::Vector3 &) const)”的引用
+          with
+          [
+              R=godot::Vector3i
+          ]
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(302): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl Chunk::* )(const godot::Vector3 &,const godot::Vector3 &) const,>(N,M)”的引用
+          with
+          [
+              N=godot::MethodDefinition,
+              M=godot::Vector3i (__cdecl Chunk::* )(const godot::Vector3 &,const godot::Vector3 &) const
+          ]
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Vector3i,const godot::Vector3 &,const godot::Vector3 &>::MethodBindTRC”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl Chunk::* )(void)”转换为“void (__cdecl godot::___UnexistingClass::* )(void)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<Chunk,>(void (__cdecl Chunk::* )(void))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(277): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl Chunk::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\chunk.cpp(304): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl Chunk::* )(void),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
               M=void (__cdecl Chunk::* )(void)
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<>::MethodBindT”: 没有合适的默认构造函数可用
+  device.cpp
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,35): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,26): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,17): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(249,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(356,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(360,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(364,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(282,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(305,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(309,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(313,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(124,51): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(124,42): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(145,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(149,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(153,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,36): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,27): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,18): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(220,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(224,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(228,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(284,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(288,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(292,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,45): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,36): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,27): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,18): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(228,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(232,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(236,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\projection.hpp(105,23): warning C4244: “return”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(162,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(178,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(177,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(176,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(207,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(209,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(211,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(213,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(241,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(244,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(247,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(250,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(253,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(256,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(259,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(262,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(265,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(268,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
   material_perset.cpp
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(282,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(305,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
@@ -412,7 +498,7 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godo
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(int)”转换为“void (__cdecl godot::___UnexistingClass::* )(int)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,int>(void (__cdecl MaterialPerset::* )(int))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(95): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(int),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(108): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(int),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
@@ -421,166 +507,377 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(95): m
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<int>::MethodBindT”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(godot::String)”转换为“void (__cdecl godot::___UnexistingClass::* )(godot::String)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(const godot::String &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::String &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::String>(void (__cdecl MaterialPerset::* )(godot::String))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(96): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(godot::String),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,const godot::String&>(void (__cdecl MaterialPerset::* )(const godot::String &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(109): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(const godot::String &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl MaterialPerset::* )(godot::String)
+              M=void (__cdecl MaterialPerset::* )(const godot::String &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<godot::String>::MethodBindT”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(godot::Color)”转换为“void (__cdecl godot::___UnexistingClass::* )(godot::Color)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const godot::String &>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(const godot::Color &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::Color &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Color>(void (__cdecl MaterialPerset::* )(godot::Color))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(97): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(godot::Color),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,const godot::Color&>(void (__cdecl MaterialPerset::* )(const godot::Color &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(110): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(const godot::Color &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl MaterialPerset::* )(godot::Color)
+              M=void (__cdecl MaterialPerset::* )(const godot::Color &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<godot::Color>::MethodBindT”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(godot::Ref<godot::Texture2D>)”转换为“void (__cdecl godot::___UnexistingClass::* )(godot::Ref<godot::Texture2D>)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const godot::Color &>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(const godot::Ref<godot::Texture2D> &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::Ref<godot::Texture2D> &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Ref<godot::Texture2D>>(void (__cdecl MaterialPerset::* )(godot::Ref<godot::Texture2D>))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(98): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(godot::Ref<godot::Texture2D>),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,const godot::Ref<godot::Texture2D>&>(void (__cdecl MaterialPerset::* )(const godot::Ref<godot::Texture2D> &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(111): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(const godot::Ref<godot::Texture2D> &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl MaterialPerset::* )(godot::Ref<godot::Texture2D>)
+              M=void (__cdecl MaterialPerset::* )(const godot::Ref<godot::Texture2D> &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<godot::Ref<godot::Texture2D>>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const godot::Ref<godot::Texture2D> &>::MethodBindT”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(float)”转换为“void (__cdecl godot::___UnexistingClass::* )(float)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,float>(void (__cdecl MaterialPerset::* )(float))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(99): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(float),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(112): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(float),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
               M=void (__cdecl MaterialPerset::* )(float)
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<float>::MethodBindT”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(godot::Vector2)”转换为“void (__cdecl godot::___UnexistingClass::* )(godot::Vector2)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl MaterialPerset::* )(const godot::Vector2 &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::Vector2 &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Vector2>(void (__cdecl MaterialPerset::* )(godot::Vector2))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(105): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(godot::Vector2),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,const godot::Vector2&>(void (__cdecl MaterialPerset::* )(const godot::Vector2 &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(120): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl MaterialPerset::* )(const godot::Vector2 &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl MaterialPerset::* )(godot::Vector2)
+              M=void (__cdecl MaterialPerset::* )(const godot::Vector2 &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<godot::Vector2>::MethodBindT”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void)”转换为“int (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const godot::Vector2 &>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void) const”转换为“int (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=int
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,int,>(R (__cdecl MaterialPerset::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,int,>(R (__cdecl MaterialPerset::* )(void) const)”的引用
           with
           [
               R=int
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(108): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl MaterialPerset::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(123): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl MaterialPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=int (__cdecl MaterialPerset::* )(void)
+              M=int (__cdecl MaterialPerset::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<int>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<int>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void)”转换为“godot::String (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void) const”转换为“godot::String (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=godot::String
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::String,>(R (__cdecl MaterialPerset::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::String,>(R (__cdecl MaterialPerset::* )(void) const)”的引用
           with
           [
               R=godot::String
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(109): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::String(__cdecl MaterialPerset::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(124): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::String(__cdecl MaterialPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=godot::String (__cdecl MaterialPerset::* )(void)
+              M=godot::String (__cdecl MaterialPerset::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<godot::String>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void)”转换为“godot::Color (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::String>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void) const”转换为“godot::Color (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=godot::Color
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Color,>(R (__cdecl MaterialPerset::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Color,>(R (__cdecl MaterialPerset::* )(void) const)”的引用
           with
           [
               R=godot::Color
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(110): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Color(__cdecl MaterialPerset::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(125): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Color(__cdecl MaterialPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=godot::Color (__cdecl MaterialPerset::* )(void)
+              M=godot::Color (__cdecl MaterialPerset::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<godot::Color>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void)”转换为“godot::Ref<godot::Texture2D> (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Color>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void) const”转换为“godot::Ref<godot::Texture2D> (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=godot::Ref<godot::Texture2D>
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Ref<godot::Texture2D>,>(R (__cdecl MaterialPerset::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Ref<godot::Texture2D>,>(R (__cdecl MaterialPerset::* )(void) const)”的引用
           with
           [
               R=godot::Ref<godot::Texture2D>
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(111): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Ref<godot::Texture2D>(__cdecl MaterialPerset::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(126): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Ref<godot::Texture2D>(__cdecl MaterialPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=godot::Ref<godot::Texture2D> (__cdecl MaterialPerset::* )(void)
+              M=godot::Ref<godot::Texture2D> (__cdecl MaterialPerset::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<godot::Ref<godot::Texture2D>>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void)”转换为“float (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Ref<godot::Texture2D>>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void) const”转换为“float (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=float
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,float,>(R (__cdecl MaterialPerset::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,float,>(R (__cdecl MaterialPerset::* )(void) const)”的引用
           with
           [
               R=float
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(112): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,float(__cdecl MaterialPerset::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(127): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,float(__cdecl MaterialPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=float (__cdecl MaterialPerset::* )(void)
+              M=float (__cdecl MaterialPerset::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<float>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void)”转换为“godot::Vector2 (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<float>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl MaterialPerset::* )(void) const”转换为“godot::Vector2 (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=godot::Vector2
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Vector2,>(R (__cdecl MaterialPerset::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<MaterialPerset,godot::Vector2,>(R (__cdecl MaterialPerset::* )(void) const)”的引用
           with
           [
               R=godot::Vector2
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(118): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector2(__cdecl MaterialPerset::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\material_perset.cpp(135): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector2(__cdecl MaterialPerset::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=godot::Vector2 (__cdecl MaterialPerset::* )(void)
+              M=godot::Vector2 (__cdecl MaterialPerset::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<godot::Vector2>::MethodBindTR”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Vector2>::MethodBindTRC”: 没有合适的默认构造函数可用
+  mesh_perset.cpp
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(282,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(305,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(309,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(313,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(124,51): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(124,42): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(145,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(149,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(153,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,35): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,26): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,17): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(249,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(356,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(360,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(364,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,36): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,27): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,18): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(220,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(224,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(228,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(284,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(288,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(292,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,45): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,36): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,27): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,18): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(228,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(232,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(236,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\projection.hpp(105,23): warning C4244: “return”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(162,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(178,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(177,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(176,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(207,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(209,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(211,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(213,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(161,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(164,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(167,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(170,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(173,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(176,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(179,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(182,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(185,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(188,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(191,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(194,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(197,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(200,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(691,58): warning C4244: “参数”: 从“const GDNativeInt”转换到“int”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(689): message : 在编译 类 模板 成员函数“godot::Variant godot::MethodBindTRS<godot::Ref<MeshPerset>,const int &,const godot::String &,const godot::Ref<godot::Mesh> &>::call(GDExtensionClassInstancePtr,const GDNativeVariantPtr *,const GDNativeInt,GDNativeCallError &) const”时
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(710): message : 查看对正在编译的 类 模板 实例化“godot::MethodBindTRS<godot::Ref<MeshPerset>,const int &,const godot::String &,const godot::Ref<godot::Mesh> &>”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(199): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_static_method_bind<godot::Ref<MeshPerset>,const int&,const godot::String&,const godot::Ref<godot::Mesh>&>(R (__cdecl *)(const int &,const godot::String &,const godot::Ref<godot::Mesh> &))”的引用
+          with
+          [
+              R=godot::Ref<MeshPerset>
+          ]
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\mesh_perset.cpp(40): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_static_method<godot::MethodDefinition,godot::Ref<MeshPerset>(__cdecl *)(const int &,const godot::String &,const godot::Ref<godot::Mesh> &),>(const char *,N,M)”的引用
+          with
+          [
+              N=godot::MethodDefinition,
+              M=godot::Ref<MeshPerset> (__cdecl *)(const int &,const godot::String &,const godot::Ref<godot::Mesh> &)
+          ]
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\binder_common.hpp(532,1): warning C4267: “初始化”: 从“size_t”转换到“int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(689): message : 查看对正在编译的函数 模板 实例化“void godot::call_with_variant_args_static_ret_dv<R,const int&,const godot::String&,const godot::Ref<godot::Mesh>&>(R (__cdecl *)(const int &,const godot::String &,const godot::Ref<godot::Mesh> &),const GDNativeVariantPtr *,int,godot::Variant &,GDNativeCallError &,const std::vector<godot::Variant,std::allocator<godot::Variant>> &)”的引用
+          with
+          [
+              R=godot::Ref<MeshPerset>
+          ]
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(689): message : 在编译 类 模板 成员函数“godot::Variant godot::MethodBindTRS<godot::Ref<MeshPerset>,const int &,const godot::String &,const godot::Ref<godot::Mesh> &>::call(GDExtensionClassInstancePtr,const GDNativeVariantPtr *,const GDNativeInt,GDNativeCallError &) const”时
+  register_types.cpp
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(282,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(305,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(309,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(313,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(124,51): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(124,42): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(145,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(149,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2i.hpp(153,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,35): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,26): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(202,17): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(249,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(356,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(360,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3.hpp(364,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,36): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,27): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(142,18): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(220,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(224,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector3i.hpp(228,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(284,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(288,17): warning C4244: “参数”: 从“const int32_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4.hpp(292,17): warning C4244: “参数”: 从“const int64_t”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,45): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,36): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,27): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(144,18): warning C4244: “参数”: 从“double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(228,20): warning C4244: “参数”: 从“const int64_t”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(232,20): warning C4244: “参数”: 从“const float”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector4i.hpp(236,20): warning C4244: “参数”: 从“const double”转换到“const int32_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\projection.hpp(105,23): warning C4244: “return”: 从“double”转换到“real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(162,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(178,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(177,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(176,7): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(207,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(209,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(211,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\color.hpp(213,64): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(241,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(244,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(247,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(250,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(253,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(256,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(259,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(262,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(265,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(268,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\node.hpp(239,14): message : 此诊断出现在编译器生成的函数“void godot::Node::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\visual_instance3d.hpp(65,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\visual_instance3d.hpp(63,14): message : 此诊断出现在编译器生成的函数“void godot::VisualInstance3D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\collision_object3d.hpp(104,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\collision_object3d.hpp(102,14): message : 此诊断出现在编译器生成的函数“void godot::CollisionObject3D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\collision_object3d.hpp(107,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\collision_object3d.hpp(102,14): message : 此诊断出现在编译器生成的函数“void godot::CollisionObject3D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\collision_object3d.hpp(110,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\collision_object3d.hpp(102,14): message : 此诊断出现在编译器生成的函数“void godot::CollisionObject3D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(161,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(164,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(167,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(170,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(173,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(176,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(179,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(182,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(185,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(188,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(191,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(194,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(197,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(200,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(68,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(66,14): message : 此诊断出现在编译器生成的函数“void godot::Material::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(71,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(66,14): message : 此诊断出现在编译器生成的函数“void godot::Material::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(74,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(66,14): message : 此诊断出现在编译器生成的函数“void godot::Material::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(77,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\material.hpp(66,14): message : 此诊断出现在编译器生成的函数“void godot::Material::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(75,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(78,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(81,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(84,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(87,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(90,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(93,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\texture2d.hpp(73,14): message : 此诊断出现在编译器生成的函数“void godot::Texture2D::register_virtuals(void)”中
   voxel_world.cpp
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(282,13): warning C4244: “初始化”: 从“double”转换到“real_t”，可能丢失数据
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\variant\vector2.hpp(305,17): warning C4244: “参数”: 从“const double”转换到“const real_t”，可能丢失数据
@@ -671,15 +968,9 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godo
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(200,3): warning C4984: "if constexpr" 是一种 C++17 语言扩展
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\gen\include\godot_cpp\classes\mesh.hpp(159,14): message : 此诊断出现在编译器生成的函数“void godot::Mesh::register_virtuals(void)”中
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(95,22): warning C4305: “-=”: 从“double”到“real_t”截断
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(98,22): warning C4305: “+=”: 从“double”到“real_t”截断
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(101,22): warning C4305: “-=”: 从“double”到“real_t”截断
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(104,22): warning C4305: “+=”: 从“double”到“real_t”截断
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(107,22): warning C4305: “-=”: 从“double”到“real_t”截断
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(110,22): warning C4305: “+=”: 从“double”到“real_t”截断
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(118,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(119,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(120,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(96,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(97,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(98,72): warning C4244: “参数”: 从“double”转换到“const real_t”，可能丢失数据
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl VoxelWorld::* )(void)”转换为“int (__cdecl godot::___UnexistingClass::* )(void)”
           with
           [
@@ -691,7 +982,7 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=int
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(126): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl VoxelWorld::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(104): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl VoxelWorld::* )(void),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
@@ -711,73 +1002,75 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=godot::Vector3i
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(127): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl VoxelWorld::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(105): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl VoxelWorld::* )(void),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
               M=godot::Vector3i (__cdecl VoxelWorld::* )(void)
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<godot::Vector3i>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(int)”转换为“void (__cdecl godot::___UnexistingClass::* )(int)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(const int &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const int &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,int>(void (__cdecl VoxelWorld::* )(int))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(130): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(int),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,const int&>(void (__cdecl VoxelWorld::* )(const int &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(108): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(const int &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl VoxelWorld::* )(int)
+              M=void (__cdecl VoxelWorld::* )(const int &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<int>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const int &>::MethodBindT”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(godot::Vector3i)”转换为“void (__cdecl godot::___UnexistingClass::* )(godot::Vector3i)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(const godot::Vector3i &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::Vector3i &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,godot::Vector3i>(void (__cdecl VoxelWorld::* )(godot::Vector3i))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(131): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(godot::Vector3i),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,const godot::Vector3i&>(void (__cdecl VoxelWorld::* )(const godot::Vector3i &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(109): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(const godot::Vector3i &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl VoxelWorld::* )(godot::Vector3i)
+              M=void (__cdecl VoxelWorld::* )(const godot::Vector3i &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<godot::Vector3i>::MethodBindT”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(godot::Array)”转换为“void (__cdecl godot::___UnexistingClass::* )(godot::Array)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const godot::Vector3i &>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(const godot::Array &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const godot::Array &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,godot::Array>(void (__cdecl VoxelWorld::* )(godot::Array))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(133): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(godot::Array),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,const godot::Array&>(void (__cdecl VoxelWorld::* )(const godot::Array &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(111): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(const godot::Array &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl VoxelWorld::* )(godot::Array)
+              M=void (__cdecl VoxelWorld::* )(const godot::Array &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<godot::Array>::MethodBindT”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl VoxelWorld::* )(void)”转换为“godot::Array (__cdecl godot::___UnexistingClass::* )(void)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const godot::Array &>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl VoxelWorld::* )(void) const”转换为“godot::Array (__cdecl godot::___UnexistingClass::* )(void) const”
           with
           [
               R=godot::Array
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,godot::Array,>(R (__cdecl VoxelWorld::* )(void))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,godot::Array,>(R (__cdecl VoxelWorld::* )(void) const)”的引用
           with
           [
               R=godot::Array
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(137): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Array(__cdecl VoxelWorld::* )(void),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(115): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Array(__cdecl VoxelWorld::* )(void) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=godot::Array (__cdecl VoxelWorld::* )(void)
+              M=godot::Array (__cdecl VoxelWorld::* )(void) const
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(490,18): error C2512: “godot::MethodBindTR<godot::Array>::MethodBindTR”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(int,int,const godot::Vector3i &,const godot::Vector3i &)”转换为“void (__cdecl godot::___UnexistingClass::* )(int,int,const godot::Vector3i &,const godot::Vector3i &)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Array>::MethodBindTRC”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2440: “reinterpret_cast”: 无法从“void (__cdecl VoxelWorld::* )(const int &,const int &,const godot::Vector3i &,const godot::Vector3i &)”转换为“void (__cdecl godot::___UnexistingClass::* )(const int &,const int &,const godot::Vector3i &,const godot::Vector3i &)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,int,int,const godot::Vector3i&,const godot::Vector3i&>(void (__cdecl VoxelWorld::* )(int,int,const godot::Vector3i &,const godot::Vector3i &))”的引用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(141): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(int,int,const godot::Vector3i &,const godot::Vector3i &),>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,const int&,const int&,const godot::Vector3i&,const godot::Vector3i&>(void (__cdecl VoxelWorld::* )(const int &,const int &,const godot::Vector3i &,const godot::Vector3i &))”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(119): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,void(__cdecl VoxelWorld::* )(const int &,const int &,const godot::Vector3i &,const godot::Vector3i &),>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
-              M=void (__cdecl VoxelWorld::* )(int,int,const godot::Vector3i &,const godot::Vector3i &)
+              M=void (__cdecl VoxelWorld::* )(const int &,const int &,const godot::Vector3i &,const godot::Vector3i &)
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<int,int,const godot::Vector3i &,const godot::Vector3i &>::MethodBindT”: 没有合适的默认构造函数可用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(331,18): error C2512: “godot::MethodBindT<const int &,const int &,const godot::Vector3i &,const godot::Vector3i &>::MethodBindT”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl VoxelWorld::* )(const godot::Vector3i &) const”转换为“int (__cdecl godot::___UnexistingClass::* )(const godot::Vector3i &) const”
           with
           [
@@ -789,15 +1082,13 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=int
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(142): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl VoxelWorld::* )(const godot::Vector3i &) const,>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(120): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,int(__cdecl VoxelWorld::* )(const godot::Vector3i &) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
               M=int (__cdecl VoxelWorld::* )(const godot::Vector3i &) const
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<int,const godot::Vector3i &>::MethodBindTRC”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2672: “godot::_post_initialize”: 未找到匹配的重载函数
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\memory.hpp(75,20): message : 可能是“T *godot::_post_initialize(T *)”
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl VoxelWorld::* )(const godot::Vector3i &) const”转换为“godot::Vector3i (__cdecl godot::___UnexistingClass::* )(const godot::Vector3i &) const”
           with
           [
@@ -809,31 +1100,13 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=godot::Vector3i
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(144): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl VoxelWorld::* )(const godot::Vector3i &) const,>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(122): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl VoxelWorld::* )(const godot::Vector3i &) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
               M=godot::Vector3i (__cdecl VoxelWorld::* )(const godot::Vector3i &) const
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Vector3i,const godot::Vector3i &>::MethodBindTRC”: 没有合适的默认构造函数可用
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl VoxelWorld::* )(const godot::Vector3 &,const godot::Vector3 &) const”转换为“godot::Vector3i (__cdecl godot::___UnexistingClass::* )(const godot::Vector3 &,const godot::Vector3 &) const”
-          with
-          [
-              R=godot::Vector3i
-          ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): message : 指向成员的指针有不同的表示形式；无法在它们之间进行类型强制转换
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\class_db.hpp(188): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::create_method_bind<VoxelWorld,godot::Vector3i,const godot::Vector3&,const godot::Vector3&>(R (__cdecl VoxelWorld::* )(const godot::Vector3 &,const godot::Vector3 &) const)”的引用
-          with
-          [
-              R=godot::Vector3i
-          ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(145): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl VoxelWorld::* )(const godot::Vector3 &,const godot::Vector3 &) const,>(N,M)”的引用
-          with
-          [
-              N=godot::MethodDefinition,
-              M=godot::Vector3i (__cdecl VoxelWorld::* )(const godot::Vector3 &,const godot::Vector3 &) const
-          ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Vector3i,const godot::Vector3 &,const godot::Vector3 &>::MethodBindTRC”: 没有合适的默认构造函数可用
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2440: “reinterpret_cast”: 无法从“R (__cdecl VoxelWorld::* )(const godot::Vector3i &,const godot::Vector3 &,const godot::Vector3i &) const”转换为“godot::Vector3i (__cdecl godot::___UnexistingClass::* )(const godot::Vector3i &,const godot::Vector3 &,const godot::Vector3i &) const”
           with
           [
@@ -845,11 +1118,12 @@ C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cp
           [
               R=godot::Vector3i
           ]
-C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(146): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl VoxelWorld::* )(const godot::Vector3i &,const godot::Vector3 &,const godot::Vector3i &) const,>(N,M)”的引用
+C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\voxel_world.cpp(123): message : 查看对正在编译的函数 模板 实例化“godot::MethodBind *godot::ClassDB::bind_method<godot::MethodDefinition,godot::Vector3i(__cdecl VoxelWorld::* )(const godot::Vector3i &,const godot::Vector3 &,const godot::Vector3i &) const,>(N,M)”的引用
           with
           [
               N=godot::MethodDefinition,
               M=godot::Vector3i (__cdecl VoxelWorld::* )(const godot::Vector3i &,const godot::Vector3 &,const godot::Vector3i &) const
           ]
 C:\Users\StarNightFlower\Desktop\godot\VoxelExpansion\godot-cpp\include\godot_cpp\core\method_bind.hpp(573,18): error C2512: “godot::MethodBindTRC<godot::Vector3i,const godot::Vector3i &,const godot::Vector3 &,const godot::Vector3i &>::MethodBindTRC”: 没有合适的默认构造函数可用
+  正在运行 C/C++ 代码分析...
   正在生成代码...

@@ -299,6 +299,8 @@ void Chunk::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("get_chunk_position"), &Chunk::get_chunk_position);
 
+	ClassDB::bind_method(D_METHOD("get_voxel_position", "position", "normal"), &Chunk::get_voxel_position);
+
 	ClassDB::bind_method(D_METHOD("generate_mesh"), &Chunk::generate_mesh);
 	ClassDB::bind_method(D_METHOD("generate_collider"), &Chunk::generate_collider);
 	ClassDB::bind_method(D_METHOD("generate_trigger"), &Chunk::generate_trigger);

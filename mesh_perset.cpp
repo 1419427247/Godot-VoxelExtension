@@ -37,5 +37,5 @@ Ref<MeshPerset> MeshPerset::instantiate(const int& id, const String& name, const
 }
 
 void MeshPerset::_bind_methods() {
-
+	ClassDB::bind_static_method("MeshPerset", D_METHOD("instantiate", "id", "name", "mesh"), &MeshPerset::instantiate);
 }
