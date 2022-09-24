@@ -1,5 +1,37 @@
 #include "basics_perset.h"
 
+void BasicsPerset::_bind_methods()
+{
+
+	ClassDB::bind_method(D_METHOD("set_materials", "value"), &BasicsPerset::set_materials);
+	ClassDB::bind_method(D_METHOD("get_materials"), &BasicsPerset::get_materials);
+
+	ClassDB::bind_method(D_METHOD("get_material_id", "uuid"), &BasicsPerset::get_material_id);
+
+	ClassDB::bind_static_method("BasicsPerset", D_METHOD("instantiate", "uuid", "name", "materials"), &BasicsPerset::instantiate);
+	ClassDB::bind_static_method("BasicsPerset", D_METHOD("get_triangle_normal", "a", "b", "c"), &BasicsPerset::get_triangle_normal);
+
+
+	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::DICTIONARY, "materials"), "set_materials", "get_materials");
+
+	BIND_ENUM_CONSTANT(UP);
+	BIND_ENUM_CONSTANT(DOWN);
+	BIND_ENUM_CONSTANT(FRONT);
+	BIND_ENUM_CONSTANT(BACK);
+	BIND_ENUM_CONSTANT(LEFT);
+	BIND_ENUM_CONSTANT(RIGHT);
+}
+
+Vector3 BasicsPerset::_rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
+{
+	Vector3 result = vertex;
+	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+	return result;
+}
+
+
 BasicsPerset::BasicsPerset()
 {
 }
@@ -8,14 +40,9 @@ BasicsPerset::~BasicsPerset()
 {
 }
 
-int BasicsPerset::get_id() const
+void BasicsPerset::set_materials(const Dictionary& value)
 {
-	return id;
-}
-
-String BasicsPerset::get_name() const
-{
-	return name;
+	this->materials = value;
 }
 
 Dictionary BasicsPerset::get_materials() const
@@ -23,31 +50,16 @@ Dictionary BasicsPerset::get_materials() const
 	return materials;
 }
 
-void BasicsPerset::set_id(const int& value)
-{
-	this->id = value;
-}
-
-void BasicsPerset::set_name(const String& value)
-{
-	this->name = value;
-}
-
-void BasicsPerset::set_materials(const Dictionary& value)
-{
-	this->materials = value;
-}
-
 int BasicsPerset::get_material_id(const int& key) const
 {
 	return materials.get(key, 0);
 }
 
-Ref<BasicsPerset> BasicsPerset::instantiate(const int& id, const String& name, const Dictionary& materials)
+Ref<BasicsPerset> BasicsPerset::instantiate(const String& uuid, const String& name, const Dictionary& materials)
 {
 	Ref<BasicsPerset> basics_perset;
 	basics_perset.instantiate();
-	basics_perset->id = id;
+	basics_perset->uuid = uuid;
 	basics_perset->name = name;
 	basics_perset->materials = materials;
 	return basics_perset;
@@ -122,41 +134,4 @@ void BasicsPerset::draw_mesh(const int& mesh_key,const Array& arrays, const Vect
 	{
 		array_tex_uv.push_back(uvs[i]);
 	}
-}
-
-
-void BasicsPerset::_bind_methods()
-{
-	ClassDB::bind_method(D_METHOD("set_id", "value"), &BasicsPerset::set_id);
-	ClassDB::bind_method(D_METHOD("set_name", "value"), &BasicsPerset::set_name);
-	ClassDB::bind_method(D_METHOD("set_materials", "value"), &BasicsPerset::set_materials);
-
-	ClassDB::bind_method(D_METHOD("get_id"), &BasicsPerset::get_id);
-	ClassDB::bind_method(D_METHOD("get_name"), &BasicsPerset::get_name);
-	ClassDB::bind_method(D_METHOD("get_materials"), &BasicsPerset::get_materials);
-
-	ClassDB::bind_method(D_METHOD("get_material_id", "id"), &BasicsPerset::get_material_id);
-
-	ClassDB::bind_static_method("BasicsPerset", D_METHOD("instantiate", "id", "name", "materials"), &BasicsPerset::instantiate);
-	ClassDB::bind_static_method("BasicsPerset", D_METHOD("get_triangle_normal", "a", "b", "c"), &BasicsPerset::get_triangle_normal);
-
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::INT, "id"), "set_id", "get_id");
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::DICTIONARY, "materials"), "set_materials", "get_materials");
-
-	BIND_ENUM_CONSTANT(UP);
-	BIND_ENUM_CONSTANT(DOWN);
-	BIND_ENUM_CONSTANT(FRONT);
-	BIND_ENUM_CONSTANT(BACK);
-	BIND_ENUM_CONSTANT(LEFT);
-	BIND_ENUM_CONSTANT(RIGHT);
-}
-
-Vector3 BasicsPerset::_rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
-{
-	Vector3 result = vertex;
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-	return result;
 }

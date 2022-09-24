@@ -33,7 +33,10 @@
     <ClInclude Include="mesh_perset.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="device.h">
+    <ClInclude Include="texture_perset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="perset.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,7 +59,10 @@
     <ClCompile Include="mesh_perset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="device.cpp">
+    <ClCompile Include="texture_perset.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="perset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

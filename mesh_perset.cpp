@@ -7,35 +7,38 @@ MeshPerset::~MeshPerset() {
 
 }
 
-void MeshPerset::set_id(const int& value) {
-}
-void MeshPerset::set_name(const String& value) {
-}
 void MeshPerset::set_mesh(const Ref<Mesh>& value) {
+	mesh = value;
 }
 
-int MeshPerset::get_id() const
-{
-	return id;
-}
-String MeshPerset::get_name() const
-{
-	return name;
-}
 Ref<Mesh> MeshPerset::get_mesh() const
 {
 	return mesh;
 }
 
-Ref<MeshPerset> MeshPerset::instantiate(const int& id, const String& name, const Ref<Mesh>& mesh) {
+void MeshPerset::draw_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation) const
+{
+	for (size_t i = 0; i < mesh->get_surface_count(); i++)
+	{
+		Array mesh_arrays = mesh->surface_get_arrays(i);
+		Array array_vertex = mesh_arrays[Mesh::ARRAY_VERTEX];
+		Array array_normal = mesh_arrays[Mesh::ARRAY_NORMAL];
+		Array array_tex_uv = mesh_arrays[Mesh::ARRAY_TEX_UV];
+		array_vertex.append_array(mesh_arrays[Mesh::ARRAY_VERTEX]);
+		array_normal.append_array(mesh_arrays[Mesh::ARRAY_NORMAL]);
+		array_tex_uv.append_array(mesh_arrays[Mesh::ARRAY_TEX_UV]);
+	}
+}
+
+Ref<MeshPerset> MeshPerset::instantiate(const String& uuid, const String& name, const Ref<Mesh>& mesh) {
 	Ref<MeshPerset> mesh_perset;
 	mesh_perset.instantiate();
-	mesh_perset->id = id;
+	mesh_perset->uuid = uuid;
 	mesh_perset->name = name;
-	mesh_perset->mesh = (Mesh*)mesh.ptr();
-	return mesh;
+	mesh_perset->mesh = mesh;
+	return mesh_perset;
 }
 
 void MeshPerset::_bind_methods() {
-	ClassDB::bind_static_method("MeshPerset", D_METHOD("instantiate", "id", "name", "mesh"), &MeshPerset::instantiate);
+	ClassDB::bind_static_method("MeshPerset", D_METHOD("instantiate", "uuid", "name", "mesh"), &MeshPerset::instantiate);
 }
