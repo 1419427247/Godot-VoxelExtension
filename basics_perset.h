@@ -16,8 +16,9 @@ class BasicsPerset : public Perset
 		LEFT = 4,
 		RIGHT = 5,
 	};
+	static const int ARRAY_MAX = 6;
 private:
-	Dictionary materials;
+	Array materials;
 protected:
 	static void _bind_methods();
 	static Vector3 _rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
@@ -25,10 +26,10 @@ public:
 	BasicsPerset();
 	~BasicsPerset();
 
-	void set_materials(const Dictionary& value);
-	Dictionary get_materials() const;
+	void set_material(const int& key, const int& id);
+	int get_material(const int& key) const;
 
-	int get_material_id(const int& key) const;
+	Array get_materials() const;
 
 	static Ref<BasicsPerset> instantiate(const String& uuid,const String& name, const Dictionary& materials);
 

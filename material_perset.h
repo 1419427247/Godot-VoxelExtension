@@ -1,13 +1,9 @@
 #ifndef MATERIAL_PERSET_H
 #define MATERIAL_PERSET_H
-
 #include "perset.h"
-
-using namespace godot;
 
 class MaterialPerset : public Perset
 {
-	friend class Chunk;
 	GDCLASS(MaterialPerset, Perset);
 private:
 	Ref<ShaderMaterial> shader_material;

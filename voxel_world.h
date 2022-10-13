@@ -3,19 +3,16 @@
 
 #include "perset.h"
 
-#include "texture_perset.h"
 #include "material_perset.h"
 #include "basics_perset.h"
 #include "mesh_perset.h"
-
-using namespace godot;
+#include "device_perset.h"
 
 typedef int Voxel;
 class VoxelWorld : public Node3D
 {
 
 	GDCLASS(VoxelWorld, Node3D);
-
 	enum VoxelType
 	{
 		EMPTY = 0,
@@ -25,45 +22,54 @@ class VoxelWorld : public Node3D
 	};
 
 private:
-	int chunk_size;
+	Vector3i chunk_size;
 	Vector3i chunk_count;
 	Vector3i world_size;
+
+	bool isolated;
 
 	PackedByteArray voxels;
 	Dictionary voxels_information;
 
-	Dictionary perset_map;
+	Timer* timer;
 
-	Array texture_persets;
+	Dictionary perset_map;
 	Array material_persets;
 	Array basics_persets;
 	Array mesh_persets;
 	Array device_persets;
+protected:
+	void _on_timer_timeout();
+	void _notification(int p_what);
 
-	Timer* timer;
+	static void _bind_methods();
 public:
+
 	VoxelWorld();
 	~VoxelWorld();
 
-	void set_chunk_size(const int& value);
-	int get_chunk_size() const;
+	void set_chunk_size(const Vector3i& value);
+	Vector3i get_chunk_size() const;
 
 	void set_chunk_count(const Vector3i& value);
 	Vector3i get_chunk_count() const;
 
 	Vector3i get_world_size() const;
 
-	int register_perset(const Ref<Perset> value);
-
-	Array get_material_persets() const;
-	Array get_basics_persets() const;
-	Array get_mesh_persets() const;
-	Array get_device_persets() const;
+	void set_isolated(const bool& value);
+	bool get_isolated() const;
 
 	void set_step(const double& value);
 	double get_step();
 
-	void set_voxel(const Vector3i& position, const Voxel& flag);
+	int register_perset(const Ref<Perset>& value);
+	Array get_material_persets();
+	Array get_basics_persets();
+	Array get_mesh_persets();
+	Array get_device_persets();
+
+
+	void set_voxel(const Vector3i& position, const Voxel& voxel);
 	Voxel get_voxel(const Vector3i& position) const;
 
 	Vector3i get_voxel_direction(const Vector3& direction, const Vector3i& rotation) const;
@@ -71,16 +77,17 @@ public:
 	PackedByteArray save();
 	void load(PackedByteArray value);
 
-	static uint8_t get_voxel_type(const Voxel& voxel);
-	static uint8_t get_voxel_id(const Voxel& voxel);
-	static uint8_t get_voxel_flag(const Voxel& voxel);
+	static int get_voxel_type(const Voxel& voxel);
+	static int get_voxel_id(const Voxel& voxel);
+	static int get_voxel_flag(const Voxel& voxel);
 
-	static Vector3i flag_to_rotation(const uint8_t& flag);
-protected:
-	void _on_timer_timeout();
-	void _notification(int p_what);
-	
-	static void _bind_methods();
+	static Vector3i flag_to_rotation(const int& flag);
+
+	static Voxel empty_voxel();
+	static Voxel basics_voxel(const int& id, const Vector3i& rotation);
+	static Voxel mesh_voxel(const int& id, const Vector3i& rotation);
+	static Voxel device_voxel(const int& id);
+
 };
 
 VARIANT_ENUM_CAST(VoxelWorld, VoxelType);

@@ -3,17 +3,13 @@
 
 #include "voxel_world.h"
 
-class BasicsPerset;
-
 class Chunk : public Node3D
 {
 	GDCLASS(Chunk, Node3D);
-
 private:
-	Dictionary data;
-	
 	Vector3i chunk_position;
 
+	Dictionary data;
 	VoxelWorld* voxel_world;
 	MeshInstance3D* mesh_instance;
 	
@@ -23,7 +19,16 @@ private:
 	Area3D* trigger;
 	CollisionShape3D* trigger_shap;
 
+	Array basics_arrays;
 	Array mesh_arrays;
+
+protected:
+	Array get_mesh_array(const int& index);
+	void build_basics(const Ref<BasicsPerset>& basics_perset, const Vector3i& local_position, const Vector3i& rotation);
+	void build_mesh(const Ref<MeshPerset>& mesh_perset, const Vector3i& local_position, const Vector3i& rotation);
+	static void _bind_methods();
+	void _notification(int p_what);
+
 public:
 	Chunk();
 	~Chunk();
@@ -39,12 +44,6 @@ public:
 	void generate_mesh();
 	void generate_collider();
 	void generate_trigger();
-
-protected:
-	void draw_basics_mesh(const Ref<BasicsPerset>& basics_perset, const Vector3i& relative_position, const Vector3i& rotation);
-	Array get_mesh_array(const int& index);
-	static void _bind_methods();
-	void _notification(int p_what);
 };
 
 #endif

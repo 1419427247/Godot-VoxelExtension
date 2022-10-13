@@ -2,17 +2,14 @@
 
 void BasicsPerset::_bind_methods()
 {
+	ClassDB::bind_method(D_METHOD("set_material", "value"), &BasicsPerset::set_material);
+	ClassDB::bind_method(D_METHOD("get_material", "uuid"), &BasicsPerset::get_material);
 
-	ClassDB::bind_method(D_METHOD("set_materials", "value"), &BasicsPerset::set_materials);
 	ClassDB::bind_method(D_METHOD("get_materials"), &BasicsPerset::get_materials);
-
-	ClassDB::bind_method(D_METHOD("get_material_id", "uuid"), &BasicsPerset::get_material_id);
 
 	ClassDB::bind_static_method("BasicsPerset", D_METHOD("instantiate", "uuid", "name", "materials"), &BasicsPerset::instantiate);
 	ClassDB::bind_static_method("BasicsPerset", D_METHOD("get_triangle_normal", "a", "b", "c"), &BasicsPerset::get_triangle_normal);
 
-
-	ClassDB::add_property("BasicsPerset", PropertyInfo(Variant::DICTIONARY, "materials"), "set_materials", "get_materials");
 
 	BIND_ENUM_CONSTANT(UP);
 	BIND_ENUM_CONSTANT(DOWN);
@@ -34,26 +31,28 @@ Vector3 BasicsPerset::_rotate_vertex(const Vector3& vertex, const Vector3i& rota
 
 BasicsPerset::BasicsPerset()
 {
+	materials.resize(ARRAY_MAX);
 }
 
 BasicsPerset::~BasicsPerset()
 {
 }
 
-void BasicsPerset::set_materials(const Dictionary& value)
+void BasicsPerset::set_material(const int& key,const int& id)
 {
-	this->materials = value;
+	this->materials[key] = id;
 }
 
-Dictionary BasicsPerset::get_materials() const
+int BasicsPerset::get_material(const int& key) const
+{
+	return materials[key];
+}
+
+Array BasicsPerset::get_materials() const
 {
 	return materials;
 }
 
-int BasicsPerset::get_material_id(const int& key) const
-{
-	return materials.get(key, 0);
-}
 
 Ref<BasicsPerset> BasicsPerset::instantiate(const String& uuid, const String& name, const Dictionary& materials)
 {
@@ -61,7 +60,11 @@ Ref<BasicsPerset> BasicsPerset::instantiate(const String& uuid, const String& na
 	basics_perset.instantiate();
 	basics_perset->uuid = uuid;
 	basics_perset->name = name;
-	basics_perset->materials = materials;
+	Array keys = materials.keys();
+	for (int i = 0; i < keys.size(); i++)
+	{
+		basics_perset->materials[keys[i]] = materials[keys[i]];
+	}
 	return basics_perset;
 }
 
@@ -115,7 +118,7 @@ void BasicsPerset::draw_mesh(const int& mesh_key,const Array& arrays, const Vect
 	Array array_normal = arrays[Mesh::ARRAY_NORMAL];
 	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
 
-	for (size_t i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		array_vertex.push_back(_rotate_vertex(vertexs[i], rotation) + position);
 	}
@@ -130,7 +133,7 @@ void BasicsPerset::draw_mesh(const int& mesh_key,const Array& arrays, const Vect
 	array_normal.push_back(normal_2);
 	array_normal.push_back(normal_2);
 
-	for (size_t i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		array_tex_uv.push_back(uvs[i]);
 	}
