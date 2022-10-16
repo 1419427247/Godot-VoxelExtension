@@ -87,7 +87,6 @@ public:
 	static Voxel basics_voxel(const int& id, const Vector3i& rotation);
 	static Voxel mesh_voxel(const int& id, const Vector3i& rotation);
 	static Voxel device_voxel(const int& id);
-
 };
 
 VARIANT_ENUM_CAST(VoxelWorld, VoxelType);
