@@ -130,24 +130,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="basics_perset.h" />
+    <ClInclude Include="basics_preset.h" />
     <ClInclude Include="chunk.h" />
-    <ClInclude Include="device_perset.h" />
-    <ClInclude Include="material_perset.h" />
-    <ClInclude Include="mesh_perset.h" />
-    <ClInclude Include="perset.h" />
+    <ClInclude Include="device_preset.h" />
+    <ClInclude Include="material_preset.h" />
+    <ClInclude Include="mesh_preset.h" />
+    <ClInclude Include="preset.h" />
     <ClInclude Include="register_types.h" />
     <ClInclude Include="voxel_world.h" />
+    <ClInclude Include="voxel_world_data.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="basics_perset.cpp" />
+    <ClCompile Include="basics_preset.cpp" />
     <ClCompile Include="chunk.cpp" />
-    <ClCompile Include="device_perset.cpp" />
-    <ClCompile Include="material_perset.cpp" />
-    <ClCompile Include="mesh_perset.cpp" />
-    <ClCompile Include="perset.cpp" />
+    <ClCompile Include="device_preset.cpp" />
+    <ClCompile Include="material_preset.cpp" />
+    <ClCompile Include="mesh_preset.cpp" />
+    <ClCompile Include="preset.cpp" />
     <ClCompile Include="register_types.cpp" />
     <ClCompile Include="voxel_world.cpp" />
+    <ClCompile Include="voxel_world_data.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

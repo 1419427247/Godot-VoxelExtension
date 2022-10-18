@@ -16,76 +16,68 @@ Array Chunk::get_mesh_array(const int& index) {
 	return result;
 }
 
-void Chunk::build_basics(const Ref<BasicsPerset>& basics_perset, const Vector3i& local_position, const Vector3i& rotation) {
-	Vector3i basics_position = local_position + chunk_position * voxel_world->get_chunk_size();
+void Chunk::build_basics(const Ref<VoxelWorldData>& voxel_world_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation) {
 
-	Vector3i up_position = basics_position + voxel_world->get_voxel_direction(Vector3(0, 1, 0), rotation);
-	int up_voxel_type = VoxelWorld::get_voxel_type(voxel_world->get_voxel(up_position));
-	if (up_voxel_type != VoxelWorld::BASICS) {
-		int up_material_id = basics_perset->get_material(BasicsPerset::UP);
+	Vector3i up_position = VoxelWorldData::get_voxel_direction(Vector3(0, 1, 0), rotation);
+	int up_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + up_position));
+	if (up_voxel_type != VoxelWorldData::BASICS) {
+		int up_material_id = basics_preset->get_up();
 		Array arrays = get_mesh_array(up_material_id);
-		BasicsPerset::draw_mesh(BasicsPerset::UP, arrays, local_position, rotation);
+		BasicsPreset::build_mesh(BasicsPreset::UP, arrays, local_position, rotation);
 	}
 
-	Vector3i down_position = basics_position + voxel_world->get_voxel_direction(Vector3(0, -1, 0), rotation);
-	int down_voxel_type = VoxelWorld::get_voxel_type(voxel_world->get_voxel(down_position));
-	if (down_voxel_type != VoxelWorld::BASICS) {
-		int down_material_id = basics_perset->get_material(BasicsPerset::DOWN);
+	Vector3i down_position = VoxelWorldData::get_voxel_direction(Vector3(0, -1, 0), rotation);
+	int down_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + down_position));
+	if (down_voxel_type != VoxelWorldData::BASICS) {
+		int down_material_id = basics_preset->get_down();
 		Array arrays = get_mesh_array(down_material_id);
-		BasicsPerset::draw_mesh(BasicsPerset::DOWN, arrays, local_position, rotation);
+		BasicsPreset::build_mesh(BasicsPreset::DOWN, arrays, local_position, rotation);
 	}
 
-	Vector3i front_position = basics_position + voxel_world->get_voxel_direction(Vector3(0, 0, -1), rotation);
-	int front_voxel_type = VoxelWorld::get_voxel_type(voxel_world->get_voxel(front_position));
-	if (front_voxel_type != VoxelWorld::BASICS) {
-		int front_material_id = basics_perset->get_material(BasicsPerset::FRONT);
+	Vector3i front_position = VoxelWorldData::get_voxel_direction(Vector3(0, 0, -1), rotation);
+	int front_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + front_position));
+	if (front_voxel_type != VoxelWorldData::BASICS) {
+		int front_material_id = basics_preset->get_front();
 		Array arrays = get_mesh_array(front_material_id);
-		BasicsPerset::draw_mesh(BasicsPerset::FRONT, arrays, local_position, rotation);
+		BasicsPreset::build_mesh(BasicsPreset::FRONT, arrays, local_position, rotation);
 	}
 
 
-	Vector3i back_position = basics_position + voxel_world->get_voxel_direction(Vector3(0, 0, 1), rotation);
-	int back_voxel_type = VoxelWorld::get_voxel_type(voxel_world->get_voxel(back_position));
-	if (back_voxel_type != VoxelWorld::BASICS) {
-		int back_material_id = basics_perset->get_material(BasicsPerset::BACK);
+	Vector3i back_position = VoxelWorldData::get_voxel_direction(Vector3(0, 0, 1), rotation);
+	int back_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + back_position));
+	if (back_voxel_type != VoxelWorldData::BASICS) {
+		int back_material_id = basics_preset->get_back();
 		Array arrays = get_mesh_array(back_material_id);
-		BasicsPerset::draw_mesh(BasicsPerset::BACK, arrays, local_position, rotation);
+		BasicsPreset::build_mesh(BasicsPreset::BACK, arrays, local_position, rotation);
 	}
 
-	Vector3i left_position = basics_position + voxel_world->get_voxel_direction(Vector3(-1, 0, 0), rotation);
-	int left_voxel_type = VoxelWorld::get_voxel_type(voxel_world->get_voxel(left_position));
-	if (left_voxel_type != VoxelWorld::BASICS) {
-		int left_material_id = basics_perset->get_material(BasicsPerset::LEFT);
+	Vector3i left_position = VoxelWorldData::get_voxel_direction(Vector3(-1, 0, 0), rotation);
+	int left_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + left_position));
+	if (left_voxel_type != VoxelWorldData::BASICS) {
+		int left_material_id = basics_preset->get_left();
 		Array arrays = get_mesh_array(left_material_id);
-		BasicsPerset::draw_mesh(BasicsPerset::LEFT, arrays, local_position, rotation);
+		BasicsPreset::build_mesh(BasicsPreset::LEFT, arrays, local_position, rotation);
 	}
 
-	Vector3i right_position = basics_position + voxel_world->get_voxel_direction(Vector3(1, 0, 0), rotation);
-	int right_voxel_type = VoxelWorld::get_voxel_type(voxel_world->get_voxel(right_position));
-	if (right_voxel_type != VoxelWorld::BASICS) {
-		int right_material_id = basics_perset->get_material(BasicsPerset::RIGHT);
+	Vector3i right_position = VoxelWorldData::get_voxel_direction(Vector3(1, 0, 0), rotation);
+	int right_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + right_position));
+	if (right_voxel_type != VoxelWorldData::BASICS) {
+		int right_material_id = basics_preset->get_right();
 		Array arrays = get_mesh_array(right_material_id);
-		BasicsPerset::draw_mesh(BasicsPerset::RIGHT, arrays, local_position, rotation);
+		BasicsPreset::build_mesh(BasicsPreset::RIGHT, arrays, local_position, rotation);
 	}
 }
 
-void Chunk::build_mesh(const Ref<MeshPerset>& mesh_perset, const Vector3i& local_position, const Vector3i& rotation)
+void Chunk::build_mesh(const Ref<VoxelWorldData>& voxel_world_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation)
 {
-	Vector3i basics_position = local_position + chunk_position * voxel_world->get_chunk_size();
+	Ref<Mesh> mesh = mesh_preset->get_mesh();
 
-	Ref<Mesh> mesh = mesh_perset->get_mesh();
+	TypedArray<int> materials = mesh_preset->get_materials();
 	for (int i = 0; i < mesh->get_surface_count(); i++)
 	{
-		int material_id = mesh_perset->get_material(i);
+		int material_id = materials[i];
 		Array arrays = get_mesh_array(material_id);
-		Array mesh_arrays = mesh->surface_get_arrays(i);
-
-		Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
-		Array array_normal = arrays[Mesh::ARRAY_NORMAL];
-		Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
-		array_vertex.append_array(mesh_arrays[Mesh::ARRAY_VERTEX]);
-		array_normal.append_array(mesh_arrays[Mesh::ARRAY_NORMAL]);
-		array_tex_uv.append_array(mesh_arrays[Mesh::ARRAY_TEX_UV]);
+		mesh_preset->build_mesh(arrays, i, local_position, rotation);
 	}
 }
 
@@ -114,7 +106,6 @@ void Chunk::_notification(int p_what) {
 }
 
 Chunk::Chunk() {
-
 	this->voxel_world = nullptr;
 	this->chunk_position = Vector3i(0, 0, 0);
 
@@ -132,13 +123,13 @@ Chunk::Chunk() {
 	add_child(collision);
 	add_child(mesh_instance);
 
-	UtilityFunctions::print("Chunk");
-	UtilityFunctions::print(Engine::get_singleton()->is_editor_hint());
+	//UtilityFunctions::print("Chunk");
+	//UtilityFunctions::print(Engine::get_singleton()->is_editor_hint());
 }
 
 Chunk::~Chunk() {
-	UtilityFunctions::print("~Chunk");
-	UtilityFunctions::print(Engine::get_singleton()->is_editor_hint());
+	//UtilityFunctions::print("~Chunk");
+	//UtilityFunctions::print(Engine::get_singleton()->is_editor_hint());
 }
 
 void Chunk::set_chunk_position(const Vector3i& value) {
@@ -151,7 +142,12 @@ Vector3i Chunk::get_chunk_position() const {
 
 void Chunk::set_voxel(const Vector3i& local_position, const Voxel& voxel)
 {
-	Vector3i chunk_size = voxel_world->get_chunk_size();
+	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
+	if (voxel_world_data.is_null())
+	{
+		return;
+	}
+	Vector3i chunk_size = voxel_world_data->get_chunk_size();
 	if (voxel_world->get_isolated() == true) {
 		if (local_position.x < 0 || local_position.x >= chunk_size.x ||
 			local_position.y < 0 || local_position.y >= chunk_size.y ||
@@ -159,12 +155,17 @@ void Chunk::set_voxel(const Vector3i& local_position, const Voxel& voxel)
 			return;
 		}
 	}
-	voxel_world->set_voxel(local_position + chunk_position * voxel_world->get_chunk_size(), voxel);
+	voxel_world_data->set_voxel(local_position + chunk_position * voxel_world_data->get_chunk_size(), voxel);
 }
 
 Voxel Chunk::get_voxel(const Vector3i& local_position) const
 {
-	Vector3i chunk_size = voxel_world->get_chunk_size();
+	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
+	if (voxel_world_data.is_null())
+	{
+		return 0;
+	}
+	Vector3i chunk_size = voxel_world_data->get_chunk_size();
 	if (voxel_world->get_isolated() == true) {
 		if (local_position.x < 0 || local_position.x >= chunk_size.x ||
 			local_position.y < 0 || local_position.y >= chunk_size.y ||
@@ -172,7 +173,7 @@ Voxel Chunk::get_voxel(const Vector3i& local_position) const
 			return 0;
 		}
 	}
-	return voxel_world->get_voxel(local_position + chunk_position * voxel_world->get_chunk_size());
+	return voxel_world_data->get_voxel(local_position + chunk_position * voxel_world_data->get_chunk_size());
 }
 
 Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& normal) const
@@ -200,13 +201,21 @@ Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& no
 }
 
 void Chunk::generate_mesh() {
-	Array material_persets = voxel_world->get_material_persets();
-	Array basics_persets = voxel_world->get_basics_persets();
+	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
+	if (voxel_world_data.is_null())
+	{
+		return;
+	}
+
+	Array material_presets = voxel_world_data->get_material_presets();
+	Array basics_presets = voxel_world_data->get_basics_presets();
+	Array mesh_presets = voxel_world_data->get_mesh_presets();
+	Array device_presets = voxel_world_data->get_device_presets();
 
 	mesh_arrays.clear();
-	mesh_arrays.resize(material_persets.size());
+	mesh_arrays.resize(material_presets.size());
 
-	Vector3i chunk_size = voxel_world->get_chunk_size();
+	Vector3i chunk_size = voxel_world_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -215,30 +224,30 @@ void Chunk::generate_mesh() {
 			{
 				Vector3i local_position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(local_position);
-				int type = VoxelWorld::get_voxel_type(voxel);
-				if (type == VoxelWorld::EMPTY)
+				int type = VoxelWorldData::get_voxel_type(voxel);
+				if (type == VoxelWorldData::EMPTY)
 				{
 					continue;
 				}
-				int id = VoxelWorld::get_voxel_id(voxel);
-				Vector3i rotation = VoxelWorld::flag_to_rotation(VoxelWorld::get_voxel_flag(voxel));
+				int id = VoxelWorldData::get_voxel_id(voxel);
+				Vector3i rotation = VoxelWorldData::flag_to_rotation(VoxelWorldData::get_voxel_flag(voxel));
 				switch (type)
 				{
-				case VoxelWorld::BASICS:
+				case VoxelWorldData::BASICS:
 				{
-					Ref<BasicsPerset> basics_perset = basics_persets[id];
-					build_basics(basics_perset, local_position, rotation);
+					Ref<BasicsPreset> basics_preset = basics_presets[id];
+					build_basics(voxel_world_data, basics_preset, local_position, rotation);
 					break;
 				}
-				case VoxelWorld::MESH:
+				case VoxelWorldData::MESH:
 				{
-					Ref<MeshPerset> mesh_perset = basics_persets[id];
-					build_mesh(mesh_perset, local_position, rotation);
+					Ref<MeshPreset> mesh_preset = mesh_presets[id];
+					build_mesh(voxel_world_data, mesh_preset, local_position, rotation);
 					break;
 				}
-				case VoxelWorld::DEVICE:
+				case VoxelWorldData::DEVICE:
 				{
-					Ref<DevicePerset> mesh_perset = basics_persets[id];
+					Ref<DevicePreset> mesh_preset = device_presets[id];
 					break;
 				}
 				}
@@ -254,7 +263,7 @@ void Chunk::generate_mesh() {
 			arrays[ArrayMesh::ARRAY_VERTEX] = PackedVector3Array((Array)arrays[ArrayMesh::ARRAY_VERTEX]);
 			arrays[ArrayMesh::ARRAY_NORMAL] = PackedVector3Array((Array)arrays[ArrayMesh::ARRAY_NORMAL]);
 			arrays[ArrayMesh::ARRAY_TEX_UV] = PackedVector2Array((Array)arrays[ArrayMesh::ARRAY_TEX_UV]);
-			Ref<ShaderMaterial> material = cast_to<MaterialPerset>(material_persets[i])->get_shader_material();
+			Ref<ShaderMaterial> material = cast_to<MaterialPreset>(material_presets[i])->get_shader_material();
 			mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
 			mesh->surface_set_material(mesh->get_surface_count() - 1, material);
 		}
@@ -273,9 +282,14 @@ void Chunk::generate_collider() {
 }
 
 void Chunk::generate_trigger() {
-	PackedVector3Array trigger_faces;
+	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
+	if (voxel_world_data.is_null())
+	{
+		return;
+	}
 
-	Vector3i chunk_size = voxel_world->get_chunk_size();
+	PackedVector3Array trigger_faces;
+	Vector3i chunk_size = voxel_world_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -283,8 +297,8 @@ void Chunk::generate_trigger() {
 			for (int z = 0; z < chunk_size.z; z++)
 			{
 				Vector3i local_position = Vector3i(x, y, z);
-				int type = VoxelWorld::get_voxel_type(get_voxel(local_position));
-				if (type == VoxelWorld::EMPTY || VoxelWorld::BASICS) {
+				int type = VoxelWorldData::get_voxel_type(get_voxel(local_position));
+				if (type == VoxelWorldData::EMPTY || VoxelWorldData::BASICS) {
 					continue;
 				}
 				Vector3 vertexs[] = {
@@ -297,14 +311,14 @@ void Chunk::generate_trigger() {
 					Vector3(-0.5, 0.5, 0.5) + Vector3(local_position),
 					Vector3(-0.5, -0.5, 0.5) + Vector3(local_position),
 				};
-				int up_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, 1, 0)));
-				int down_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, -1, 0)));
-				int front_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, -1)));
-				int back_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, 1)));
-				int left_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(-1, 0, 0)));
-				int right_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(1, 0, 0)));
+				int up_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + Vector3i(0, 1, 0)));
+				int down_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + Vector3i(0, -1, 0)));
+				int front_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, -1)));
+				int back_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, 1)));
+				int left_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + Vector3i(-1, 0, 0)));
+				int right_voxel_type = VoxelWorldData::get_voxel_type(get_voxel(local_position + Vector3i(1, 0, 0)));
 
-				if (up_voxel_type == VoxelWorld::EMPTY)
+				if (up_voxel_type == VoxelWorldData::EMPTY)
 				{
 					trigger_faces.push_back(vertexs[2]);
 					trigger_faces.push_back(vertexs[1]);
@@ -313,7 +327,7 @@ void Chunk::generate_trigger() {
 					trigger_faces.push_back(vertexs[5]);
 					trigger_faces.push_back(vertexs[6]);
 				}
-				if (down_voxel_type == VoxelWorld::EMPTY)
+				if (down_voxel_type == VoxelWorldData::EMPTY)
 				{
 					trigger_faces.push_back(vertexs[0]);
 					trigger_faces.push_back(vertexs[3]);
@@ -322,7 +336,7 @@ void Chunk::generate_trigger() {
 					trigger_faces.push_back(vertexs[7]);
 					trigger_faces.push_back(vertexs[4]);
 				}
-				if (front_voxel_type == VoxelWorld::EMPTY)
+				if (front_voxel_type == VoxelWorldData::EMPTY)
 				{
 					trigger_faces.push_back(vertexs[1]);
 					trigger_faces.push_back(vertexs[2]);
@@ -331,7 +345,7 @@ void Chunk::generate_trigger() {
 					trigger_faces.push_back(vertexs[3]);
 					trigger_faces.push_back(vertexs[0]);
 				}
-				if (back_voxel_type == VoxelWorld::EMPTY)
+				if (back_voxel_type == VoxelWorldData::EMPTY)
 				{
 					trigger_faces.push_back(vertexs[6]);
 					trigger_faces.push_back(vertexs[5]);
@@ -340,7 +354,7 @@ void Chunk::generate_trigger() {
 					trigger_faces.push_back(vertexs[4]);
 					trigger_faces.push_back(vertexs[7]);
 				}
-				if (left_voxel_type == VoxelWorld::EMPTY)
+				if (left_voxel_type == VoxelWorldData::EMPTY)
 				{
 					trigger_faces.push_back(vertexs[2]);
 					trigger_faces.push_back(vertexs[6]);
@@ -349,7 +363,7 @@ void Chunk::generate_trigger() {
 					trigger_faces.push_back(vertexs[7]);
 					trigger_faces.push_back(vertexs[3]);
 				}
-				if (right_voxel_type == VoxelWorld::EMPTY)
+				if (right_voxel_type == VoxelWorldData::EMPTY)
 				{
 					trigger_faces.push_back(vertexs[5]);
 					trigger_faces.push_back(vertexs[1]);

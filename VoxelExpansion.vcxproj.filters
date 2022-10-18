@@ -24,19 +24,22 @@
     <ClInclude Include="chunk.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="basics_perset.h">
+    <ClInclude Include="basics_preset.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="material_perset.h">
+    <ClInclude Include="material_preset.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="mesh_perset.h">
+    <ClInclude Include="mesh_preset.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="perset.h">
+    <ClInclude Include="preset.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="device_perset.h">
+    <ClInclude Include="device_preset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="voxel_world_data.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,19 +53,22 @@
     <ClCompile Include="chunk.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="basics_perset.cpp">
+    <ClCompile Include="basics_preset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="material_perset.cpp">
+    <ClCompile Include="material_preset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="mesh_perset.cpp">
+    <ClCompile Include="mesh_preset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="perset.cpp">
+    <ClCompile Include="preset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="device_perset.cpp">
+    <ClCompile Include="device_preset.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="voxel_world_data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

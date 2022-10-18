@@ -19,13 +19,14 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 		return;
 	}
 	ClassDB::register_class<VoxelWorld>();
+	ClassDB::register_class<VoxelWorldData>();
 	ClassDB::register_class<Chunk>();
 
-	ClassDB::register_class<Perset>();
-	ClassDB::register_class<MaterialPerset>();
-	ClassDB::register_class<BasicsPerset>();
-	ClassDB::register_class<MeshPerset>();
-	ClassDB::register_class<DevicePerset>();
+	ClassDB::register_class<Preset>();
+	ClassDB::register_class<MaterialPreset>();
+	ClassDB::register_class<BasicsPreset>();
+	ClassDB::register_class<MeshPreset>();
+	ClassDB::register_class<DevicePreset>();
 }
 
 void uninitialize_voxel_module(ModuleInitializationLevel p_level)
