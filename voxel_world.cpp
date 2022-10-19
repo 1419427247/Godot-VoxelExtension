@@ -47,6 +47,7 @@ VoxelWorld::VoxelWorld()
 
 VoxelWorld::~VoxelWorld()
 {
+
 }
 
 void VoxelWorld::set_voxel_world_data(const Ref<VoxelWorldData>& value)
