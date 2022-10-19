@@ -40,6 +40,8 @@ void BasicsPreset::_bind_methods()
 
 BasicsPreset::BasicsPreset()
 {
+	build_mesh = true;
+	build_collider = true;
 	up = 0;
 	down = 0;
 	front = 0;

@@ -17,6 +17,8 @@ class BasicsPreset : public Preset
 		RIGHT = 5,
 	};
 private:
+	bool build_mesh;
+	bool build_collider;
 	int up;
 	int down;
 	int front;

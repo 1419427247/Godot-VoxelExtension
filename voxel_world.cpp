@@ -52,6 +52,10 @@ VoxelWorld::~VoxelWorld()
 void VoxelWorld::set_voxel_world_data(const Ref<VoxelWorldData>& value)
 {
 	voxel_world_data = value;
+	//for (size_t i = 0; i < length; i++)
+	//{
+
+	//}
 }
 
 Ref<VoxelWorldData> VoxelWorld::get_voxel_world_data() const

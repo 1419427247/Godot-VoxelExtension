@@ -8,6 +8,7 @@ class VoxelWorld : public Node3D
 	GDCLASS(VoxelWorld, Node3D);
 private:
 	Ref<VoxelWorldData> voxel_world_data;
+	Dictionary devices;
 	bool isolated;
 	Timer* timer;
 protected:
