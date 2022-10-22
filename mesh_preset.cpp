@@ -9,8 +9,8 @@ void MeshPreset::_bind_methods() {
 
 	ClassDB::bind_static_method("MeshPreset", D_METHOD("instantiate", "uuid", "name", "mesh"), &MeshPreset::instantiate);
 
-	ClassDB::add_property("MeshPreset", PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
-	ClassDB::add_property("MeshPreset", PropertyInfo(Variant::ARRAY, "material", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::INT) + "/" + String::num_int64(PROPERTY_HINT_NONE) + ":"), "set_materials", "get_materials");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "material", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::INT) + "/" + String::num_int64(PROPERTY_HINT_NONE) + ":"), "set_materials", "get_materials");
 }
 
 MeshPreset::MeshPreset() {
@@ -22,6 +22,52 @@ MeshPreset::~MeshPreset() {
 
 void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 	mesh = value;
+	if (value.is_null())
+	{
+		return;
+	}
+	mesh_arrays.resize(mesh->get_surface_count());
+	for (size_t i = 0; i < mesh->get_surface_count(); i++)
+	{
+		Array mesh_surface_arrays = mesh->surface_get_arrays(i);
+
+		PackedVector3Array packed_array_vertex = mesh_surface_arrays[Mesh::ARRAY_VERTEX];
+		PackedVector2Array packed_array_tex_uv = mesh_surface_arrays[Mesh::ARRAY_TEX_UV];
+		PackedInt32Array packed_array_index = mesh_surface_arrays[Mesh::ARRAY_INDEX];
+
+		Array surface;
+		surface.resize(Mesh::ARRAY_MAX);
+
+		Array surface_vertex_array;
+		Array surface_normal_array;
+		Array surface_tex_uv_array;
+
+		for (size_t i = 0; i < packed_array_index.size(); i += 3)
+		{
+			Vector3 vertex_a = packed_array_vertex[packed_array_index[i]];
+			Vector3 vertex_b = packed_array_vertex[packed_array_index[i + 1]];
+			Vector3 vertex_c = packed_array_vertex[packed_array_index[i + 2]];
+
+			surface_vertex_array.push_back(vertex_a);
+			surface_vertex_array.push_back(vertex_b);
+			surface_vertex_array.push_back(vertex_c);
+
+			Vector3 normal = Plane(vertex_a, vertex_b, vertex_c).get_normal();
+
+			surface_normal_array.push_back(normal);
+			surface_normal_array.push_back(normal);
+			surface_normal_array.push_back(normal);
+
+			surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i]]);
+			surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i + 1]]);
+			surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i + 2]]);
+		}
+		surface[Mesh::ARRAY_VERTEX] = surface_vertex_array;
+		surface[Mesh::ARRAY_NORMAL] = surface_normal_array;
+		surface[Mesh::ARRAY_TEX_UV] = surface_tex_uv_array;
+
+		mesh_arrays[i] = surface;
+	}
 }
 
 Ref<Mesh> MeshPreset::get_mesh() const
@@ -37,68 +83,26 @@ TypedArray<int> MeshPreset::get_materials() const {
 	return materials;
 }
 
-void MeshPreset::build_mesh(const Array& arrays, const int surface_index, const Vector3& position, const Vector3& rotation)
+void MeshPreset::build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation)
 {
-	Array mesh_arrays = mesh->surface_get_arrays(surface_index);
-
 	Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
 	Array array_normal = arrays[Mesh::ARRAY_NORMAL];
 	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
 
-	PackedVector3Array packed_array_vertex = mesh_arrays[Mesh::ARRAY_VERTEX];
-	PackedVector2Array packed_array_tex_uv = mesh_arrays[Mesh::ARRAY_TEX_UV];
+	Array surface = mesh_arrays[surface_index];
 
-	for (size_t i = 0; i < packed_array_vertex.size(); i++)
+	Array surface_vertex_array = surface[Mesh::ARRAY_VERTEX];
+	Array surface_normal_array = surface[Mesh::ARRAY_NORMAL];
+	Array surface_tex_uv_array = surface[Mesh::ARRAY_TEX_UV];
+
+	for (size_t i = 0; i < surface_vertex_array.size(); i++)
 	{
-		packed_array_vertex[i] = rotate_vertex(packed_array_vertex[i], rotation) + position;
+		array_vertex.push_back(rotate_vertex(surface_vertex_array[i], rotation) + position);
+		//array_normal.push_back(surface_normal_array[i]);
+		//array_tex_uv.push_back(surface_tex_uv_array[i]);
 	}
-
-	if (mesh_arrays[Mesh::ARRAY_INDEX].get_type() == Variant::Type::PACKED_INT32_ARRAY)
-	{
-		PackedInt32Array packed_array_index = mesh_arrays[Mesh::ARRAY_INDEX];
-		for (size_t i = 0; i < packed_array_index.size(); i += 3)
-		{
-			Vector3 vertex_a = packed_array_vertex[packed_array_index[i]];
-			Vector3 vertex_b = packed_array_vertex[packed_array_index[i + 1]];
-			Vector3 vertex_c = packed_array_vertex[packed_array_index[i + 2]];
-
-			array_vertex.push_back(vertex_a);
-			array_vertex.push_back(vertex_b);
-			array_vertex.push_back(vertex_c);
-
-			Vector3 normal = get_triangle_normal(vertex_a, vertex_b, vertex_c);
-
-			array_normal.push_back(normal);
-			array_normal.push_back(normal);
-			array_normal.push_back(normal);
-		}
-		for (size_t i = 0; i < packed_array_index.size(); i++)
-		{
-			array_tex_uv.push_back(packed_array_tex_uv[packed_array_index[i]]);
-		}
-	}
-	else {
-		for (size_t i = 0; i < packed_array_vertex.size(); i += 3)
-		{
-			Vector3 vertex_a = packed_array_vertex[i];
-			Vector3 vertex_b = packed_array_vertex[i + 1];
-			Vector3 vertex_c = packed_array_vertex[i + 2];
-
-			array_vertex.push_back(vertex_a);
-			array_vertex.push_back(vertex_b);
-			array_vertex.push_back(vertex_c);
-
-			Vector3 normal = get_triangle_normal(vertex_a, vertex_b, vertex_c);
-
-			array_normal.push_back(normal);
-			array_normal.push_back(normal);
-			array_normal.push_back(normal);
-		}
-		for (size_t i = 0; i < packed_array_tex_uv.size(); i++)
-		{
-			array_tex_uv.push_back(packed_array_tex_uv[i]);
-		}
-	}
+	array_normal.append_array(surface_normal_array);
+	array_tex_uv.append_array(surface_tex_uv_array);
 }
 
 Ref<MeshPreset> MeshPreset::instantiate(const String& uuid, const String& name, const Ref<Mesh>& mesh, Array materials) {
@@ -114,13 +118,8 @@ Ref<MeshPreset> MeshPreset::instantiate(const String& uuid, const String& name, 
 Vector3 MeshPreset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
 {
 	Vector3 result = vertex;
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
 	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
 	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
 	return result;
-}
-
-Vector3 MeshPreset::get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c)
-{
-	return (c - a).cross(b - a);
 }

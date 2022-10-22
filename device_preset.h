@@ -4,6 +4,7 @@
 #include "preset.h"
 class DevicePreset : public Preset
 {
+	GDCLASS(DevicePreset, Preset);
 private:
 	Ref<PackedScene> packed_scene;
 protected:

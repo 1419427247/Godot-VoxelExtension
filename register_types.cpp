@@ -8,7 +8,6 @@ extern "C" {
 		init_obj.register_initializer(initialize_voxel_module);
 		init_obj.register_terminator(uninitialize_voxel_module);
 		init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
-
 		return init_obj.init();
 	}
 }
@@ -34,5 +33,4 @@ void uninitialize_voxel_module(ModuleInitializationLevel p_level)
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-
 }

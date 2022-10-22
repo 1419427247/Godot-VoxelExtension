@@ -9,7 +9,7 @@ void MaterialPreset::_bind_methods() {
 
 	ClassDB::bind_static_method("MaterialPreset", D_METHOD("instantiate", "uuid", "name", "shader", "parameter"), &MaterialPreset::instantiate);
 
-	ClassDB::add_property("MaterialPreset", PropertyInfo(Variant::OBJECT, "shader_material", PROPERTY_HINT_RESOURCE_TYPE, "ShaderMaterial"), "set_shader_material", "get_shader_material");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shader_material", PROPERTY_HINT_RESOURCE_TYPE, "ShaderMaterial"), "set_shader_material", "get_shader_material");
 }
 
 MaterialPreset::MaterialPreset() {

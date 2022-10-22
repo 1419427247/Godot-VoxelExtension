@@ -7,7 +7,12 @@
 #include "mesh_preset.h"
 #include "device_preset.h"
 
-typedef int Voxel;
+
+//type : 2
+//id : 10
+//flag : 20
+
+typedef unsigned int Voxel;
 class VoxelWorldData : public Resource
 {
 	GDCLASS(VoxelWorldData, Resource);
@@ -19,12 +24,15 @@ class VoxelWorldData : public Resource
 		DEVICE = 3,
 	};
 private:
+	Vector3i world_size;
+protected:
+	static void _bind_methods();
+public:
 	Vector3i chunk_size;
 	Vector3i chunk_count;
 
-	Vector3i world_size;
+	PackedInt32Array voxels;
 
-	PackedByteArray voxels;
 	Dictionary voxels_information;
 
 	Dictionary preset_map;
@@ -33,9 +41,7 @@ private:
 	TypedArray<BasicsPreset> basics_presets;
 	TypedArray<MeshPreset> mesh_presets;
 	TypedArray<DevicePreset> device_presets;
-protected:
-	static void _bind_methods();
-public:
+
 	VoxelWorldData();
 	~VoxelWorldData();
 
@@ -47,8 +53,8 @@ public:
 
 	Vector3i get_world_size() const;
 
-	void set_voxels(const PackedByteArray& value);
-	PackedByteArray get_voxels() const;
+	void set_voxels(const PackedInt32Array& value);
+	PackedInt32Array get_voxels() const;
 
 	void set_material_presets(const TypedArray <MaterialPreset>& value);
 	TypedArray <MaterialPreset> get_material_presets();
@@ -64,20 +70,6 @@ public:
 
 	int register_preset(const Ref<Preset>& value);
 
-	void set_voxel(const Vector3i& position, const Voxel& voxel);
-	Voxel get_voxel(const Vector3i& position) const;
-
-	static Vector3i get_voxel_direction(const Vector3& direction, const Vector3i& rotation);
-	static int get_voxel_type(const Voxel& voxel);
-	static int get_voxel_id(const Voxel& voxel);
-	static int get_voxel_flag(const Voxel& voxel);
-
-	static Vector3i flag_to_rotation(const int& flag);
-
-	static Voxel empty_voxel();
-	static Voxel basics_voxel(const int& id, const Vector3i& rotation);
-	static Voxel mesh_voxel(const int& id, const Vector3i& rotation);
-	static Voxel device_voxel(const int& id);
 };
 #endif // !VOXEL_WORLD_DATA_H
 

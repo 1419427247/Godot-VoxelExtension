@@ -8,8 +8,8 @@ void Preset::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_name", "value"), &Preset::set_name);
 	ClassDB::bind_method(D_METHOD("get_name"), &Preset::get_name);
 
-	ClassDB::add_property("Preset", PropertyInfo(Variant::STRING, "uuid"), "set_uuid", "get_uuid");
-	ClassDB::add_property("Preset", PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "uuid"), "set_uuid", "get_uuid");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
 }
 
 Preset::Preset()

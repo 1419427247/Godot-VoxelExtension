@@ -17,8 +17,6 @@ class BasicsPreset : public Preset
 		RIGHT = 5,
 	};
 private:
-	bool build_mesh;
-	bool build_collider;
 	int up;
 	int down;
 	int front;
@@ -47,10 +45,7 @@ public:
 	static Ref<BasicsPreset> instantiate(const String& uuid, const String& name, const Dictionary& materials);
 
 	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
-	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
 	static void build_mesh(const int& mesh_key, const Array& arrays, const Vector3& position, const Vector3& rotation);
 };
-
-VARIANT_ENUM_CAST(BasicsPreset, MeshKey);
 
 #endif // !BASIC_PRESET_H

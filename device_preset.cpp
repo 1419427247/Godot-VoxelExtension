@@ -7,7 +7,7 @@ void DevicePreset::_bind_methods()
 
     ClassDB::bind_static_method("DevicePreset", D_METHOD("instantiate", "uuid", "name", "packed_scene"), &DevicePreset::instantiate);
 
-    ClassDB::add_property("DevicePreset", PropertyInfo(Variant::OBJECT, "packed_scene", PROPERTY_HINT_RESOURCE_TYPE, "PackedScene"), "set_packed_scene", "get_packed_scene");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "packed_scene", PROPERTY_HINT_RESOURCE_TYPE, "PackedScene"), "set_packed_scene", "get_packed_scene");
 }
 
 DevicePreset::DevicePreset()

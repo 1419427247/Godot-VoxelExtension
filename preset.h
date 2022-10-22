@@ -19,11 +19,14 @@
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/engine.hpp>
-#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/typed_array.hpp>
+#include <godot_cpp/variant/plane.hpp>
 #include <godot_cpp/godot.hpp>
 #include <godot/gdnative_interface.h>
+#include <godot_cpp/templates/hash_map.hpp>
+
 using namespace godot;
 
 class Preset : public Resource

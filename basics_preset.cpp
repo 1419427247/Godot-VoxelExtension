@@ -21,27 +21,17 @@ void BasicsPreset::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_right"), &BasicsPreset::get_right);
 
 	ClassDB::bind_static_method("BasicsPreset", D_METHOD("instantiate", "uuid", "name", "materials"), &BasicsPreset::instantiate);
-	ClassDB::bind_static_method("BasicsPreset", D_METHOD("get_triangle_normal", "a", "b", "c"), &BasicsPreset::get_triangle_normal);
 
-	ClassDB::add_property("BasicsPreset", PropertyInfo(Variant::INT, "up"), "set_up", "get_up");
-	ClassDB::add_property("BasicsPreset", PropertyInfo(Variant::INT, "down"), "set_down", "get_down");
-	ClassDB::add_property("BasicsPreset", PropertyInfo(Variant::INT, "front"), "set_front", "get_front");
-	ClassDB::add_property("BasicsPreset", PropertyInfo(Variant::INT, "back"), "set_back", "get_back");
-	ClassDB::add_property("BasicsPreset", PropertyInfo(Variant::INT, "left"), "set_left", "get_left");
-	ClassDB::add_property("BasicsPreset", PropertyInfo(Variant::INT, "right"), "set_right", "get_right");
-
-	BIND_ENUM_CONSTANT(UP);
-	BIND_ENUM_CONSTANT(DOWN);
-	BIND_ENUM_CONSTANT(FRONT);
-	BIND_ENUM_CONSTANT(BACK);
-	BIND_ENUM_CONSTANT(LEFT);
-	BIND_ENUM_CONSTANT(RIGHT);
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "up"), "set_up", "get_up");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "down"), "set_down", "get_down");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "front"), "set_front", "get_front");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "back"), "set_back", "get_back");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "left"), "set_left", "get_left");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "right"), "set_right", "get_right");
 }
 
 BasicsPreset::BasicsPreset()
 {
-	build_mesh = true;
-	build_collider = true;
 	up = 0;
 	down = 0;
 	front = 0;
@@ -121,12 +111,12 @@ Ref<BasicsPreset> BasicsPreset::instantiate(const String& uuid, const String& na
 	basics_preset->uuid = uuid;
 	basics_preset->name = name;
 
-	basics_preset->set_up((int)materials.get(UP, 0));
-	basics_preset->set_down((int)materials.get(DOWN, 0));
-	basics_preset->set_front((int)materials.get(FRONT, 0));
-	basics_preset->set_back((int)materials.get(BACK, 0));
-	basics_preset->set_left((int)materials.get(LEFT, 0));
-	basics_preset->set_right((int)materials.get(RIGHT, 0));
+	basics_preset->set_up((int)materials.get("up", 0));
+	basics_preset->set_down((int)materials.get("down", 0));
+	basics_preset->set_front((int)materials.get("front", 0));
+	basics_preset->set_back((int)materials.get("back", 0));
+	basics_preset->set_left((int)materials.get("left", 0));
+	basics_preset->set_right((int)materials.get("right", 0));
 
 	return basics_preset;
 }
@@ -181,8 +171,8 @@ void BasicsPreset::build_mesh(const int& mesh_key,const Array& arrays, const Vec
 		array_vertex.push_back(rotate_vertex(vertexs[i], rotation) + position);
 	}
 
-	Vector3 normal_1 = get_triangle_normal(vertexs[0], vertexs[1], vertexs[2]);
-	Vector3 normal_2 = get_triangle_normal(vertexs[3], vertexs[4], vertexs[5]);
+	Vector3 normal_1 = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
+	Vector3 normal_2 = Plane(vertexs[3], vertexs[4], vertexs[5]).get_normal();
 
 	array_normal.push_back(normal_1);
 	array_normal.push_back(normal_1);
@@ -200,13 +190,8 @@ void BasicsPreset::build_mesh(const int& mesh_key,const Array& arrays, const Vec
 Vector3 BasicsPreset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
 {
 	Vector3 result = vertex;
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
 	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
 	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
 	return result;
-}
-
-Vector3 BasicsPreset::get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c)
-{
-	return (c - a).cross(b - a);
 }

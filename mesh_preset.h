@@ -2,8 +2,6 @@
 #define MESH_PRESET_H
 
 #include "preset.h"
-
-
 class MeshPreset : public Preset
 {
 	GDCLASS(MeshPreset, Preset);
@@ -12,6 +10,8 @@ protected:
 private:
 	Ref<Mesh> mesh;
 	TypedArray<int> materials;
+
+	Array mesh_arrays;
 public:
 	MeshPreset();
 	~MeshPreset();
@@ -22,12 +22,10 @@ public:
 	void set_materials(const TypedArray<int>& value);
 	TypedArray<int> get_materials() const;
 
-
-	void build_mesh(const Array& arrays, const int surface_index, const Vector3& position, const Vector3& rotation);
+	void build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation);
 
 	static Ref<MeshPreset> instantiate(const String& uuid, const String& name, const Ref<Mesh>& mesh, Array materials);
 	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
-	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
 };
 
 #endif // !MESH_PRESET_H
