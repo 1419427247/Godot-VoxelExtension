@@ -1,9 +1,7 @@
 #ifndef REGISTER_TYPES_H
 #define REGISTER_TYPES_H
 
-
-#include "voxel_world.h"
-#include "chunk.h"
+#include "preset.h"
 
 using namespace godot;
 

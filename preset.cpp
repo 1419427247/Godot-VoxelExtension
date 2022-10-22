@@ -10,6 +10,7 @@ void Preset::_bind_methods()
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "uuid"), "set_uuid", "get_uuid");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "script", PROPERTY_HINT_RESOURCE_TYPE, "Script"), "set_script", "get_script");
 }
 
 Preset::Preset()
@@ -38,4 +39,14 @@ void Preset::set_name(const String& value)
 String Preset::get_name() const
 {
 	return name;
+}
+
+void Preset::set_script(const Ref<Script>& value)
+{
+	script = value;
+}
+
+Ref<Script> Preset::get_script() const
+{
+	return script;
 }

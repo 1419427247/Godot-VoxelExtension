@@ -1,5 +1,18 @@
 #include "device_preset.h"
 
+void Device::_bind_methods()
+{
+}
+
+Device::Device()
+{
+}
+
+Device::~Device()
+{
+}
+
+
 void DevicePreset::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("set_packed_scene", "value"), &DevicePreset::set_packed_scene);

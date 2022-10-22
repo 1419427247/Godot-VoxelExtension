@@ -27,7 +27,7 @@
     <ClInclude Include="basics_preset.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="material_preset.h">
+    <ClInclude Include="custom_material.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="mesh_preset.h">
@@ -56,7 +56,7 @@
     <ClCompile Include="basics_preset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="material_preset.cpp">
+    <ClCompile Include="custom_material.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="mesh_preset.cpp">

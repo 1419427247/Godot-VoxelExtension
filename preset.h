@@ -20,6 +20,7 @@
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/mutex.hpp>
+#include <godot_cpp/classes/script.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/typed_array.hpp>
 #include <godot_cpp/variant/plane.hpp>
@@ -27,7 +28,10 @@
 #include <godot/gdnative_interface.h>
 #include <godot_cpp/templates/hash_map.hpp>
 
+
 using namespace godot;
+
+typedef unsigned int Voxel;
 
 class Preset : public Resource
 {
@@ -37,6 +41,7 @@ private:
 protected:
 	String uuid;
 	String name;
+	Ref<Script> script;
 	static void _bind_methods();
 public:
 	Preset();
@@ -46,6 +51,14 @@ public:
 
 	void set_name(const String& value);
 	String get_name() const;
+
+	void set_script(const Ref<Script>& value);
+	Ref<Script> get_script() const;
+
+	virtual void _on_voxel_new(const Voxel& voxel, const Vector3i& position) const{
+	}
+	virtual void _on_voxel_delete(const Voxel& voxel, const Vector3i& position) const {
+	}
 };
 
 #endif // !PRESET_H

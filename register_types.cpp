@@ -1,5 +1,5 @@
 #include"register_types.h"
-
+#include "chunk.h"
 
 extern "C" {
 	GDNativeBool GDN_EXPORT voxel_library_init(const GDNativeInterface* p_interface, const GDNativeExtensionClassLibraryPtr p_library, GDNativeInitialization* r_initialization) {
@@ -20,9 +20,10 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 	ClassDB::register_class<VoxelWorld>();
 	ClassDB::register_class<VoxelWorldData>();
 	ClassDB::register_class<Chunk>();
+	ClassDB::register_class<Device>();
 
 	ClassDB::register_class<Preset>();
-	ClassDB::register_class<MaterialPreset>();
+	ClassDB::register_class<CustomMaterial>();
 	ClassDB::register_class<BasicsPreset>();
 	ClassDB::register_class<MeshPreset>();
 	ClassDB::register_class<DevicePreset>();

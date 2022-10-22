@@ -159,16 +159,18 @@ static Vector3* brick_vertexs[] = {
 	brick_left_vertexs,
 	brick_right_vertexs
 };
+
 void BasicsPreset::build_mesh(const int& mesh_key,const Array& arrays, const Vector3& position, const Vector3& rotation)
 {
-	Vector3* vertexs = brick_vertexs[mesh_key];
+	Vector3 vertexs[6];
 	Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
 	Array array_normal = arrays[Mesh::ARRAY_NORMAL];
 	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
 
 	for (int i = 0; i < 6; i++)
 	{
-		array_vertex.push_back(rotate_vertex(vertexs[i], rotation) + position);
+		vertexs[i] = rotate_vertex(brick_vertexs[mesh_key][i], rotation) + position;
+		array_vertex.push_back(vertexs[i]);
 	}
 
 	Vector3 normal_1 = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();

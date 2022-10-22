@@ -3,12 +3,6 @@
 
 #include "voxel_world.h"
 
-struct Device
-{
-	Node3D* node = nullptr;
-	Vector3i position;
-};
-
 class Chunk : public Node3D
 {
 	GDCLASS(Chunk, Node3D);
@@ -44,10 +38,8 @@ public:
 
 	Vector3i get_voxel_local_position(const Vector3& point, const Vector3& normal) const;
 
-	Ref<Mesh> generate_mesh();
-	Ref<ConcavePolygonShape3D> generate_collider();
+	Ref<ArrayMesh> generate_mesh();
 	Ref<ConcavePolygonShape3D> generate_trigger();
-	void refresh_device();
 };
 
 #endif

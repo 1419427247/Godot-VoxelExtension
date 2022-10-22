@@ -1,18 +1,16 @@
 #ifndef VOXEL_WORLD_DATA_H
 #define VOXEL_WORLD_DATA_H
-#include "preset.h"
 
-#include "material_preset.h"
 #include "basics_preset.h"
 #include "mesh_preset.h"
 #include "device_preset.h"
-
+#include "custom_material.h"
 
 //type : 2
 //id : 10
-//flag : 20
+//rotation: 15
+//flag : 5
 
-typedef unsigned int Voxel;
 class VoxelWorldData : public Resource
 {
 	GDCLASS(VoxelWorldData, Resource);
@@ -37,7 +35,7 @@ public:
 
 	Dictionary preset_map;
 
-	TypedArray<MaterialPreset> material_presets;
+	TypedArray<CustomMaterial> custom_materials;
 	TypedArray<BasicsPreset> basics_presets;
 	TypedArray<MeshPreset> mesh_presets;
 	TypedArray<DevicePreset> device_presets;
@@ -56,8 +54,8 @@ public:
 	void set_voxels(const PackedInt32Array& value);
 	PackedInt32Array get_voxels() const;
 
-	void set_material_presets(const TypedArray <MaterialPreset>& value);
-	TypedArray <MaterialPreset> get_material_presets();
+	void set_custom_materials(const TypedArray <CustomMaterial>& value);
+	TypedArray <CustomMaterial> get_custom_materials();
 
 	void set_basics_presets(const TypedArray <BasicsPreset>& value);
 	TypedArray <BasicsPreset> get_basics_presets();
@@ -68,7 +66,7 @@ public:
 	void set_device_presets(const TypedArray <DevicePreset>& value);
 	TypedArray <DevicePreset> get_device_presets();
 
-	int register_preset(const Ref<Preset>& value);
+	//int register_preset(const Ref<Preset>& value);
 
 };
 #endif // !VOXEL_WORLD_DATA_H

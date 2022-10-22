@@ -133,7 +133,7 @@
     <ClInclude Include="basics_preset.h" />
     <ClInclude Include="chunk.h" />
     <ClInclude Include="device_preset.h" />
-    <ClInclude Include="material_preset.h" />
+    <ClInclude Include="custom_material.h" />
     <ClInclude Include="mesh_preset.h" />
     <ClInclude Include="preset.h" />
     <ClInclude Include="register_types.h" />
@@ -144,7 +144,7 @@
     <ClCompile Include="basics_preset.cpp" />
     <ClCompile Include="chunk.cpp" />
     <ClCompile Include="device_preset.cpp" />
-    <ClCompile Include="material_preset.cpp" />
+    <ClCompile Include="custom_material.cpp" />
     <ClCompile Include="mesh_preset.cpp" />
     <ClCompile Include="preset.cpp" />
     <ClCompile Include="register_types.cpp" />

@@ -13,10 +13,10 @@ void VoxelWorldData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelWorldData::set_voxels);
 	ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelWorldData::get_voxels);
 
-	ClassDB::bind_method(D_METHOD("register_preset"), &VoxelWorldData::register_preset);
+	//ClassDB::bind_method(D_METHOD("register_preset"), &VoxelWorldData::register_preset);
 
-	ClassDB::bind_method(D_METHOD("set_material_presets"), &VoxelWorldData::set_material_presets);
-	ClassDB::bind_method(D_METHOD("get_material_presets"), &VoxelWorldData::get_material_presets);
+	ClassDB::bind_method(D_METHOD("set_custom_materials"), &VoxelWorldData::set_custom_materials);
+	ClassDB::bind_method(D_METHOD("get_custom_materials"), &VoxelWorldData::get_custom_materials);
 
 	ClassDB::bind_method(D_METHOD("set_basics_presets"), &VoxelWorldData::set_basics_presets);
 	ClassDB::bind_method(D_METHOD("get_basics_presets"), &VoxelWorldData::get_basics_presets);
@@ -32,7 +32,7 @@ void VoxelWorldData::_bind_methods()
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_size"), "set_chunk_size", "get_chunk_size");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_count"), "set_chunk_count", "get_chunk_count");
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_BYTE_ARRAY, "voxels"), "set_voxels", "get_voxels");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "material_presets", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::OBJECT) + "/" + String::num_int64(PROPERTY_HINT_RESOURCE_TYPE) + ":MaterialPreset"), "set_material_presets", "get_material_presets");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "custom_materials", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::OBJECT) + "/" + String::num_int64(PROPERTY_HINT_RESOURCE_TYPE) + ":CustomMaterial"), "set_custom_materials", "get_custom_materials");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "basics_presets", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::OBJECT) + "/" + String::num_int64(PROPERTY_HINT_RESOURCE_TYPE) + ":BasicsPreset"), "set_basics_presets", "get_basics_presets");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "mesh_presets", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::OBJECT) + "/" + String::num_int64(PROPERTY_HINT_RESOURCE_TYPE) + ":MeshPreset"), "set_mesh_presets", "get_mesh_presets");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "device_presets", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::OBJECT) + "/" + String::num_int64(PROPERTY_HINT_RESOURCE_TYPE) + ":DevicePreset"), "set_device_presets", "get_device_presets");
@@ -98,50 +98,50 @@ PackedInt32Array VoxelWorldData::get_voxels() const
 	return voxels;
 }
 
-int VoxelWorldData::register_preset(const Ref<Preset>& value)
+//int VoxelWorldData::register_preset(const Ref<Preset>& value)
+//{
+//	String uuid = value->get_uuid();
+//	int index = -1;
+//	if (preset_map.get(uuid, nullptr).get_type() != Variant::NIL) {
+//		UtilityFunctions::printerr("This preset + " + value->get_name() + " + is already registered");
+//		return index;
+//	}
+//	String name = value->get_class();
+//	Array presets;
+//	if (name == StringName("CustomMaterial")) {
+//		presets = custom_materials;
+//	}
+//	else if (name == StringName("BasicsPreset")) {
+//		presets = basics_presets;
+//	}
+//	else if (name == StringName("DevicePreset")) {
+//		presets = device_presets;
+//	}
+//	else {
+//		UtilityFunctions::printerr("This object + " + value->get_class() + " + is not a preset");
+//		return index;
+//	}
+//	for (index = 0; index < presets.size(); index++)
+//	{
+//		if (presets[index].get_type() == Variant::NIL) {
+//			preset_map[uuid] = index;
+//			presets[index] = value;
+//			return index;
+//		}
+//	}
+//	index = presets.size();
+//	presets.push_back(value);
+//	preset_map[uuid] = index;
+//	return index;
+//}
+
+void VoxelWorldData::set_custom_materials(const TypedArray <CustomMaterial>& value)
 {
-	String uuid = value->get_uuid();
-	int index = -1;
-	if (preset_map.get(uuid, nullptr).get_type() != Variant::NIL) {
-		UtilityFunctions::printerr("This preset + " + value->get_name() + " + is already registered");
-		return index;
-	}
-	String name = value->get_class();
-	Array presets;
-	if (name == StringName("MaterialPreset")) {
-		presets = material_presets;
-	}
-	else if (name == StringName("BasicsPreset")) {
-		presets = basics_presets;
-	}
-	else if (name == StringName("DevicePreset")) {
-		presets = device_presets;
-	}
-	else {
-		UtilityFunctions::printerr("This object + " + value->get_class() + " + is not a preset");
-		return index;
-	}
-	for (index = 0; index < presets.size(); index++)
-	{
-		if (presets[index].get_type() == Variant::NIL) {
-			preset_map[uuid] = index;
-			presets[index] = value;
-			return index;
-		}
-	}
-	index = presets.size();
-	presets.push_back(value);
-	preset_map[uuid] = index;
-	return index;
+	custom_materials = value;
 }
 
-void VoxelWorldData::set_material_presets(const TypedArray <MaterialPreset>& value)
-{
-	material_presets = value;
-}
-
-TypedArray <MaterialPreset> VoxelWorldData::get_material_presets() {
-	return material_presets;
+TypedArray <CustomMaterial> VoxelWorldData::get_custom_materials() {
+	return custom_materials;
 }
 
 void VoxelWorldData::set_basics_presets(const TypedArray <BasicsPreset>& value)
