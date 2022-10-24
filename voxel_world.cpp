@@ -1,10 +1,5 @@
 #include "voxel_world.h"
 
-
-void VoxelWorld::_notification(int p_what) {
-
-}
-
 void VoxelWorld::_bind_methods()
 {
 	ClassDB::bind_method(D_METHOD("set_voxel_world_data", "value"), &VoxelWorld::set_voxel_world_data);
@@ -41,6 +36,16 @@ VoxelWorld::~VoxelWorld()
 
 }
 
+void VoxelWorld::set_presets_data(const Ref<PresetsData>& value)
+{
+	presets_data = value;
+}
+
+Ref<PresetsData> VoxelWorld::get_presets_data() const
+{
+	return presets_data;
+}
+
 void VoxelWorld::set_voxel_world_data(const Ref<VoxelWorldData>& value)
 {
 	voxel_world_data = value;
@@ -49,16 +54,6 @@ void VoxelWorld::set_voxel_world_data(const Ref<VoxelWorldData>& value)
 Ref<VoxelWorldData> VoxelWorld::get_voxel_world_data() const
 {
 	return voxel_world_data;
-}
-
-void VoxelWorld::set_devices(const Dictionary& value)
-{
-	devices = value;
-}
-
-Dictionary VoxelWorld::get_devices() const
-{
-	return devices;
 }
 
 void VoxelWorld::set_isolated(const bool& value)
@@ -89,6 +84,8 @@ void VoxelWorld::set_voxel(const Vector3i& position, const Voxel& value)
 
 	int type = get_voxel_type(voxel);
 	int id = get_voxel_id(voxel);
+	Vector3i rotation = get_voxel_rotation(voxel);
+	int flag = get_voxel_flag(voxel);
 
 	voxel_world_data->voxels[index] = value;
 }

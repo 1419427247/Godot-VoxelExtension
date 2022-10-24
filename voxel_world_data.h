@@ -31,15 +31,6 @@ public:
 
 	PackedInt32Array voxels;
 
-	Dictionary voxels_information;
-
-	Dictionary preset_map;
-
-	TypedArray<CustomMaterial> custom_materials;
-	TypedArray<BasicsPreset> basics_presets;
-	TypedArray<MeshPreset> mesh_presets;
-	TypedArray<DevicePreset> device_presets;
-
 	VoxelWorldData();
 	~VoxelWorldData();
 
@@ -51,23 +42,8 @@ public:
 
 	Vector3i get_world_size() const;
 
-	void set_voxels(const PackedInt32Array& value);
-	PackedInt32Array get_voxels() const;
-
-	void set_custom_materials(const TypedArray <CustomMaterial>& value);
-	TypedArray <CustomMaterial> get_custom_materials();
-
-	void set_basics_presets(const TypedArray <BasicsPreset>& value);
-	TypedArray <BasicsPreset> get_basics_presets();
-
-	void set_mesh_presets(const TypedArray <MeshPreset>& value);
-	TypedArray <MeshPreset> get_mesh_presets();
-
-	void set_device_presets(const TypedArray <DevicePreset>& value);
-	TypedArray <DevicePreset> get_device_presets();
-
-	//int register_preset(const Ref<Preset>& value);
-
+	void set_voxels(const PackedByteArray& value);
+	PackedByteArray get_voxels() const;
 };
 #endif // !VOXEL_WORLD_DATA_H
 

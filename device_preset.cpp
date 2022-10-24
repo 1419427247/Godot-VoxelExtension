@@ -1,17 +1,5 @@
 #include "device_preset.h"
 
-void Device::_bind_methods()
-{
-}
-
-Device::Device()
-{
-}
-
-Device::~Device()
-{
-}
-
 
 void DevicePreset::_bind_methods()
 {

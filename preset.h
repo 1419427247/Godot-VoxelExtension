@@ -33,6 +33,7 @@ using namespace godot;
 
 typedef unsigned int Voxel;
 
+class VoxelWorld;
 class Preset : public Resource
 {
 	GDCLASS(Preset, Resource);
@@ -55,10 +56,9 @@ public:
 	void set_script(const Ref<Script>& value);
 	Ref<Script> get_script() const;
 
-	virtual void _on_voxel_new(const Voxel& voxel, const Vector3i& position) const{
-	}
-	virtual void _on_voxel_delete(const Voxel& voxel, const Vector3i& position) const {
-	}
+	virtual void _on_voxel_new(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position);
+	virtual void _on_voxel_delete(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position);
 };
+
 
 #endif // !PRESET_H

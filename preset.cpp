@@ -1,4 +1,5 @@
 #include "preset.h"
+#include "voxel_world.h"
 
 void Preset::_bind_methods()
 {
@@ -49,4 +50,12 @@ void Preset::set_script(const Ref<Script>& value)
 Ref<Script> Preset::get_script() const
 {
 	return script;
+}
+
+void Preset::_on_voxel_new(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position)
+{
+}
+
+void Preset::_on_voxel_delete(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position)
+{
 }

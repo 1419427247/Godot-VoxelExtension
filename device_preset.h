@@ -3,17 +3,6 @@
 
 #include "preset.h"
 
-class Device : public Node3D
-{
-	GDCLASS(Device, Node3D);
-private:
-protected:
-	static void _bind_methods();
-public:
-	Device();
-	~Device();
-};
-
 class DevicePreset : public Preset
 {
 	GDCLASS(DevicePreset, Preset);

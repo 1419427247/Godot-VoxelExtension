@@ -6,17 +6,12 @@
 class Chunk : public Node3D
 {
 	GDCLASS(Chunk, Node3D);
-	enum
-	{
-		MESH_FLAG = 0b001,
-		COLLIDER_FLAG = 0b0010,
-		TRIGGER_FLAG = 0b0100,
-		DEVICE_FLAG = 0b1000,
-	};
 private:
 	VoxelWorld* voxel_world;
 	Vector3i chunk_position;
 	Array mesh_arrays;
+
+	Dictionary devices;
 protected:
 	Array get_mesh_array(const int& index);
 	
@@ -40,6 +35,7 @@ public:
 
 	Ref<ArrayMesh> generate_mesh();
 	Ref<ConcavePolygonShape3D> generate_trigger();
+	Array generate_device();
 };
 
 #endif

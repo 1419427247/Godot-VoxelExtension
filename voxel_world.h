@@ -2,28 +2,26 @@
 #define VOXEL_WORLD_H
 
 #include "voxel_world_data.h"
+#include "presets_data.h"
 
 class VoxelWorld : public Node3D
 {
 	GDCLASS(VoxelWorld, Node3D);
 private:
+	Ref<PresetsData> presets_data;
 	Ref<VoxelWorldData> voxel_world_data;
-	Dictionary devices;
-
 	bool isolated;
 protected:
-	void _notification(int p_what);
-
 	static void _bind_methods();
 public:
 	VoxelWorld();
 	~VoxelWorld();
 
+	void set_presets_data(const Ref<PresetsData>& value);
+	Ref<PresetsData> get_presets_data() const;
+
 	void set_voxel_world_data(const Ref<VoxelWorldData>& value);
 	Ref<VoxelWorldData> get_voxel_world_data() const;
-
-	void set_devices(const Dictionary& value);
-	Dictionary get_devices() const;
 
 	void set_isolated(const bool& value);
 	bool get_isolated() const;

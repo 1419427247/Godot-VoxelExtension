@@ -92,10 +92,6 @@ void Chunk::_bind_methods()
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_position"), "set_chunk_position", "get_chunk_position");
 
-	BIND_CONSTANT(MESH_FLAG);
-	BIND_CONSTANT(COLLIDER_FLAG);
-	BIND_CONSTANT(TRIGGER_FLAG);
-	BIND_CONSTANT(DEVICE_FLAG);
 }
 
 void Chunk::_notification(int p_what) {
@@ -201,9 +197,11 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_world_data is null"));
 		return Ref<Mesh>();
 	}
-	Array custom_materials = voxel_world_data->get_custom_materials();
-	Array basics_presets = voxel_world_data->get_basics_presets();
-	Array mesh_presets = voxel_world_data->get_mesh_presets();
+	Ref<PresetsData> presets_data = voxel_world->get_presets_data();
+
+	Array custom_materials = presets_data->get_custom_materials();
+	Array basics_presets = presets_data->get_basics_presets();
+	Array mesh_presets = presets_data->get_mesh_presets();
 	mesh_arrays.clear();
 	mesh_arrays.resize(custom_materials.size());
 
@@ -358,4 +356,38 @@ Ref<ConcavePolygonShape3D> Chunk::generate_trigger()
 		result->set_faces(trigger_faces);
 	}
 	return result;
+}
+
+Array Chunk::generate_device()
+{
+	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
+	if (voxel_world_data.is_null())
+	{
+		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_world_data is null"));
+		return Array();
+	}
+	Vector3i chunk_size = voxel_world_data->get_chunk_size();
+	for (int x = 0; x < chunk_size.x; x++)
+	{
+		for (int y = 0; y < chunk_size.y; y++)
+		{
+			for (int z = 0; z < chunk_size.z; z++)
+			{
+				Vector3i local_position = Vector3i(x, y, z);
+				Voxel voxel = get_voxel(local_position);
+				int type = VoxelWorld::get_voxel_type(voxel);
+				if (devices.has(local_position) == true)
+				{
+					int id = VoxelWorld::get_voxel_id(voxel);
+					if (type != VoxelWorldData::DEVICE)
+					{
+
+					}
+				}
+				else {
+
+				}
+			}
+		}
+	}
 }

@@ -42,6 +42,9 @@
     <ClInclude Include="voxel_world_data.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="presets_data.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="register_types.cpp">
@@ -71,5 +74,11 @@
     <ClCompile Include="voxel_world_data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="presets_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
