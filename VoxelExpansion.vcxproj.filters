@@ -45,6 +45,9 @@
     <ClInclude Include="presets_data.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="device.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="register_types.cpp">
@@ -75,6 +78,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="presets_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="device.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

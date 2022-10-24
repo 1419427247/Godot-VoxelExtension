@@ -28,14 +28,20 @@ public:
 	void set_chunk_position(const Vector3i& value);
 	Vector3i get_chunk_position() const;
 
+	Dictionary get_devices() const;
+
 	void set_voxel(const Vector3i& local_position, const Voxel& value);
 	Voxel get_voxel(const Vector3i& local_position) const;
+
+
 
 	Vector3i get_voxel_local_position(const Vector3& point, const Vector3& normal) const;
 
 	Ref<ArrayMesh> generate_mesh();
 	Ref<ConcavePolygonShape3D> generate_trigger();
-	Array generate_device();
+	void generate_device();
+
+	void print_error(const String& value) const;
 };
 
 #endif

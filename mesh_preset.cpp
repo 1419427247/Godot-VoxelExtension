@@ -68,6 +68,7 @@ void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 
 		mesh_arrays[i] = surface;
 	}
+	materials.resize(mesh->get_surface_count());
 }
 
 Ref<Mesh> MeshPreset::get_mesh() const
@@ -79,7 +80,11 @@ void MeshPreset::set_materials(const TypedArray<int>& value) {
 	materials = value;
 }
 
-TypedArray<int> MeshPreset::get_materials() const {
+TypedArray<int> MeshPreset::get_materials() {
+	if (mesh.is_null())
+	{
+		return TypedArray<int>();
+	}
 	return materials;
 }
 
@@ -98,8 +103,6 @@ void MeshPreset::build_mesh(const Array& arrays, const int& surface_index, const
 	for (size_t i = 0; i < surface_vertex_array.size(); i++)
 	{
 		array_vertex.push_back(rotate_vertex(surface_vertex_array[i], rotation) + position);
-		//array_normal.push_back(surface_normal_array[i]);
-		//array_tex_uv.push_back(surface_tex_uv_array[i]);
 	}
 	array_normal.append_array(surface_normal_array);
 	array_tex_uv.append_array(surface_tex_uv_array);

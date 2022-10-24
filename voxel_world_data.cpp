@@ -70,7 +70,11 @@ Vector3i VoxelWorldData::get_world_size() const {
 
 void VoxelWorldData::set_voxels(const PackedByteArray& value)
 {
-	voxels = value.decompress(4096).to_int32_array();
+	//Ref<StreamPeerBuffer> buffer;
+	//buffer.instantiate();
+	//buffer->put_var(world_size);
+	//voxels = value.decompress(4096).to_int32_array();
+	return;
 }
 
 PackedByteArray VoxelWorldData::get_voxels() const

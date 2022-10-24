@@ -2,6 +2,9 @@
 
 void VoxelWorld::_bind_methods()
 {
+	ClassDB::bind_method(D_METHOD("set_presets_data", "value"), &VoxelWorld::set_presets_data);
+	ClassDB::bind_method(D_METHOD("get_presets_data"), &VoxelWorld::get_presets_data);
+
 	ClassDB::bind_method(D_METHOD("set_voxel_world_data", "value"), &VoxelWorld::set_voxel_world_data);
 	ClassDB::bind_method(D_METHOD("get_voxel_world_data"), &VoxelWorld::get_voxel_world_data);
 
@@ -22,6 +25,7 @@ void VoxelWorld::_bind_methods()
 	ClassDB::bind_static_method("VoxelWorld", D_METHOD("mesh_voxel", "id", "rotation", "flag"), &VoxelWorld::mesh_voxel, 0);
 	ClassDB::bind_static_method("VoxelWorld", D_METHOD("device_voxel", "id", "rotation", "flag"), &VoxelWorld::device_voxel, 0);
 
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "voxel_world_data", PROPERTY_HINT_RESOURCE_TYPE, "VoxelWorldData"), "set_voxel_world_data", "get_voxel_world_data");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "isolated"), "set_isolated", "get_isolated");
 }

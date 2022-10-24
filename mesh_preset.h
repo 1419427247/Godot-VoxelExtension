@@ -20,7 +20,7 @@ public:
 	Ref<Mesh> get_mesh() const;
 
 	void set_materials(const TypedArray<int>& value);
-	TypedArray<int> get_materials() const;
+	TypedArray<int> get_materials();
 
 	void build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation);
 

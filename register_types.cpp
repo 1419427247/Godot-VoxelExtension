@@ -27,6 +27,7 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 	ClassDB::register_class<BasicsPreset>();
 	ClassDB::register_class<MeshPreset>();
 	ClassDB::register_class<DevicePreset>();
+	ClassDB::register_class<Device>();
 }
 
 void uninitialize_voxel_module(ModuleInitializationLevel p_level)

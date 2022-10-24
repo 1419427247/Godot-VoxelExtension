@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="basics_preset.h" />
     <ClInclude Include="chunk.h" />
+    <ClInclude Include="device.h" />
     <ClInclude Include="device_preset.h" />
     <ClInclude Include="custom_material.h" />
     <ClInclude Include="mesh_preset.h" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="basics_preset.cpp" />
     <ClCompile Include="chunk.cpp" />
+    <ClCompile Include="device.cpp" />
     <ClCompile Include="device_preset.cpp" />
     <ClCompile Include="custom_material.cpp" />
     <ClCompile Include="mesh_preset.cpp" />

@@ -2,6 +2,16 @@
 
 Array Chunk::get_mesh_array(const int& index) {
 	Array result;
+	if (index >= mesh_arrays.size())
+	{
+		UtilityFunctions::printerr("Material["+ String::num_int64(index) + "] does not exist");
+		result = Array();
+		result.resize(Mesh::ARRAY_MAX);
+		result[Mesh::ARRAY_VERTEX] = Array();
+		result[Mesh::ARRAY_TEX_UV] = Array();
+		result[Mesh::ARRAY_NORMAL] = Array();
+		return result;
+	}
 	if (mesh_arrays[index].get_type() == Variant::NIL) {
 		result = Array();
 		result.resize(Mesh::ARRAY_MAX);
@@ -70,6 +80,11 @@ void Chunk::build_basics(const Ref<VoxelWorldData>& voxel_world_data, Ref<Basics
 void Chunk::build_mesh(const Ref<VoxelWorldData>& voxel_world_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation)
 {
 	Ref<Mesh> mesh = mesh_preset->get_mesh();
+	if (mesh.is_null())
+	{
+		UtilityFunctions::printerr("Cannot build mesh at Chunk" + chunk_position + "-" + local_position);
+		return;
+	}
 	TypedArray<int> materials = mesh_preset->get_materials();
 	for (int i = 0; i < mesh->get_surface_count(); i++)
 	{
@@ -89,6 +104,7 @@ void Chunk::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("generate_mesh"), &Chunk::generate_mesh);
 	ClassDB::bind_method(D_METHOD("generate_trigger"), &Chunk::generate_trigger);
+	ClassDB::bind_method(D_METHOD("generate_device"), &Chunk::generate_device);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_position"), "set_chunk_position", "get_chunk_position");
 
@@ -127,6 +143,17 @@ Vector3i Chunk::get_chunk_position() const {
 	return chunk_position;
 }
 
+
+Dictionary Chunk::get_devices() const
+{
+	return devices;
+}
+
+/// <summary>
+/// 设置体素信息
+/// </summary>
+/// <param name="local_position">本地坐标</param>
+/// <param name="value"></param>
 void Chunk::set_voxel(const Vector3i& local_position, const Voxel& value)
 {
 	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
@@ -146,6 +173,11 @@ void Chunk::set_voxel(const Vector3i& local_position, const Voxel& value)
 	voxel_world->set_voxel(local_position + chunk_position * voxel_world_data->get_chunk_size(), value);
 }
 
+/// <summary>
+/// 获取体素信息(在本地坐标中)
+/// </summary>
+/// <param name="local_position">本地坐标</param>
+/// <returns></returns>
 Voxel Chunk::get_voxel(const Vector3i& local_position) const
 {
 	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
@@ -189,6 +221,10 @@ Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& no
 	return Vector3i(voxel_position.round());
 }
 
+/// <summary>
+/// 生成区块内所有类型为[Basics or Mesh]合并后的可渲染网格
+/// </summary>
+/// <returns></returns>
 Ref<ArrayMesh> Chunk::generate_mesh()
 {
 	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
@@ -221,12 +257,22 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 				{
 				case VoxelWorldData::BASICS: {
 					Vector3i rotation = VoxelWorld::get_voxel_rotation(voxel);
+					if (id >= basics_presets.size())
+					{
+						UtilityFunctions::printerr("BasicsPreset["+ String::num_int64(id) + "] does not exist");
+						continue;
+					}
 					Ref<BasicsPreset> basics_preset = basics_presets[id];
 					build_basics(voxel_world_data, basics_preset, local_position, rotation);
 					break;
 				}
 				case VoxelWorldData::MESH: {
 					Vector3i rotation = VoxelWorld::get_voxel_rotation(voxel);
+					if (id >= mesh_presets.size())
+					{
+						UtilityFunctions::printerr("MeshPreset[" + String::num_int64(id) + "] does not exist");
+						continue;
+					}
 					Ref<MeshPreset> mesh_preset = mesh_presets[id];
 					build_mesh(voxel_world_data, mesh_preset, local_position, rotation);
 					break;
@@ -252,7 +298,10 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 	}
 	return result;
 }
-
+/// <summary>
+/// 将每个体素视作正方体，以生成区块的碰撞网格
+/// </summary>
+/// <returns></returns>
 Ref<ConcavePolygonShape3D> Chunk::generate_trigger()
 {
 	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
@@ -357,15 +406,21 @@ Ref<ConcavePolygonShape3D> Chunk::generate_trigger()
 	}
 	return result;
 }
-
-Array Chunk::generate_device()
+/// <summary>
+/// 返回区块内所有的节点实例
+/// </summary>
+/// <returns></returns>
+void Chunk::generate_device()
 {
 	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
 	if (voxel_world_data.is_null())
 	{
 		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_world_data is null"));
-		return Array();
+		return;
 	}
+	Ref<PresetsData> presets_data = voxel_world->get_presets_data();
+	Array device_presets = presets_data->get_device_presets();
+
 	Vector3i chunk_size = voxel_world_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
@@ -376,18 +431,49 @@ Array Chunk::generate_device()
 				Vector3i local_position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(local_position);
 				int type = VoxelWorld::get_voxel_type(voxel);
-				if (devices.has(local_position) == true)
-				{
-					int id = VoxelWorld::get_voxel_id(voxel);
-					if (type != VoxelWorldData::DEVICE)
-					{
+				int id = VoxelWorld::get_voxel_id(voxel);
+				Vector3i rotation = VoxelWorld::get_voxel_rotation(voxel);
 
+				Device* device = cast_to<Device>(devices[local_position]);
+
+				if (type == VoxelWorldData::DEVICE)
+				{
+					Ref<DevicePreset> device_preset = device_presets[id];
+					if (device != nullptr) {
+						if (device->get_device_preset() != device_preset) {
+							devices.erase(local_position);
+							device->queue_free();
+							device = nullptr;
+						}
+					}
+
+					if (device == nullptr) {
+						Node* node = device_preset->get_packed_scene()->instantiate();
+						device = cast_to<Device>(node);
+						if (device == nullptr)
+						{
+							UtilityFunctions::print("Cannot instantiate DevicePreset in Chunk" + chunk_position + "-Vectori" + local_position);
+							continue;
+						}
+						device->set_device_preset(device_preset);
+						devices[local_position] = device;
+
+						device->set_position(local_position);
+						device->set_rotation(rotation);
+						add_child(device);
 					}
 				}
 				else {
-
+					if (device != nullptr) {
+						devices.erase(local_position);
+						device->queue_free();
+					}
 				}
 			}
 		}
 	}
+}
+
+void Chunk::print_error(const String& value) const
+{
 }

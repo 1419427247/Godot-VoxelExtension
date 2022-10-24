@@ -3,6 +3,7 @@
 
 #include "voxel_world_data.h"
 #include "presets_data.h"
+#include "device.h"
 
 class VoxelWorld : public Node3D
 {
