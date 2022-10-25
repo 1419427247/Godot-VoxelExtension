@@ -30,7 +30,7 @@ public:
 	void set_voxel(const Vector3i& position, const Voxel& value);
 	Voxel get_voxel(const Vector3i& position) const;
 
-	static Vector3i get_voxel_direction(const Vector3& direction, const Vector3i& rotation);
+	static Vector3i get_voxel_direction(const Vector3i& direction, const Vector3i& rotation);
 
 	static int get_voxel_type(const Voxel& value);
 	static int get_voxel_id(const Voxel& value);

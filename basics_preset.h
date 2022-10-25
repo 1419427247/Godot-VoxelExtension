@@ -17,6 +17,8 @@ class BasicsPreset : public Preset
 		RIGHT = 5,
 	};
 private:
+	bool transparent;
+	bool collider;
 	int up;
 	int down;
 	int front;
@@ -46,6 +48,13 @@ public:
 
 	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
 	static void build_mesh(const int& mesh_key, const Array& arrays, const Vector3& position, const Vector3& rotation);
+
+	static void build_up_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation);
+	static void build_down_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation);
+	static void build_front_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation);
+	static void build_back_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation);
+	static void build_left_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation);
+	static void build_right_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation);
 };
 
 #endif // !BASIC_PRESET_H

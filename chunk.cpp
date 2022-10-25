@@ -4,7 +4,7 @@ Array Chunk::get_mesh_array(const int& index) {
 	Array result;
 	if (index >= mesh_arrays.size())
 	{
-		UtilityFunctions::printerr("Material["+ String::num_int64(index) + "] does not exist");
+		UtilityFunctions::printerr("Material[" + String::num_int64(index) + "] does not exist");
 		result = Array();
 		result.resize(Mesh::ARRAY_MAX);
 		result[Mesh::ARRAY_VERTEX] = Array();
@@ -27,54 +27,44 @@ Array Chunk::get_mesh_array(const int& index) {
 }
 
 void Chunk::build_basics(const Ref<VoxelWorldData>& voxel_world_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation) {
-	Vector3i up_position = VoxelWorld::get_voxel_direction(Vector3(0, 1, 0), rotation);
-	int up_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + up_position));
-	if (up_position == Vector3i() || up_voxel_type != VoxelWorldData::BASICS) {
-		int up_material_id = basics_preset->get_up();
-		Array arrays = get_mesh_array(up_material_id);
-		BasicsPreset::build_mesh(BasicsPreset::UP, arrays, local_position, rotation);
-	}
 
-	Vector3i down_position = VoxelWorld::get_voxel_direction(Vector3(0, -1, 0), rotation);
-	int down_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + down_position));
-	if (down_position == Vector3i() || down_voxel_type != VoxelWorldData::BASICS) {
-		int down_material_id = basics_preset->get_down();
-		Array arrays = get_mesh_array(down_material_id);
-		BasicsPreset::build_mesh(BasicsPreset::DOWN, arrays, local_position, rotation);
-	}
+#define BUILD_MESH_NO_CONDITION(direction)\
+	do{\
+		int material_id = basics_preset->get_##direction();\
+		Array arrays = get_mesh_array(material_id);\
+		BasicsPreset::build_##direction##_mesh(arrays, local_position, rotation);\
+	} while (false)
 
-	Vector3i front_position = VoxelWorld::get_voxel_direction(Vector3(0, 0, -1), rotation);
-	int front_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + front_position));
-	if (front_position == Vector3i() || front_voxel_type != VoxelWorldData::BASICS) {
-		int front_material_id = basics_preset->get_front();
-		Array arrays = get_mesh_array(front_material_id);
-		BasicsPreset::build_mesh(BasicsPreset::FRONT, arrays, local_position, rotation);
-	}
+#define BUILD_MESH(direction,axis)\
+	do{\
+		int voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + VoxelWorld::get_voxel_direction(axis, rotation)));\
+		if (voxel_type != VoxelWorldData::BASICS) {\
+			int material_id = basics_preset->get_##direction();\
+			Array arrays = get_mesh_array(material_id);\
+			BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
+		}\
+	}while(false)
 
+	if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
+	{
+		BUILD_MESH_NO_CONDITION(up);
+		BUILD_MESH_NO_CONDITION(down);
+		BUILD_MESH_NO_CONDITION(front);
+		BUILD_MESH_NO_CONDITION(back);
+		BUILD_MESH_NO_CONDITION(left);
+		BUILD_MESH_NO_CONDITION(right);
 
-	Vector3i back_position = VoxelWorld::get_voxel_direction(Vector3(0, 0, 1), rotation);
-	int back_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + back_position));
-	if (back_position == Vector3i() || back_voxel_type != VoxelWorldData::BASICS) {
-		int back_material_id = basics_preset->get_back();
-		Array arrays = get_mesh_array(back_material_id);
-		BasicsPreset::build_mesh(BasicsPreset::BACK, arrays, local_position, rotation);
 	}
-
-	Vector3i left_position = VoxelWorld::get_voxel_direction(Vector3(-1, 0, 0), rotation);
-	int left_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + left_position));
-	if (left_position == Vector3i() || left_voxel_type != VoxelWorldData::BASICS) {
-		int left_material_id = basics_preset->get_left();
-		Array arrays = get_mesh_array(left_material_id);
-		BasicsPreset::build_mesh(BasicsPreset::LEFT, arrays, local_position, rotation);
+	else {
+		BUILD_MESH(up,Vector3i(0, 1, 0));
+		BUILD_MESH(down,Vector3i(0, -1, 0));
+		BUILD_MESH(front,Vector3i(0, 0, -1));
+		BUILD_MESH(back,Vector3i(0, 0, 1));
+		BUILD_MESH(left,Vector3i(-1, 0, 0));
+		BUILD_MESH(right,Vector3i(1, 0, 0));
 	}
-
-	Vector3i right_position = VoxelWorld::get_voxel_direction(Vector3(1, 0, 0), rotation);
-	int right_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + right_position));
-	if (right_position == Vector3i() || right_voxel_type != VoxelWorldData::BASICS) {
-		int right_material_id = basics_preset->get_right();
-		Array arrays = get_mesh_array(right_material_id);
-		BasicsPreset::build_mesh(BasicsPreset::RIGHT, arrays, local_position, rotation);
-	}
+#undef BUILD_MESH_NO_CONDITION
+#undef BUILD_MESH
 }
 
 void Chunk::build_mesh(const Ref<VoxelWorldData>& voxel_world_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation)
@@ -94,7 +84,6 @@ void Chunk::build_mesh(const Ref<VoxelWorldData>& voxel_world_data, Ref<MeshPres
 	}
 }
 
-
 void Chunk::_bind_methods()
 {
 	ClassDB::bind_method(D_METHOD("set_chunk_position", "value"), &Chunk::set_chunk_position);
@@ -103,11 +92,10 @@ void Chunk::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_voxel_local_position", "position", "normal"), &Chunk::get_voxel_local_position);
 
 	ClassDB::bind_method(D_METHOD("generate_mesh"), &Chunk::generate_mesh);
-	ClassDB::bind_method(D_METHOD("generate_trigger"), &Chunk::generate_trigger);
+	ClassDB::bind_method(D_METHOD("generate_collider"), &Chunk::generate_collider);
 	ClassDB::bind_method(D_METHOD("generate_device"), &Chunk::generate_device);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_position"), "set_chunk_position", "get_chunk_position");
-
 }
 
 void Chunk::_notification(int p_what) {
@@ -259,7 +247,7 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 					Vector3i rotation = VoxelWorld::get_voxel_rotation(voxel);
 					if (id >= basics_presets.size())
 					{
-						UtilityFunctions::printerr("BasicsPreset["+ String::num_int64(id) + "] does not exist");
+						UtilityFunctions::printerr("BasicsPreset[" + String::num_int64(id) + "] does not exist");
 						continue;
 					}
 					Ref<BasicsPreset> basics_preset = basics_presets[id];
@@ -302,7 +290,7 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 /// 将每个体素视作正方体，以生成区块的碰撞网格
 /// </summary>
 /// <returns></returns>
-Ref<ConcavePolygonShape3D> Chunk::generate_trigger()
+Ref<ConcavePolygonShape3D> Chunk::generate_collider()
 {
 	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
 	if (voxel_world_data.is_null())

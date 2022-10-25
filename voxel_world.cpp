@@ -111,12 +111,23 @@ Voxel VoxelWorld::get_voxel(const Vector3i& position) const
 	return voxel_world_data->voxels[index];
 }
 
-Vector3i VoxelWorld::get_voxel_direction(const Vector3& direction, const Vector3i& rotation)
+static Vector3 direction_memorandum[8][32] = { Vector3() };
+
+//Vector3i VoxelWorld::get_voxel_direction(const Vector3i& direction, const Vector3i& rotation)
+//{
+//	Vector3* result = &direction_memorandum[direction.x * 4 + direction.y * 2 + direction.z][rotation.x / 90 * 4 * 4 + rotation.y / 90 * 4 + rotation.z];
+//	if (*result == Vector3i())
+//	{
+//		*result = direction;
+//		result->rotate(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+//		result->rotate(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+//		result->rotate(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+//	}
+//	return Vector3i(*result);
+//}
+
+Vector3i VoxelWorld::get_voxel_direction(const Vector3i& direction, const Vector3i& rotation)
 {
-	if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
-	{
-		return Vector3i();
-	}
 	Vector3 result = direction;
 	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
 	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
@@ -136,7 +147,7 @@ int VoxelWorld::get_voxel_id(const Voxel& value)
 
 Vector3i VoxelWorld::get_voxel_rotation(const Voxel& value)
 {
-	return Vector3i((value<< 12) >> 27, (value << 17) >> 27, (value & (0b11111 << 22) >> 27)) * 15;
+	return Vector3i((value << 12) >> 27, (value << 17) >> 27, (value & (0b11111 << 22) >> 27)) * 15;
 }
 
 int VoxelWorld::get_voxel_flag(const Voxel& value)
@@ -151,15 +162,15 @@ Voxel VoxelWorld::empty_voxel()
 
 Voxel VoxelWorld::basics_voxel(const int& id, const Vector3i& rotation, const int& flag)
 {
-	return (VoxelWorldData::BASICS << 30) | (id << 20) | ((rotation.x / 15) << 15) | ((rotation.y / 15)) << 10 | ((rotation.z / 15) << 5) | flag;
+	return VOXEL(VoxelWorldData::BASICS, id, rotation, flag);
 }
 
 Voxel VoxelWorld::mesh_voxel(const int& id, const Vector3i& rotation, const int& flag)
 {
-	return (VoxelWorldData::MESH << 30) | (id << 20) | ((rotation.x / 15) << 15) | ((rotation.y / 15)) << 10 | ((rotation.z / 15) << 5) | flag;
+	return VOXEL(VoxelWorldData::MESH, id, rotation, flag);
 }
 
 Voxel VoxelWorld::device_voxel(const int& id, const Vector3i& rotation, const int& flag)
 {
-	return (VoxelWorldData::DEVICE << 30) | (id << 20) | ((rotation.x / 15) << 15) | ((rotation.y / 15)) << 10 | ((rotation.z / 15) << 5) | flag;
+	return VOXEL(VoxelWorldData::EMPTY, id, rotation, flag);
 }

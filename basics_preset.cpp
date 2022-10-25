@@ -32,6 +32,8 @@ void BasicsPreset::_bind_methods()
 
 BasicsPreset::BasicsPreset()
 {
+	transparent = false;
+	collider = true;
 	up = 0;
 	down = 0;
 	front = 0;
@@ -126,67 +128,113 @@ static Vector2 uvs[] = {
 	Vector2(0, 0), Vector2(1, 1), Vector2(0, 1),
 };
 
-static Vector3 brick_up_vertexs[] = {
-	Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),
-	Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),Vector3(-0.5, 0.5, 0.5),
-};
-static Vector3 brick_down_vertexs[] = {
-	Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),
-	Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(0.5, -0.5, 0.5),
-};
-static Vector3 brick_front_vertexs[] = {
-	Vector3(0.5, 0.5, -0.5),Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),
-	Vector3(0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(0.5, -0.5, -0.5),
-};
-static Vector3 brick_back_vertexs[] = {
-	Vector3(-0.5, 0.5, 0.5),Vector3(0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),
-	Vector3(-0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
-};
-static Vector3 brick_left_vertexs[] = {
-	Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, 0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
-	Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(-0.5, -0.5, -0.5),
-};
-static Vector3 brick_right_vertexs[] = {
-	Vector3(0.5, 0.5, 0.5),Vector3(0.5, 0.5, -0.5),Vector3(0.5, -0.5, -0.5),
-	Vector3(0.5, 0.5, 0.5),Vector3(0.5, -0.5, -0.5),Vector3(0.5, -0.5, 0.5),
+static Vector3 brick_vertexs[][6] = {
+
+	{
+		Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),
+		Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),Vector3(-0.5, 0.5, 0.5),
+	},
+	{
+		Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),
+		Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(0.5, -0.5, 0.5),
+	},
+	{
+		Vector3(0.5, 0.5, -0.5),Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),
+		Vector3(0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(0.5, -0.5, -0.5),
+	},
+	{
+		Vector3(-0.5, 0.5, 0.5),Vector3(0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),
+		Vector3(-0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
+	},
+	{
+		Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, 0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
+		Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(-0.5, -0.5, -0.5),
+	},
+	{
+		Vector3(0.5, 0.5, 0.5), Vector3(0.5, 0.5, -0.5), Vector3(0.5, -0.5, -0.5),
+		Vector3(0.5, 0.5, 0.5), Vector3(0.5, -0.5, -0.5), Vector3(0.5, -0.5, 0.5),
+	}
 };
 
-static Vector3* brick_vertexs[] = {
-	brick_up_vertexs,
-	brick_down_vertexs,
-	brick_front_vertexs,
-	brick_back_vertexs,
-	brick_left_vertexs,
-	brick_right_vertexs
-};
-
-void BasicsPreset::build_mesh(const int& mesh_key,const Array& arrays, const Vector3& position, const Vector3& rotation)
+struct BasicsMeshData
 {
-	Vector3 vertexs[6];
+	Vector3 vertexs[6][6];
+	Vector3 normals[6][2];
+};
+
+static BasicsMeshData* basics_data_memorandum[24 * 24 * 24] = { nullptr };
+
+void BasicsPreset::build_mesh(const int& mesh_key, const Array& arrays, const Vector3& position, const Vector3& rotation)
+{
+	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
+
+	BasicsMeshData* basics_mesh_data = basics_data_memorandum[index];
+	if (basics_mesh_data == nullptr)
+	{
+		basics_mesh_data = (BasicsMeshData*)memalloc(sizeof(BasicsMeshData));
+		for (int i = 0; i < 6; i++)
+		{
+			Vector3 vertexs[6];
+			for (int j = 0; j < 6; j++)
+			{
+				basics_mesh_data->vertexs[i][j] = (vertexs[j] = rotate_vertex(brick_vertexs[i][j], rotation));
+			}
+			basics_mesh_data->normals[i][0] = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
+			basics_mesh_data->normals[i][1] = Plane(vertexs[3], vertexs[4], vertexs[5]).get_normal();
+		}
+		basics_data_memorandum[index] = basics_mesh_data;
+	}
+
 	Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
 	Array array_normal = arrays[Mesh::ARRAY_NORMAL];
 	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
-
 	for (int i = 0; i < 6; i++)
 	{
-		vertexs[i] = rotate_vertex(brick_vertexs[mesh_key][i], rotation) + position;
-		array_vertex.push_back(vertexs[i]);
+		array_vertex.push_back(basics_mesh_data->vertexs[mesh_key][i] + position);
 	}
 
-	Vector3 normal_1 = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
-	Vector3 normal_2 = Plane(vertexs[3], vertexs[4], vertexs[5]).get_normal();
-
-	array_normal.push_back(normal_1);
-	array_normal.push_back(normal_1);
-	array_normal.push_back(normal_1);
-	array_normal.push_back(normal_2);
-	array_normal.push_back(normal_2);
-	array_normal.push_back(normal_2);
-
+	for (int i = 0; i < 3; i++)
+	{
+		array_normal.push_back(basics_mesh_data->normals[mesh_key][0]);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		array_normal.push_back(basics_mesh_data->normals[mesh_key][1]);
+	}
 	for (int i = 0; i < 6; i++)
 	{
 		array_tex_uv.push_back(uvs[i]);
 	}
+}
+
+void BasicsPreset::build_up_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
+{
+	build_mesh(UP, arrays, position, rotation);
+}
+
+void BasicsPreset::build_down_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
+{
+	build_mesh(DOWN, arrays, position, rotation);
+}
+
+void BasicsPreset::build_front_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
+{
+	build_mesh(FRONT, arrays, position, rotation);
+}
+
+void BasicsPreset::build_back_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
+{
+	build_mesh(BACK, arrays, position, rotation);
+}
+
+void BasicsPreset::build_left_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
+{
+	build_mesh(LEFT, arrays, position, rotation);
+}
+
+void BasicsPreset::build_right_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
+{
+	build_mesh(RIGHT, arrays, position, rotation);
 }
 
 Vector3 BasicsPreset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
