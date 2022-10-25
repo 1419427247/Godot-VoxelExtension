@@ -26,7 +26,7 @@ Array Chunk::get_mesh_array(const int& index) {
 	return result;
 }
 
-void Chunk::build_basics(const Ref<VoxelWorldData>& voxel_world_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation) {
+void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRoomData>& voxel_room_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation) {
 
 #define BUILD_MESH_NO_CONDITION(direction)\
 	do{\
@@ -37,14 +37,24 @@ void Chunk::build_basics(const Ref<VoxelWorldData>& voxel_world_data, Ref<Basics
 
 #define BUILD_MESH(direction,axis)\
 	do{\
-		int voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + VoxelWorld::get_voxel_direction(axis, rotation)));\
-		if (voxel_type != VoxelWorldData::BASICS) {\
+		Voxel direction##voxel = get_voxel(local_position + VoxelRoom::get_voxel_direction(axis, rotation));\
+		int direction##voxel_type = VoxelRoom::get_voxel_type(direction##voxel);\
+		int direction##voxel_id = VoxelRoom::get_voxel_id(direction##voxel);\
+		if (direction##voxel_type != VoxelRoomData::BASICS) {\
 			int material_id = basics_preset->get_##direction();\
 			Array arrays = get_mesh_array(material_id);\
 			BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
+		}else{\
+			Ref<BasicsPreset> direction##preset = basics_presets[direction##voxel_id];\
+			if(direction##preset->get_transparent() == true){\
+				int material_id = basics_preset->get_##direction();\
+				Array arrays = get_mesh_array(material_id);\
+				BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
+			}\
 		}\
 	}while(false)
 
+	Array basics_presets = presets_data->get_basics_presets();
 	if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
 	{
 		BUILD_MESH_NO_CONDITION(up);
@@ -56,18 +66,18 @@ void Chunk::build_basics(const Ref<VoxelWorldData>& voxel_world_data, Ref<Basics
 
 	}
 	else {
-		BUILD_MESH(up,Vector3i(0, 1, 0));
-		BUILD_MESH(down,Vector3i(0, -1, 0));
-		BUILD_MESH(front,Vector3i(0, 0, -1));
-		BUILD_MESH(back,Vector3i(0, 0, 1));
-		BUILD_MESH(left,Vector3i(-1, 0, 0));
-		BUILD_MESH(right,Vector3i(1, 0, 0));
+		BUILD_MESH(up, Vector3i(0, 1, 0));
+		BUILD_MESH(down, Vector3i(0, -1, 0));
+		BUILD_MESH(front, Vector3i(0, 0, -1));
+		BUILD_MESH(back, Vector3i(0, 0, 1));
+		BUILD_MESH(left, Vector3i(-1, 0, 0));
+		BUILD_MESH(right, Vector3i(1, 0, 0));
 	}
 #undef BUILD_MESH_NO_CONDITION
 #undef BUILD_MESH
 }
 
-void Chunk::build_mesh(const Ref<VoxelWorldData>& voxel_world_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation)
+void Chunk::build_mesh(const Ref<VoxelRoomData>& voxel_room_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation)
 {
 	Ref<Mesh> mesh = mesh_preset->get_mesh();
 	if (mesh.is_null())
@@ -101,15 +111,15 @@ void Chunk::_bind_methods()
 void Chunk::_notification(int p_what) {
 	if (p_what == NOTIFICATION_ENTER_TREE)
 	{
-		voxel_world = static_cast<VoxelWorld*>(get_parent());
+		voxel_room = static_cast<VoxelRoom*>(get_parent());
 	}
 	else if (p_what == NOTIFICATION_EXIT_TREE) {
-		voxel_world = nullptr;
+		voxel_room = nullptr;
 	}
 }
 
 Chunk::Chunk() {
-	this->voxel_world = nullptr;
+	this->voxel_room = nullptr;
 	this->chunk_position = Vector3i(0, 0, 0);
 }
 
@@ -144,21 +154,21 @@ Dictionary Chunk::get_devices() const
 /// <param name="value"></param>
 void Chunk::set_voxel(const Vector3i& local_position, const Voxel& value)
 {
-	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
-	if (voxel_world_data.is_null())
+	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
+	if (voxel_room_data.is_null())
 	{
-		UtilityFunctions::printerr("voxel_world_data is null");
+		UtilityFunctions::printerr("voxel_room_data is null");
 		return;
 	}
-	Vector3i chunk_size = voxel_world_data->get_chunk_size();
-	if (voxel_world->get_isolated() == true) {
+	Vector3i chunk_size = voxel_room_data->get_chunk_size();
+	if (voxel_room->get_isolated() == true) {
 		if (local_position.x < 0 || local_position.x >= chunk_size.x ||
 			local_position.y < 0 || local_position.y >= chunk_size.y ||
 			local_position.z < 0 || local_position.z >= chunk_size.z) {
 			return;
 		}
 	}
-	voxel_world->set_voxel(local_position + chunk_position * voxel_world_data->get_chunk_size(), value);
+	voxel_room->set_voxel(local_position + chunk_position * voxel_room_data->get_chunk_size(), value);
 }
 
 /// <summary>
@@ -168,21 +178,21 @@ void Chunk::set_voxel(const Vector3i& local_position, const Voxel& value)
 /// <returns></returns>
 Voxel Chunk::get_voxel(const Vector3i& local_position) const
 {
-	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
-	if (voxel_world_data.is_null())
+	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
+	if (voxel_room_data.is_null())
 	{
-		UtilityFunctions::printerr("voxel_world_data is null");
-		return VoxelWorld::empty_voxel();
+		UtilityFunctions::printerr("voxel_room_data is null");
+		return VoxelRoom::empty_voxel();
 	}
-	Vector3i chunk_size = voxel_world_data->get_chunk_size();
-	if (voxel_world->get_isolated() == true) {
+	Vector3i chunk_size = voxel_room_data->get_chunk_size();
+	if (voxel_room->get_isolated() == true) {
 		if (local_position.x < 0 || local_position.x >= chunk_size.x ||
 			local_position.y < 0 || local_position.y >= chunk_size.y ||
 			local_position.z < 0 || local_position.z >= chunk_size.z) {
-			return VoxelWorld::empty_voxel();
+			return VoxelRoom::empty_voxel();
 		}
 	}
-	return voxel_world->get_voxel(local_position + chunk_position * voxel_world_data->get_chunk_size());
+	return voxel_room->get_voxel(local_position + chunk_position * voxel_room_data->get_chunk_size());
 }
 
 Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& normal) const
@@ -215,13 +225,13 @@ Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& no
 /// <returns></returns>
 Ref<ArrayMesh> Chunk::generate_mesh()
 {
-	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
-	if (voxel_world_data.is_null())
+	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
+	if (voxel_room_data.is_null())
 	{
-		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_world_data is null"));
+		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_room_data is null"));
 		return Ref<Mesh>();
 	}
-	Ref<PresetsData> presets_data = voxel_world->get_presets_data();
+	Ref<PresetsData> presets_data = voxel_room->get_presets_data();
 
 	Array custom_materials = presets_data->get_custom_materials();
 	Array basics_presets = presets_data->get_basics_presets();
@@ -229,7 +239,7 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 	mesh_arrays.clear();
 	mesh_arrays.resize(custom_materials.size());
 
-	Vector3i chunk_size = voxel_world_data->get_chunk_size();
+	Vector3i chunk_size = voxel_room_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -238,31 +248,31 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 			{
 				Vector3i local_position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(local_position);
-				int type = VoxelWorld::get_voxel_type(voxel);
-				int id = VoxelWorld::get_voxel_id(voxel);
-				int flag = VoxelWorld::get_voxel_flag(voxel);
+				int type = VoxelRoom::get_voxel_type(voxel);
+				int id = VoxelRoom::get_voxel_id(voxel);
+				int flag = VoxelRoom::get_voxel_flag(voxel);
 				switch (type)
 				{
-				case VoxelWorldData::BASICS: {
-					Vector3i rotation = VoxelWorld::get_voxel_rotation(voxel);
+				case VoxelRoomData::BASICS: {
+					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 					if (id >= basics_presets.size())
 					{
 						UtilityFunctions::printerr("BasicsPreset[" + String::num_int64(id) + "] does not exist");
 						continue;
 					}
 					Ref<BasicsPreset> basics_preset = basics_presets[id];
-					build_basics(voxel_world_data, basics_preset, local_position, rotation);
+					build_basics(presets_data, voxel_room_data, basics_preset, local_position, rotation);
 					break;
 				}
-				case VoxelWorldData::MESH: {
-					Vector3i rotation = VoxelWorld::get_voxel_rotation(voxel);
+				case VoxelRoomData::MESH: {
+					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 					if (id >= mesh_presets.size())
 					{
 						UtilityFunctions::printerr("MeshPreset[" + String::num_int64(id) + "] does not exist");
 						continue;
 					}
 					Ref<MeshPreset> mesh_preset = mesh_presets[id];
-					build_mesh(voxel_world_data, mesh_preset, local_position, rotation);
+					build_mesh(voxel_room_data, mesh_preset, local_position, rotation);
 					break;
 				}
 				}
@@ -292,15 +302,15 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 /// <returns></returns>
 Ref<ConcavePolygonShape3D> Chunk::generate_collider()
 {
-	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
-	if (voxel_world_data.is_null())
+	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
+	if (voxel_room_data.is_null())
 	{
-		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_world_data is null"));
+		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_room_data is null"));
 		return Ref<ConcavePolygonShape3D>();
 	}
-	PackedVector3Array trigger_faces;
+	PackedVector3Array collider_faces;
 
-	Vector3i chunk_size = voxel_world_data->get_chunk_size();
+	Vector3i chunk_size = voxel_room_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -308,8 +318,8 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider()
 			for (int z = 0; z < chunk_size.z; z++)
 			{
 				Vector3i local_position = Vector3i(x, y, z);
-				int type = VoxelWorld::get_voxel_type(get_voxel(local_position));
-				if (type == VoxelWorldData::EMPTY) {
+				int type = VoxelRoom::get_voxel_type(get_voxel(local_position));
+				if (type == VoxelRoomData::EMPTY) {
 					continue;
 				}
 				Vector3 vertexs[] = {
@@ -322,66 +332,66 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider()
 					Vector3(-0.5, 0.5, 0.5) + Vector3(local_position),
 					Vector3(-0.5, -0.5, 0.5) + Vector3(local_position),
 				};
-				int up_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, 1, 0)));
-				int down_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, -1, 0)));
-				int front_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, -1)));
-				int back_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, 1)));
-				int left_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(-1, 0, 0)));
-				int right_voxel_type = VoxelWorld::get_voxel_type(get_voxel(local_position + Vector3i(1, 0, 0)));
+				int up_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, 1, 0)));
+				int down_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, -1, 0)));
+				int front_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, -1)));
+				int back_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, 1)));
+				int left_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(-1, 0, 0)));
+				int right_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(1, 0, 0)));
 
-				if (up_voxel_type == VoxelWorldData::EMPTY)
+				if (up_voxel_type == VoxelRoomData::EMPTY)
 				{
-					trigger_faces.push_back(vertexs[2]);
-					trigger_faces.push_back(vertexs[1]);
-					trigger_faces.push_back(vertexs[5]);
-					trigger_faces.push_back(vertexs[2]);
-					trigger_faces.push_back(vertexs[5]);
-					trigger_faces.push_back(vertexs[6]);
+					collider_faces.push_back(vertexs[2]);
+					collider_faces.push_back(vertexs[1]);
+					collider_faces.push_back(vertexs[5]);
+					collider_faces.push_back(vertexs[2]);
+					collider_faces.push_back(vertexs[5]);
+					collider_faces.push_back(vertexs[6]);
 				}
-				if (down_voxel_type == VoxelWorldData::EMPTY)
+				if (down_voxel_type == VoxelRoomData::EMPTY)
 				{
-					trigger_faces.push_back(vertexs[0]);
-					trigger_faces.push_back(vertexs[3]);
-					trigger_faces.push_back(vertexs[7]);
-					trigger_faces.push_back(vertexs[0]);
-					trigger_faces.push_back(vertexs[7]);
-					trigger_faces.push_back(vertexs[4]);
+					collider_faces.push_back(vertexs[0]);
+					collider_faces.push_back(vertexs[3]);
+					collider_faces.push_back(vertexs[7]);
+					collider_faces.push_back(vertexs[0]);
+					collider_faces.push_back(vertexs[7]);
+					collider_faces.push_back(vertexs[4]);
 				}
-				if (front_voxel_type == VoxelWorldData::EMPTY)
+				if (front_voxel_type == VoxelRoomData::EMPTY)
 				{
-					trigger_faces.push_back(vertexs[1]);
-					trigger_faces.push_back(vertexs[2]);
-					trigger_faces.push_back(vertexs[3]);
-					trigger_faces.push_back(vertexs[1]);
-					trigger_faces.push_back(vertexs[3]);
-					trigger_faces.push_back(vertexs[0]);
+					collider_faces.push_back(vertexs[1]);
+					collider_faces.push_back(vertexs[2]);
+					collider_faces.push_back(vertexs[3]);
+					collider_faces.push_back(vertexs[1]);
+					collider_faces.push_back(vertexs[3]);
+					collider_faces.push_back(vertexs[0]);
 				}
-				if (back_voxel_type == VoxelWorldData::EMPTY)
+				if (back_voxel_type == VoxelRoomData::EMPTY)
 				{
-					trigger_faces.push_back(vertexs[6]);
-					trigger_faces.push_back(vertexs[5]);
-					trigger_faces.push_back(vertexs[4]);
-					trigger_faces.push_back(vertexs[6]);
-					trigger_faces.push_back(vertexs[4]);
-					trigger_faces.push_back(vertexs[7]);
+					collider_faces.push_back(vertexs[6]);
+					collider_faces.push_back(vertexs[5]);
+					collider_faces.push_back(vertexs[4]);
+					collider_faces.push_back(vertexs[6]);
+					collider_faces.push_back(vertexs[4]);
+					collider_faces.push_back(vertexs[7]);
 				}
-				if (left_voxel_type == VoxelWorldData::EMPTY)
+				if (left_voxel_type == VoxelRoomData::EMPTY)
 				{
-					trigger_faces.push_back(vertexs[2]);
-					trigger_faces.push_back(vertexs[6]);
-					trigger_faces.push_back(vertexs[7]);
-					trigger_faces.push_back(vertexs[2]);
-					trigger_faces.push_back(vertexs[7]);
-					trigger_faces.push_back(vertexs[3]);
+					collider_faces.push_back(vertexs[2]);
+					collider_faces.push_back(vertexs[6]);
+					collider_faces.push_back(vertexs[7]);
+					collider_faces.push_back(vertexs[2]);
+					collider_faces.push_back(vertexs[7]);
+					collider_faces.push_back(vertexs[3]);
 				}
-				if (right_voxel_type == VoxelWorldData::EMPTY)
+				if (right_voxel_type == VoxelRoomData::EMPTY)
 				{
-					trigger_faces.push_back(vertexs[5]);
-					trigger_faces.push_back(vertexs[1]);
-					trigger_faces.push_back(vertexs[0]);
-					trigger_faces.push_back(vertexs[5]);
-					trigger_faces.push_back(vertexs[0]);
-					trigger_faces.push_back(vertexs[4]);
+					collider_faces.push_back(vertexs[5]);
+					collider_faces.push_back(vertexs[1]);
+					collider_faces.push_back(vertexs[0]);
+					collider_faces.push_back(vertexs[5]);
+					collider_faces.push_back(vertexs[0]);
+					collider_faces.push_back(vertexs[4]);
 				}
 			}
 		}
@@ -389,8 +399,8 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider()
 	Ref<ConcavePolygonShape3D> result;
 	result.instantiate();
 	result->reference();
-	if (trigger_faces.size() > 0) {
-		result->set_faces(trigger_faces);
+	if (collider_faces.size() > 0) {
+		result->set_faces(collider_faces);
 	}
 	return result;
 }
@@ -400,16 +410,16 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider()
 /// <returns></returns>
 void Chunk::generate_device()
 {
-	Ref<VoxelWorldData> voxel_world_data = voxel_world->get_voxel_world_data();
-	if (voxel_world_data.is_null())
+	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
+	if (voxel_room_data.is_null())
 	{
-		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_world_data is null"));
+		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_room_data is null"));
 		return;
 	}
-	Ref<PresetsData> presets_data = voxel_world->get_presets_data();
+	Ref<PresetsData> presets_data = voxel_room->get_presets_data();
 	Array device_presets = presets_data->get_device_presets();
 
-	Vector3i chunk_size = voxel_world_data->get_chunk_size();
+	Vector3i chunk_size = voxel_room_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -418,13 +428,13 @@ void Chunk::generate_device()
 			{
 				Vector3i local_position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(local_position);
-				int type = VoxelWorld::get_voxel_type(voxel);
-				int id = VoxelWorld::get_voxel_id(voxel);
-				Vector3i rotation = VoxelWorld::get_voxel_rotation(voxel);
+				int type = VoxelRoom::get_voxel_type(voxel);
+				int id = VoxelRoom::get_voxel_id(voxel);
+				Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 
 				Device* device = cast_to<Device>(devices[local_position]);
 
-				if (type == VoxelWorldData::DEVICE)
+				if (type == VoxelRoomData::DEVICE)
 				{
 					Ref<DevicePreset> device_preset = device_presets[id];
 					if (device != nullptr) {

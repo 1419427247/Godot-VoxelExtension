@@ -26,7 +26,8 @@ void PresetsData::set_custom_materials(const TypedArray <CustomMaterial>& value)
 	custom_materials = value;
 }
 
-TypedArray <CustomMaterial> PresetsData::get_custom_materials() {
+TypedArray <CustomMaterial> PresetsData::get_custom_materials()const
+{
 	return custom_materials;
 }
 
@@ -35,7 +36,7 @@ void PresetsData::set_basics_presets(const TypedArray <BasicsPreset>& value)
 	basics_presets = value;
 }
 
-TypedArray <BasicsPreset> PresetsData::get_basics_presets()
+TypedArray <BasicsPreset> PresetsData::get_basics_presets()const
 {
 	return basics_presets;
 }
@@ -45,7 +46,7 @@ void PresetsData::set_mesh_presets(const TypedArray <MeshPreset>& value)
 	mesh_presets = value;
 }
 
-TypedArray <MeshPreset> PresetsData::get_mesh_presets()
+TypedArray <MeshPreset> PresetsData::get_mesh_presets()const
 {
 	return mesh_presets;
 }
@@ -55,6 +56,7 @@ void PresetsData::set_device_presets(const TypedArray <DevicePreset>& value)
 	device_presets = value;
 }
 
-TypedArray <DevicePreset> PresetsData::get_device_presets() {
+TypedArray <DevicePreset> PresetsData::get_device_presets() const
+{
 	return device_presets;
 }

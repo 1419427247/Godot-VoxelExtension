@@ -33,7 +33,7 @@ using namespace godot;
 
 typedef unsigned int Voxel;
 #define VOXEL(type,id,rotation,flag) ((type << 30) | (id << 20) | (abs(rotation.x % 360 / 15) << 15) | (abs(rotation.y % 360 / 15)) << 10 | (abs(rotation.z % 360 / 15) << 5) | (flag & 0b11111))
-class VoxelWorld;
+class VoxelRoom;
 
 class Preset : public Resource
 {
@@ -57,8 +57,8 @@ public:
 	void set_script(const Ref<Script>& value);
 	Ref<Script> get_script() const;
 
-	virtual void _on_voxel_new(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position);
-	virtual void _on_voxel_delete(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position);
+	virtual void _on_voxel_new(VoxelRoom* voxel_room, const Voxel& voxel, const Vector3i& position);
+	virtual void _on_voxel_delete(VoxelRoom* voxel_room, const Voxel& voxel, const Vector3i& position);
 };
 
 

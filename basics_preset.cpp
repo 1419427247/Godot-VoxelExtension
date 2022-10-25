@@ -2,6 +2,12 @@
 
 void BasicsPreset::_bind_methods()
 {
+	ClassDB::bind_method(D_METHOD("set_transparent", "value"), &BasicsPreset::set_transparent);
+	ClassDB::bind_method(D_METHOD("get_transparent"), &BasicsPreset::get_transparent);
+	;
+	ClassDB::bind_method(D_METHOD("set_collider", "value"), &BasicsPreset::set_collider);
+	ClassDB::bind_method(D_METHOD("get_collider"), &BasicsPreset::get_collider);
+
 	ClassDB::bind_method(D_METHOD("set_up", "value"), &BasicsPreset::set_up);
 	ClassDB::bind_method(D_METHOD("get_up"), &BasicsPreset::get_up);
 
@@ -22,6 +28,8 @@ void BasicsPreset::_bind_methods()
 
 	ClassDB::bind_static_method("BasicsPreset", D_METHOD("instantiate", "uuid", "name", "materials"), &BasicsPreset::instantiate);
 
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transparent"), "set_transparent", "get_transparent");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "collider"), "set_collider", "get_collider");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "up"), "set_up", "get_up");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "down"), "set_down", "get_down");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "front"), "set_front", "get_front");
@@ -44,6 +52,26 @@ BasicsPreset::BasicsPreset()
 
 BasicsPreset::~BasicsPreset()
 {
+}
+
+void BasicsPreset::set_transparent(const bool& value)
+{
+	transparent = value;
+}
+
+bool BasicsPreset::get_transparent() const
+{
+	return transparent;
+}
+
+void BasicsPreset::set_collider(const bool& value)
+{
+	collider = value;
+}
+
+bool BasicsPreset::get_collider() const
+{
+	return collider;
 }
 
 void BasicsPreset::set_up(const int& value)

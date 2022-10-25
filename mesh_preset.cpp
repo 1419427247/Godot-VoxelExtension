@@ -1,4 +1,5 @@
 #include "mesh_preset.h"
+#include "basics_preset.h"
 
 void MeshPreset::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_mesh", "value"), &MeshPreset::set_mesh);
@@ -99,10 +100,9 @@ void MeshPreset::build_mesh(const Array& arrays, const int& surface_index, const
 	Array surface_vertex_array = surface[Mesh::ARRAY_VERTEX];
 	Array surface_normal_array = surface[Mesh::ARRAY_NORMAL];
 	Array surface_tex_uv_array = surface[Mesh::ARRAY_TEX_UV];
-
 	for (size_t i = 0; i < surface_vertex_array.size(); i++)
 	{
-		array_vertex.push_back(rotate_vertex(surface_vertex_array[i], rotation) + position);
+		array_vertex.push_back(BasicsPreset::rotate_vertex(surface_vertex_array[i], rotation) + position);
 	}
 	array_normal.append_array(surface_normal_array);
 	array_tex_uv.append_array(surface_tex_uv_array);
@@ -116,13 +116,4 @@ Ref<MeshPreset> MeshPreset::instantiate(const String& uuid, const String& name, 
 	mesh_preset->mesh = mesh;
 	mesh_preset->materials = materials;
 	return mesh_preset;
-}
-
-Vector3 MeshPreset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
-{
-	Vector3 result = vertex;
-	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-	return result;
 }

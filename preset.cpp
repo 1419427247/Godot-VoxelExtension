@@ -1,5 +1,5 @@
 #include "preset.h"
-#include "voxel_world.h"
+#include "voxel_room.h"
 
 void Preset::_bind_methods()
 {
@@ -55,10 +55,10 @@ Ref<Script> Preset::get_script() const
 	return script;
 }
 
-void Preset::_on_voxel_new(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position)
+void Preset::_on_voxel_new(VoxelRoom* voxel_room, const Voxel& voxel, const Vector3i& position)
 {
 }
 
-void Preset::_on_voxel_delete(VoxelWorld* voxel_world, const Voxel& voxel, const Vector3i& position)
+void Preset::_on_voxel_delete(VoxelRoom* voxel_room, const Voxel& voxel, const Vector3i& position)
 {
 }

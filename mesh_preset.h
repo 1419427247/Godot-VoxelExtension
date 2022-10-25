@@ -25,7 +25,6 @@ public:
 	void build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation);
 
 	static Ref<MeshPreset> instantiate(const String& uuid, const String& name, const Ref<Mesh>& mesh, Array materials);
-	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
 };
 
 #endif // !MESH_PRESET_H

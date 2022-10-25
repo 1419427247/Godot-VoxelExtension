@@ -17,8 +17,8 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-	ClassDB::register_class<VoxelWorld>();
-	ClassDB::register_class<VoxelWorldData>();
+	ClassDB::register_class<VoxelRoom>();
+	ClassDB::register_class<VoxelRoomData>();
 	ClassDB::register_class<Chunk>();
 
 	ClassDB::register_class<Preset>();

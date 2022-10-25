@@ -1,23 +1,23 @@
 #ifndef CHUNK_H
 #define CHUNK_H
 
-#include "voxel_world.h"
+#include "voxel_room.h"
 
 class Chunk : public Node3D
 {
 	GDCLASS(Chunk, Node3D);
 private:
-	VoxelWorld* voxel_world;
+	VoxelRoom* voxel_room;
 	Vector3i chunk_position;
 	Array mesh_arrays;
 
 	Dictionary devices;
 protected:
 	Array get_mesh_array(const int& index);
-	
-	void build_basics(const Ref<VoxelWorldData>& voxel_world_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation);
-	void build_mesh(const Ref<VoxelWorldData>& voxel_world_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation);
-	
+
+	void build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRoomData>& voxel_room_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation);
+	void build_mesh(const Ref<VoxelRoomData>& voxel_room_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation);
+
 	static void _bind_methods();
 	void _notification(int p_what);
 

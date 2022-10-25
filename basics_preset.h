@@ -31,6 +31,12 @@ public:
 	BasicsPreset();
 	~BasicsPreset();
 
+	void set_transparent(const bool& value);
+	bool get_transparent() const;
+
+	void set_collider(const bool& value);
+	bool get_collider() const;
+
 	void set_up(const int& value);
 	int get_up() const;
 	void set_down(const int& value);
