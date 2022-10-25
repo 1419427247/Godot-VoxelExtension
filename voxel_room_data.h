@@ -14,7 +14,7 @@
 class VoxelRoomData : public Resource
 {
 	GDCLASS(VoxelRoomData, Resource);
-	enum VoxelType
+	enum Type
 	{
 		EMPTY = 0,
 		BASICS = 1,
@@ -47,4 +47,4 @@ public:
 };
 #endif // !VOXEL_WORLD_DATA_H
 
-VARIANT_ENUM_CAST(VoxelRoomData, VoxelType);
+VARIANT_ENUM_CAST(VoxelRoomData, Type);

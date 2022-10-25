@@ -46,7 +46,7 @@ void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRo
 			BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
 		}else{\
 			Ref<BasicsPreset> direction##preset = basics_presets[direction##voxel_id];\
-			if(direction##preset->get_transparent() == true){\
+			if(direction##preset->get_transparent() != basics_preset->get_transparent()){\
 				int material_id = basics_preset->get_##direction();\
 				Array arrays = get_mesh_array(material_id);\
 				BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
@@ -101,11 +101,18 @@ void Chunk::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("get_voxel_local_position", "position", "normal"), &Chunk::get_voxel_local_position);
 
-	ClassDB::bind_method(D_METHOD("generate_mesh"), &Chunk::generate_mesh);
-	ClassDB::bind_method(D_METHOD("generate_collider"), &Chunk::generate_collider);
+	ClassDB::bind_method(D_METHOD("generate_mesh", "flag"), &Chunk::generate_mesh, BASICS_FLAG | MESH_FLAG);
+	ClassDB::bind_method(D_METHOD("generate_collider", "flag"), &Chunk::generate_collider, BASICS_FLAG | MESH_FLAG);
 	ClassDB::bind_method(D_METHOD("generate_device"), &Chunk::generate_device);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_position"), "set_chunk_position", "get_chunk_position");
+
+	BIND_ENUM_CONSTANT(BASICS_FLAG);
+	BIND_ENUM_CONSTANT(MESH_FLAG);
+	BIND_ENUM_CONSTANT(TRANSPARENT_TRUE_FLAG);
+	BIND_ENUM_CONSTANT(TRANSPARENT_FALSE_FLAG);
+	BIND_ENUM_CONSTANT(COLLIDER_TRUE_FLAG);
+	BIND_ENUM_CONSTANT(COLLIDER_FALSE_FLAG);
 }
 
 void Chunk::_notification(int p_what) {
@@ -220,10 +227,10 @@ Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& no
 }
 
 /// <summary>
-/// 生成区块内所有类型为[Basics or Mesh]合并后的可渲染网格
+/// 生成区块内所有可渲染网格
 /// </summary>
 /// <returns></returns>
-Ref<ArrayMesh> Chunk::generate_mesh()
+Ref<ArrayMesh> Chunk::generate_mesh(const int& flag)
 {
 	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
 	if (voxel_room_data.is_null())
@@ -231,6 +238,17 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_room_data is null"));
 		return Ref<Mesh>();
 	}
+	bool is_generate_basics = (flag & BASICS_FLAG) != 0;
+	bool is_generate_mesh = (flag & MESH_FLAG) != 0;
+
+	bool is_generate_transparent_true = (flag & TRANSPARENT_TRUE_FLAG) != 0;
+	bool is_generate_transparent_false = (flag & TRANSPARENT_FALSE_FLAG) != 0;
+	bool is_generate_transparent_all = is_generate_transparent_true && is_generate_transparent_false;
+
+	bool is_generate_collider_true = (flag & COLLIDER_TRUE_FLAG) != 0;
+	bool is_generate_collider_false = (flag & COLLIDER_FALSE_FLAG) != 0;
+	bool is_generate_collider_all = is_generate_collider_true && is_generate_collider_false;
+
 	Ref<PresetsData> presets_data = voxel_room->get_presets_data();
 
 	Array custom_materials = presets_data->get_custom_materials();
@@ -261,17 +279,69 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 						continue;
 					}
 					Ref<BasicsPreset> basics_preset = basics_presets[id];
+					if (is_generate_basics == false)
+					{
+						continue;
+					}
+					if (is_generate_transparent_all == false)
+					{
+						if (is_generate_transparent_true == true && basics_preset->get_transparent() == true)
+						{
+							continue;
+						}
+						if (is_generate_transparent_false == true && basics_preset->get_transparent() == false)
+						{
+							continue;
+						}
+					}
+					if (is_generate_collider_all == false)
+					{
+						if (is_generate_collider_true == true && basics_preset->get_collider() == true)
+						{
+							continue;
+						}
+						if (is_generate_collider_false == true && basics_preset->get_collider() == false)
+						{
+							continue;
+						}
+					}
 					build_basics(presets_data, voxel_room_data, basics_preset, local_position, rotation);
 					break;
 				}
 				case VoxelRoomData::MESH: {
-					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 					if (id >= mesh_presets.size())
 					{
 						UtilityFunctions::printerr("MeshPreset[" + String::num_int64(id) + "] does not exist");
 						continue;
 					}
 					Ref<MeshPreset> mesh_preset = mesh_presets[id];
+					if (is_generate_mesh == false)
+					{
+						continue;
+					}
+					if (is_generate_transparent_all == false)
+					{
+						if (is_generate_transparent_true == true && mesh_preset->get_transparent() == true)
+						{
+							continue;
+						}
+						if (is_generate_transparent_false == true && mesh_preset->get_transparent() == false)
+						{
+							continue;
+						}
+					}
+					if (is_generate_collider_all == false)
+					{
+						if (is_generate_collider_true == true && mesh_preset->get_collider() == true)
+						{
+							continue;
+						}
+						if (is_generate_collider_false == true && mesh_preset->get_collider() == false)
+						{
+							continue;
+						}
+					}
+					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 					build_mesh(voxel_room_data, mesh_preset, local_position, rotation);
 					break;
 				}
@@ -300,7 +370,7 @@ Ref<ArrayMesh> Chunk::generate_mesh()
 /// 将每个体素视作正方体，以生成区块的碰撞网格
 /// </summary>
 /// <returns></returns>
-Ref<ConcavePolygonShape3D> Chunk::generate_collider()
+Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& flag)
 {
 	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
 	if (voxel_room_data.is_null())
@@ -308,8 +378,18 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider()
 		UtilityFunctions::printerr(UtilityFunctions::str("The voxel_room_data is null"));
 		return Ref<ConcavePolygonShape3D>();
 	}
-	PackedVector3Array collider_faces;
+	bool is_generate_basics = (flag & BASICS_FLAG) != 0;
+	bool is_generate_mesh = (flag & MESH_FLAG) != 0;
 
+	bool is_generate_transparent_true = (flag & TRANSPARENT_TRUE_FLAG) != 0;
+	bool is_generate_transparent_false = (flag & TRANSPARENT_FALSE_FLAG) != 0;
+	bool is_generate_transparent_all = is_generate_transparent_true && is_generate_transparent_false;
+
+	bool is_generate_collider_true = (flag & COLLIDER_TRUE_FLAG) != 0;
+	bool is_generate_collider_false = (flag & COLLIDER_FALSE_FLAG) != 0;
+	bool is_generate_collider_all = is_generate_collider_true && is_generate_collider_false;
+
+	PackedVector3Array collider_faces;
 	Vector3i chunk_size = voxel_room_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{

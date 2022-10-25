@@ -2,11 +2,7 @@
 
 void BasicsPreset::_bind_methods()
 {
-	ClassDB::bind_method(D_METHOD("set_transparent", "value"), &BasicsPreset::set_transparent);
-	ClassDB::bind_method(D_METHOD("get_transparent"), &BasicsPreset::get_transparent);
-	;
-	ClassDB::bind_method(D_METHOD("set_collider", "value"), &BasicsPreset::set_collider);
-	ClassDB::bind_method(D_METHOD("get_collider"), &BasicsPreset::get_collider);
+
 
 	ClassDB::bind_method(D_METHOD("set_up", "value"), &BasicsPreset::set_up);
 	ClassDB::bind_method(D_METHOD("get_up"), &BasicsPreset::get_up);
@@ -26,10 +22,9 @@ void BasicsPreset::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_right", "value"), &BasicsPreset::set_right);
 	ClassDB::bind_method(D_METHOD("get_right"), &BasicsPreset::get_right);
 
-	ClassDB::bind_static_method("BasicsPreset", D_METHOD("instantiate", "uuid", "name", "materials"), &BasicsPreset::instantiate);
+	ClassDB::bind_static_method("BasicsPreset", D_METHOD("instantiate", "name", "materials"), &BasicsPreset::instantiate);
 
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transparent"), "set_transparent", "get_transparent");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "collider"), "set_collider", "get_collider");
+
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "up"), "set_up", "get_up");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "down"), "set_down", "get_down");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "front"), "set_front", "get_front");
@@ -40,8 +35,6 @@ void BasicsPreset::_bind_methods()
 
 BasicsPreset::BasicsPreset()
 {
-	transparent = false;
-	collider = true;
 	up = 0;
 	down = 0;
 	front = 0;
@@ -52,26 +45,6 @@ BasicsPreset::BasicsPreset()
 
 BasicsPreset::~BasicsPreset()
 {
-}
-
-void BasicsPreset::set_transparent(const bool& value)
-{
-	transparent = value;
-}
-
-bool BasicsPreset::get_transparent() const
-{
-	return transparent;
-}
-
-void BasicsPreset::set_collider(const bool& value)
-{
-	collider = value;
-}
-
-bool BasicsPreset::get_collider() const
-{
-	return collider;
 }
 
 void BasicsPreset::set_up(const int& value)
@@ -134,11 +107,10 @@ int BasicsPreset::get_right() const
 	return right;
 }
 
-Ref<BasicsPreset> BasicsPreset::instantiate(const String& uuid, const String& name, const Dictionary& materials)
+Ref<BasicsPreset> BasicsPreset::instantiate(const String& name, const Dictionary& materials)
 {
 	Ref<BasicsPreset> basics_preset;
 	basics_preset.instantiate();
-	basics_preset->uuid = uuid;
 	basics_preset->name = name;
 
 	basics_preset->set_up((int)materials.get("up", 0));

@@ -24,7 +24,7 @@ public:
 
 	void build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation);
 
-	static Ref<MeshPreset> instantiate(const String& uuid, const String& name, const Ref<Mesh>& mesh, Array materials);
+	static Ref<MeshPreset> instantiate(const String& name, const Ref<Mesh>& mesh, Array materials);
 };
 
 #endif // !MESH_PRESET_H

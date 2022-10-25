@@ -8,7 +8,7 @@ void MeshPreset::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_materials", "value"), &MeshPreset::set_materials);
 	ClassDB::bind_method(D_METHOD("get_materials"), &MeshPreset::get_materials);
 
-	ClassDB::bind_static_method("MeshPreset", D_METHOD("instantiate", "uuid", "name", "mesh"), &MeshPreset::instantiate);
+	ClassDB::bind_static_method("MeshPreset", D_METHOD("instantiate", "name", "mesh"), &MeshPreset::instantiate);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "material", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::INT) + "/" + String::num_int64(PROPERTY_HINT_NONE) + ":"), "set_materials", "get_materials");
@@ -108,10 +108,9 @@ void MeshPreset::build_mesh(const Array& arrays, const int& surface_index, const
 	array_tex_uv.append_array(surface_tex_uv_array);
 }
 
-Ref<MeshPreset> MeshPreset::instantiate(const String& uuid, const String& name, const Ref<Mesh>& mesh, Array materials) {
+Ref<MeshPreset> MeshPreset::instantiate(const String& name, const Ref<Mesh>& mesh, Array materials) {
 	Ref<MeshPreset> mesh_preset;
 	mesh_preset.instantiate();
-	mesh_preset->uuid = uuid;
 	mesh_preset->name = name;
 	mesh_preset->mesh = mesh;
 	mesh_preset->materials = materials;

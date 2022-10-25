@@ -7,7 +7,7 @@ void CustomMaterial::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_shader_parameter_list"), &CustomMaterial::get_shader_parameter_list);
 	ClassDB::bind_method(D_METHOD("set_shader_parameter", "key", "value"), &CustomMaterial::set_shader_parameter);
 
-	ClassDB::bind_static_method("CustomMaterial", D_METHOD("instantiate", "uuid", "name", "shader", "parameter"), &CustomMaterial::instantiate);
+	ClassDB::bind_static_method("CustomMaterial", D_METHOD("instantiate", "name", "shader", "parameter"), &CustomMaterial::instantiate);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shader_material", PROPERTY_HINT_RESOURCE_TYPE, "ShaderMaterial"), "set_shader_material", "get_shader_material");
 }
@@ -41,7 +41,7 @@ void CustomMaterial::set_shader_parameter(const String& key, const Variant& valu
 }
 
 
-Ref<CustomMaterial> CustomMaterial::instantiate(const String& uuid, const String& name, const Ref<ShaderMaterial>& shader_material, Dictionary parameter) {
+Ref<CustomMaterial> CustomMaterial::instantiate(const String& name, const Ref<ShaderMaterial>& shader_material, Dictionary parameter) {
 	Ref<CustomMaterial> custom_material;
 	custom_material.instantiate();
 	custom_material->shader_material = shader_material;

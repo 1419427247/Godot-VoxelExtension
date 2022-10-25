@@ -6,6 +6,15 @@
 class Chunk : public Node3D
 {
 	GDCLASS(Chunk, Node3D);
+	enum Flag
+	{
+		BASICS_FLAG = 0b1,
+		MESH_FLAG = 0b10,
+		TRANSPARENT_TRUE_FLAG = 0b0100,
+		TRANSPARENT_FALSE_FLAG = 0b1000,
+		COLLIDER_TRUE_FLAG = 0b100000,
+		COLLIDER_FALSE_FLAG = 0b1000000,
+	};
 private:
 	VoxelRoom* voxel_room;
 	Vector3i chunk_position;
@@ -35,11 +44,13 @@ public:
 
 	Vector3i get_voxel_local_position(const Vector3& point, const Vector3& normal) const;
 
-	Ref<ArrayMesh> generate_mesh();
-	Ref<ConcavePolygonShape3D> generate_collider();
+	Ref<ArrayMesh> generate_mesh(const int& flag = BASICS_FLAG | MESH_FLAG);
+	Ref<ConcavePolygonShape3D> generate_collider(const int& flag = BASICS_FLAG | MESH_FLAG);
 	void generate_device();
 
 	void print_error(const String& value) const;
 };
+
+VARIANT_ENUM_CAST(Chunk, Chunk::Flag);
 
 #endif

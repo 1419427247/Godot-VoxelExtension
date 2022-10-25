@@ -41,18 +41,22 @@ class Preset : public Resource
 private:
 
 protected:
-	String uuid;
 	String name;
+	bool transparent;
+	bool collider;
 	Ref<Script> script;
 	static void _bind_methods();
 public:
 	Preset();
 	~Preset();
-	void set_uuid(const String& value);
-	String get_uuid() const;
-
 	void set_name(const String& value);
 	String get_name() const;
+
+	void set_transparent(const bool& value);
+	bool get_transparent() const;
+
+	void set_collider(const bool& value);
+	bool get_collider() const;
 
 	void set_script(const Ref<Script>& value);
 	Ref<Script> get_script() const;

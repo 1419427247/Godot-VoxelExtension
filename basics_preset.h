@@ -17,8 +17,6 @@ class BasicsPreset : public Preset
 		RIGHT = 5,
 	};
 private:
-	bool transparent;
-	bool collider;
 	int up;
 	int down;
 	int front;
@@ -30,12 +28,6 @@ protected:
 public:
 	BasicsPreset();
 	~BasicsPreset();
-
-	void set_transparent(const bool& value);
-	bool get_transparent() const;
-
-	void set_collider(const bool& value);
-	bool get_collider() const;
 
 	void set_up(const int& value);
 	int get_up() const;
@@ -50,7 +42,7 @@ public:
 	void set_right(const int& value);
 	int get_right() const;
 
-	static Ref<BasicsPreset> instantiate(const String& uuid, const String& name, const Dictionary& materials);
+	static Ref<BasicsPreset> instantiate(const String& name, const Dictionary& materials);
 
 	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
 	static void build_mesh(const int& mesh_key, const Array& arrays, const Vector3& position, const Vector3& rotation);

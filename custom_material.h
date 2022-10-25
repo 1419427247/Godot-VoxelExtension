@@ -20,7 +20,7 @@ public:
 	Array get_shader_parameter_list() const;
 	void set_shader_parameter(const String& key, const Variant& value);
 
-	static Ref<CustomMaterial> instantiate(const String& uuid,const String& name,const Ref<ShaderMaterial>& shader_material,Dictionary parameter);
+	static Ref<CustomMaterial> instantiate(const String& name,const Ref<ShaderMaterial>& shader_material,Dictionary parameter);
 };
 
 #endif // !CUSTOM_MATERIAL_H
