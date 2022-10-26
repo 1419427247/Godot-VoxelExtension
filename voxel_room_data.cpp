@@ -35,11 +35,8 @@ VoxelRoomData::~VoxelRoomData()
 
 
 void VoxelRoomData::set_chunk_size(const Vector3i& value) {
-	if (value.x <= 0 || value.y <= 0 || value.z <= 0)
-	{
-		UtilityFunctions::printerr("Chunk size is an invalid value");
-		return;
-	}
+	ERR_FAIL_COND_MSG(value.x <= 0 || value.y <= 0 || value.z <= 0, "Chunk size is an invalid value");
+
 	this->chunk_size = value;
 	room_size = chunk_count * chunk_size;
 	voxels.resize(room_size.x * room_size.y * room_size.z);
@@ -50,11 +47,8 @@ Vector3i VoxelRoomData::get_chunk_size() const {
 }
 
 void VoxelRoomData::set_chunk_count(const Vector3i& value) {
-	if (value.x <= 0 || value.y <= 0 || value.z <= 0)
-	{
-		UtilityFunctions::printerr("Chunk count is an invalid value");
-		return;
-	}
+	ERR_FAIL_COND_MSG(value.x <= 0 || value.y <= 0 || value.z <= 0, "Chunk count is an invalid value");
+
 	chunk_count = value;
 	room_size = chunk_count * chunk_size;
 	voxels.resize(room_size.x * room_size.y * room_size.z);
@@ -68,18 +62,20 @@ Vector3i VoxelRoomData::get_room_size() const {
 	return room_size;
 }
 
-void VoxelRoomData::set_voxels(const PackedByteArray& value)
+void VoxelRoomData::set_voxels(const PackedInt32Array& value)
 {
-	//Ref<StreamPeerBuffer> buffer;
-	//buffer.instantiate();
-	//buffer->put_var(room_size);
+	//if (value.size() == 0)
+	//{
+	//	return;
+	//}
 	//voxels = value.decompress(4096).to_int32_array();
-	return;
+	voxels = value;
 }
 
-PackedByteArray VoxelRoomData::get_voxels() const
+PackedInt32Array VoxelRoomData::get_voxels() const
 {
-	return voxels.to_byte_array().compress();
+	//return voxels.to_byte_array().compress();
+	return voxels;
 }
 
 //int VoxelRoomData::register_preset(const Ref<Preset>& value)
@@ -118,5 +114,3 @@ PackedByteArray VoxelRoomData::get_voxels() const
 //	preset_map[uuid] = index;
 //	return index;
 //}
-
-

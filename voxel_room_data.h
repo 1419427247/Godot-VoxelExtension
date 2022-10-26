@@ -42,8 +42,8 @@ public:
 
 	Vector3i get_room_size() const;
 
-	void set_voxels(const PackedByteArray& value);
-	PackedByteArray get_voxels() const;
+	void set_voxels(const PackedInt32Array& value);
+	PackedInt32Array get_voxels() const;
 };
 #endif // !VOXEL_WORLD_DATA_H
 

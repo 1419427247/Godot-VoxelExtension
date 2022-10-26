@@ -69,7 +69,7 @@ void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 
 		mesh_arrays[i] = surface;
 	}
-	materials.resize(mesh->get_surface_count());
+	materials.resize(mesh_arrays.size());
 }
 
 Ref<Mesh> MeshPreset::get_mesh() const
@@ -79,13 +79,10 @@ Ref<Mesh> MeshPreset::get_mesh() const
 
 void MeshPreset::set_materials(const TypedArray<int>& value) {
 	materials = value;
+	materials.resize(mesh_arrays.size());
 }
 
 TypedArray<int> MeshPreset::get_materials() {
-	if (mesh.is_null())
-	{
-		return TypedArray<int>();
-	}
 	return materials;
 }
 

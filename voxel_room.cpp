@@ -32,7 +32,7 @@ void VoxelRoom::_bind_methods()
 
 VoxelRoom::VoxelRoom()
 {
-	this->isolated = false;
+	isolated = false;
 }
 
 VoxelRoom::~VoxelRoom()
@@ -72,11 +72,7 @@ bool VoxelRoom::get_isolated() const
 
 void VoxelRoom::set_voxel(const Vector3i& position, const Voxel& value)
 {
-	if (voxel_room_data.is_null())
-	{
-		UtilityFunctions::printerr("voxel_room_data is null");
-		return;
-	}
+	ERR_FAIL_NULL_MSG(voxel_room_data, "");
 	Vector3i room_size = voxel_room_data->get_room_size();
 	if (position.x < 0 || position.x >= room_size.x ||
 		position.y < 0 || position.y >= room_size.y ||
@@ -96,11 +92,7 @@ void VoxelRoom::set_voxel(const Vector3i& position, const Voxel& value)
 
 Voxel VoxelRoom::get_voxel(const Vector3i& position) const
 {
-	if (voxel_room_data.is_null())
-	{
-		UtilityFunctions::printerr("voxel_room_data is null");
-		return VoxelRoom::empty_voxel();
-	}
+	ERR_FAIL_NULL_V_MSG(voxel_room_data, VoxelRoom::empty_voxel(), "");
 	Vector3i room_size = voxel_room_data->get_room_size();
 	if (position.x < 0 || position.x >= room_size.x ||
 		position.y < 0 || position.y >= room_size.y ||
@@ -110,21 +102,6 @@ Voxel VoxelRoom::get_voxel(const Vector3i& position) const
 	int index = ((position.x * room_size.y * room_size.z) + (position.y * room_size.z) + position.z);
 	return voxel_room_data->voxels[index];
 }
-
-static Vector3 direction_memorandum[8][32] = { Vector3() };
-
-//Vector3i VoxelRoom::get_voxel_direction(const Vector3i& direction, const Vector3i& rotation)
-//{
-//	Vector3* result = &direction_memorandum[direction.x * 4 + direction.y * 2 + direction.z][rotation.x / 90 * 4 * 4 + rotation.y / 90 * 4 + rotation.z];
-//	if (*result == Vector3i())
-//	{
-//		*result = direction;
-//		result->rotate(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-//		result->rotate(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-//		result->rotate(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-//	}
-//	return Vector3i(*result);
-//}
 
 Vector3i VoxelRoom::get_voxel_direction(const Vector3i& direction, const Vector3i& rotation)
 {
