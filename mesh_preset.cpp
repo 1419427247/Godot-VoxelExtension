@@ -15,7 +15,6 @@ void MeshPreset::_bind_methods() {
 }
 
 MeshPreset::MeshPreset() {
-
 }
 MeshPreset::~MeshPreset() {
 
@@ -78,6 +77,10 @@ Ref<Mesh> MeshPreset::get_mesh() const
 }
 
 void MeshPreset::set_materials(const TypedArray<int>& value) {
+	if (mesh.is_null())
+	{
+		return;
+	}
 	materials = value;
 	materials.resize(mesh_arrays.size());
 }

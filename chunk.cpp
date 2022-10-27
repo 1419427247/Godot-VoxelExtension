@@ -1,28 +1,12 @@
 #include "chunk.h"
 
-Array Chunk::get_mesh_array(const int& index) {
-	Array result;
-	ERR_FAIL_INDEX_V(index, mesh_arrays.size(), Array());
-	if (mesh_arrays[index].get_type() == Variant::NIL) {
-		result = Array();
-		result.resize(Mesh::ARRAY_MAX);
-		result[Mesh::ARRAY_VERTEX] = Array();
-		result[Mesh::ARRAY_TEX_UV] = Array();
-		result[Mesh::ARRAY_NORMAL] = Array();
-		mesh_arrays[index] = result;
-	}
-	else {
-		result = mesh_arrays[index];
-	}
-	return result;
-}
-
 void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRoomData>& voxel_room_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation) {
 
 #define BUILD_MESH_NO_CONDITION(direction)\
 	do{\
 		int material_id = basics_preset->get_##direction();\
-		Array arrays = get_mesh_array(material_id);\
+		ERR_FAIL_INDEX(material_id, mesh_arrays.size());\
+		Array arrays = mesh_arrays[material_id];\
 		BasicsPreset::build_##direction##_mesh(arrays, local_position, rotation);\
 	} while (false)
 
@@ -33,20 +17,22 @@ void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRo
 		int direction##voxel_id = VoxelRoom::get_voxel_id(direction##voxel);\
 		if (direction##voxel_type != VoxelRoomData::BASICS) {\
 			int material_id = basics_preset->get_##direction();\
-			Array arrays = get_mesh_array(material_id);\
+			ERR_FAIL_INDEX(material_id, mesh_arrays.size());\
+			Array arrays = mesh_arrays[material_id];\
 			BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
 		}else{\
 			Ref<BasicsPreset> direction##preset = basics_presets[direction##voxel_id];\
 			if(direction##preset->get_transparent() != basics_preset->get_transparent()){\
 				int material_id = basics_preset->get_##direction();\
-				Array arrays = get_mesh_array(material_id);\
+				ERR_FAIL_INDEX(material_id, mesh_arrays.size());\
+				Array arrays = mesh_arrays[material_id];\
 				BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
 			}\
 		}\
 	}while(false)
 
 	Array basics_presets = presets_data->get_basics_presets();
-	if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
+	if (rotation.x % 90 != 0 && rotation.y % 90 != 0 && rotation.z % 90 != 0)
 	{
 		BUILD_MESH_NO_CONDITION(up);
 		BUILD_MESH_NO_CONDITION(down);
@@ -54,7 +40,6 @@ void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRo
 		BUILD_MESH_NO_CONDITION(back);
 		BUILD_MESH_NO_CONDITION(left);
 		BUILD_MESH_NO_CONDITION(right);
-
 	}
 	else {
 		BUILD_MESH(up, Vector3i(0, 1, 0));
@@ -76,7 +61,8 @@ void Chunk::build_mesh(const Ref<VoxelRoomData>& voxel_room_data, Ref<MeshPreset
 	for (int i = 0; i < mesh->get_surface_count(); i++)
 	{
 		int material_id = materials[i];
-		Array arrays = get_mesh_array(material_id);
+		ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+		Array arrays = mesh_arrays[material_id];
 		mesh_preset->build_mesh(arrays, i, local_position, rotation);
 	}
 }
@@ -95,6 +81,7 @@ void Chunk::_bind_methods()
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_position"), "set_chunk_position", "get_chunk_position");
 
+	BIND_ENUM_CONSTANT(EMPTY_FILTER);
 	BIND_ENUM_CONSTANT(BASICS_FILTER);
 	BIND_ENUM_CONSTANT(MESH_FILTER);
 	BIND_ENUM_CONSTANT(DEVICE_FILTER);
@@ -163,16 +150,16 @@ void Chunk::set_voxel(const Vector3i& local_position, const Voxel& value)
 Voxel Chunk::get_voxel(const Vector3i& local_position) const
 {
 	VoxelRoom* voxel_room = get_voxel_room();
-	ERR_FAIL_NULL_V_MSG(voxel_room, VoxelRoom::empty_voxel(), "Chunk node must be a direct child of VoxelRoom");
+	ERR_FAIL_NULL_V_MSG(voxel_room, EMPTY_VOXEL, "Chunk node must be a direct child of VoxelRoom");
 	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
-	ERR_FAIL_NULL_V(voxel_room_data, VoxelRoom::empty_voxel());
+	ERR_FAIL_NULL_V(voxel_room_data, EMPTY_VOXEL);
 
 	Vector3i chunk_size = voxel_room_data->get_chunk_size();
 	if (voxel_room->get_isolated() == true) {
 		if (local_position.x < 0 || local_position.x >= chunk_size.x ||
 			local_position.y < 0 || local_position.y >= chunk_size.y ||
 			local_position.z < 0 || local_position.z >= chunk_size.z) {
-			return VoxelRoom::empty_voxel();
+			return EMPTY_VOXEL;
 		}
 	}
 	return voxel_room->get_voxel(local_position + chunk_position * voxel_room_data->get_chunk_size());
@@ -206,7 +193,7 @@ Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& no
 /// 生成区块内所有可渲染网格
 /// </summary>
 /// <returns></returns>
-ArrayMesh* Chunk::generate_mesh(const int& filter)
+Ref<ArrayMesh> Chunk::generate_mesh(const int& filter)
 {
 	VoxelRoom* voxel_room = get_voxel_room();
 	ERR_FAIL_NULL_V_MSG(voxel_room, nullptr, "Chunk node must be a direct child of VoxelRoom");
@@ -233,8 +220,17 @@ ArrayMesh* Chunk::generate_mesh(const int& filter)
 	Array custom_materials = presets_data->get_custom_materials();
 	Array basics_presets = presets_data->get_basics_presets();
 	Array mesh_presets = presets_data->get_mesh_presets();
-	mesh_arrays.clear();
+
 	mesh_arrays.resize(custom_materials.size());
+	for (int i = 0; i < mesh_arrays.size(); i++)
+	{
+		Array arrays;
+		arrays.resize(Mesh::ARRAY_MAX);
+		arrays[Mesh::ARRAY_VERTEX] = Array();
+		arrays[Mesh::ARRAY_TEX_UV] = Array();
+		arrays[Mesh::ARRAY_NORMAL] = Array();
+		mesh_arrays[i] = arrays;
+	}
 
 	Vector3i chunk_size = voxel_room_data->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
@@ -255,7 +251,7 @@ ArrayMesh* Chunk::generate_mesh(const int& filter)
 
 					ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
 					Ref<BasicsPreset> basics_preset = basics_presets[id];
-					ERR_FAIL_NULL_V_MSG(basics_preset, nullptr, "The basics_preset is null [id = " + String::num_int64(id) + "]");
+					ERR_FAIL_NULL_V_MSG(basics_preset, nullptr, "The basics_preset with id " + String::num_int64(id) + " is null");
 
 					if (is_generate_basics == false)
 					{
@@ -290,7 +286,7 @@ ArrayMesh* Chunk::generate_mesh(const int& filter)
 
 					ERR_FAIL_INDEX_V(id, mesh_presets.size(), nullptr);
 					Ref<MeshPreset> mesh_preset = mesh_presets[id];
-					ERR_FAIL_NULL_V_MSG(mesh_preset, nullptr, "The mesh_preset is null [id = " + String::num_int64(id) + "]");
+					ERR_FAIL_NULL_V_MSG(mesh_preset, nullptr, "The mesh_preset with id " + String::num_int64(id) + " is null");
 
 					if (is_generate_mesh == false)
 					{
@@ -326,7 +322,8 @@ ArrayMesh* Chunk::generate_mesh(const int& filter)
 			}
 		}
 	}
-	ArrayMesh* result = memnew(ArrayMesh);
+	Ref<ArrayMesh> result;
+	result.instantiate();
 	for (int i = 0; i < mesh_arrays.size(); i++)
 	{
 		if (mesh_arrays[i].get_type() != Variant::NIL) {
@@ -345,7 +342,7 @@ ArrayMesh* Chunk::generate_mesh(const int& filter)
 /// 将每个体素视作正方体，以生成区块的碰撞网格
 /// </summary>
 /// <returns></returns>
-ConcavePolygonShape3D* Chunk::generate_collider(const int& filter)
+Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 {
 	VoxelRoom* voxel_room = get_voxel_room();
 	ERR_FAIL_NULL_V_MSG(voxel_room, nullptr, "Chunk node must be a direct child of VoxelRoom");
@@ -522,21 +519,19 @@ ConcavePolygonShape3D* Chunk::generate_collider(const int& filter)
 		}
 	}
 
-	ConcavePolygonShape3D* result = memnew(ConcavePolygonShape3D);
+	Ref<ConcavePolygonShape3D> result;
+	result.instantiate();
 	if (collider_faces.size() > 0) {
 		result->set_faces(collider_faces);
 	}
 	return result;
 }
-/// <summary>
-/// 返回区块内所有的节点实例
-/// </summary>
-/// <returns></returns>
+
 void Chunk::generate_device()
 {
 	VoxelRoom* voxel_room = get_voxel_room();
 	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
-	ERR_FAIL_NULL_MSG(voxel_room_data, "");
+	ERR_FAIL_NULL(voxel_room_data);
 
 	Ref<PresetsData> presets_data = voxel_room->get_presets_data();
 	Array device_presets = presets_data->get_device_presets();
@@ -566,11 +561,14 @@ void Chunk::generate_device()
 							device = nullptr;
 						}
 					}
-
 					if (device == nullptr) {
 						Node* node = device_preset->get_packed_scene()->instantiate();
 						device = cast_to<Device>(node);
-						ERR_FAIL_NULL_MSG(device, "The DevicePreset with id = " + String::num_int64(id) + " cannot be instantiated");
+						if (unlikely(device == nullptr))
+						{
+							node->queue_free();
+							ERR_FAIL_MSG("The DevicePreset with id " + String::num_int64(id) + " cannot be instantiated");
+						}
 						device->set_device_preset(device_preset);
 						devices[local_position] = device;
 
@@ -588,8 +586,4 @@ void Chunk::generate_device()
 			}
 		}
 	}
-}
-
-void Chunk::print_error(const String& value) const
-{
 }

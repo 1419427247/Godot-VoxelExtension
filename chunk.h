@@ -8,13 +8,14 @@ class Chunk : public Node3D
 	GDCLASS(Chunk, Node3D);
 	enum Filter
 	{
-		BASICS_FILTER = 0b1,
-		MESH_FILTER = 0b10,
-		DEVICE_FILTER = 0b100,
-		TRANSPARENT_TRUE_FILTER = 0b01000,
-		TRANSPARENT_FALSE_FILTER = 0b10000,
-		COLLIDER_TRUE_FILTER = 0b1000000,
-		COLLIDER_FALSE_FILTER = 0b10000000,
+		EMPTY_FILTER = 0b1,
+		BASICS_FILTER = 0b10,
+		MESH_FILTER = 0b100,
+		DEVICE_FILTER = 0b1000,
+		TRANSPARENT_TRUE_FILTER = 0b010000,
+		TRANSPARENT_FALSE_FILTER = 0b100000,
+		COLLIDER_TRUE_FILTER = 0b10000000,
+		COLLIDER_FALSE_FILTER = 0b100000000,
 	};
 private:
 	Vector3i chunk_position;
@@ -22,8 +23,6 @@ private:
 
 	Dictionary devices;
 protected:
-	Array get_mesh_array(const int& index);
-
 	void build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRoomData>& voxel_room_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation);
 	void build_mesh(const Ref<VoxelRoomData>& voxel_room_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation);
 
@@ -44,11 +43,9 @@ public:
 
 	Vector3i get_voxel_local_position(const Vector3& point, const Vector3& normal) const;
 
-	ArrayMesh* generate_mesh(const int& filter = BASICS_FILTER | MESH_FILTER);
-	ConcavePolygonShape3D* generate_collider(const int& filter = BASICS_FILTER | MESH_FILTER);
+	Ref<ArrayMesh> generate_mesh(const int& filter = BASICS_FILTER | MESH_FILTER);
+	Ref<ConcavePolygonShape3D> generate_collider(const int& filter = BASICS_FILTER | MESH_FILTER);
 	void generate_device();
-
-	void print_error(const String& value) const;
 };
 
 VARIANT_ENUM_CAST(Chunk, Chunk::Filter);

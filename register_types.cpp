@@ -1,5 +1,4 @@
 #include"register_types.h"
-#include "chunk.h"
 
 extern "C" {
 	GDNativeBool GDN_EXPORT voxel_library_init(const GDNativeInterface* p_interface, const GDNativeExtensionClassLibraryPtr p_library, GDNativeInitialization* r_initialization) {
@@ -17,6 +16,7 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
+	ClassDB::register_class<VoxelContainer>();
 	ClassDB::register_class<VoxelRoom>();
 	ClassDB::register_class<VoxelRoomData>();
 	ClassDB::register_class<Chunk>();

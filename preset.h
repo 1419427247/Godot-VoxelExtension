@@ -32,7 +32,6 @@
 using namespace godot;
 
 typedef unsigned int Voxel;
-#define VOXEL(type,id,rotation,flag) ((type << 30) | (id << 20) | (abs(rotation.x % 360 / 15) << 15) | (abs(rotation.y % 360 / 15)) << 10 | (abs(rotation.z % 360 / 15) << 5) | (flag & 0b11111))
 class VoxelRoom;
 
 class Preset : public Resource

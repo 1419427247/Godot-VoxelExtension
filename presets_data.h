@@ -5,6 +5,7 @@
 #include "mesh_preset.h"
 #include "device_preset.h"
 #include "custom_material.h"
+#include "device.h"
 
 class PresetsData : public Resource
 {

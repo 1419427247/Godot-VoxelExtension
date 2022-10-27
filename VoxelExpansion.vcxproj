@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,6 +139,7 @@
     <ClInclude Include="preset.h" />
     <ClInclude Include="presets_data.h" />
     <ClInclude Include="register_types.h" />
+    <ClInclude Include="voxel_container.h" />
     <ClInclude Include="voxel_room.h" />
     <ClInclude Include="voxel_room_data.h" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClCompile Include="preset.cpp" />
     <ClCompile Include="presets_data.cpp" />
     <ClCompile Include="register_types.cpp" />
+    <ClCompile Include="voxel_container.cpp" />
     <ClCompile Include="voxel_room.cpp" />
     <ClCompile Include="voxel_room_data.cpp" />
   </ItemGroup>
