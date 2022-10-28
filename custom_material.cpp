@@ -4,8 +4,8 @@ void CustomMaterial::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_shader_material", "value"), &CustomMaterial::set_shader_material);
 	ClassDB::bind_method(D_METHOD("get_shader_material"), &CustomMaterial::get_shader_material);
 
-	ClassDB::bind_method(D_METHOD("get_shader_parameter_list"), &CustomMaterial::get_shader_parameter_list);
 	ClassDB::bind_method(D_METHOD("set_shader_parameter", "key", "value"), &CustomMaterial::set_shader_parameter);
+	ClassDB::bind_method(D_METHOD("get_shader_parameter_list"), &CustomMaterial::get_shader_parameter_list);
 
 	ClassDB::bind_static_method("CustomMaterial", D_METHOD("instantiate", "name", "shader", "parameter"), &CustomMaterial::instantiate);
 

@@ -5,11 +5,14 @@ void VoxelContainer::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_presets_data", "value"), &VoxelContainer::set_presets_data);
 	ClassDB::bind_method(D_METHOD("get_presets_data"), &VoxelContainer::get_presets_data);
 
-	ClassDB::bind_method(D_METHOD("set_isolated", "value"), &VoxelContainer::set_isolated);
-	ClassDB::bind_method(D_METHOD("get_isolated"), &VoxelContainer::get_isolated);
+	ClassDB::bind_method(D_METHOD("set_chunk_size", "value"), &VoxelContainer::set_chunk_size);
+	ClassDB::bind_method(D_METHOD("get_chunk_size"), &VoxelContainer::get_chunk_size);
 
-	//ClassDB::bind_method(D_METHOD("set_voxel", "position", "value"), &VoxelContainer::set_voxel);
-	//ClassDB::bind_method(D_METHOD("get_voxel", "position"), &VoxelContainer::get_voxel);
+	ClassDB::bind_method(D_METHOD("set_isolated", "value"), &VoxelContainer::set_isolated);
+	ClassDB::bind_method(D_METHOD("is_isolated"), &VoxelContainer::is_isolated);
+
+	ClassDB::bind_method(D_METHOD("copy", "from", "to"), &VoxelContainer::copy);
+	ClassDB::bind_method(D_METHOD("paste", "voxel_container_data", "position", "direction"), &VoxelContainer::paste);
 
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("get_voxel_direction", "direction", "rotation"), &VoxelContainer::get_voxel_direction);
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("get_voxel_type", "value"), &VoxelContainer::get_voxel_type);
@@ -22,11 +25,22 @@ void VoxelContainer::_bind_methods()
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("mesh_voxel", "id", "rotation", "flag"), &VoxelContainer::mesh_voxel, Vector3i(), 0);
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("device_voxel", "id", "rotation", "flag"), &VoxelContainer::device_voxel, Vector3i(), 0);
 
-	BIND_VIRTUAL_METHOD(VoxelContainer, set_voxel);
-	BIND_VIRTUAL_METHOD(VoxelContainer, get_voxel);
+	//BIND_VIRTUAL_METHOD(VoxelContainer, set_voxel);
+	//BIND_VIRTUAL_METHOD(VoxelContainer, get_voxel);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "isolated"), "set_isolated", "get_isolated");
+	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_size"), "set_chunk_size", "get_chunk_size");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "isolated"), "set_isolated", "is_isolated");
+}
+
+VoxelContainer::VoxelContainer()
+{
+	chunk_size = Vector3i(8, 8, 8);
+	isolated = false;
+}
+
+VoxelContainer::~VoxelContainer()
+{
 }
 
 void VoxelContainer::set_presets_data(const Ref<PresetsData>& value)
@@ -39,13 +53,24 @@ Ref<PresetsData> VoxelContainer::get_presets_data() const
 	return presets_data;
 }
 
+void VoxelContainer::set_chunk_size(const Vector3i& value)
+{
+	ERR_FAIL_COND_MSG(value.x <= 0 || value.y <= 0 || value.z <= 0, "The chunk size is an invalid value");
+	chunk_size = value;
+}
+
+Vector3i VoxelContainer::get_chunk_size() const
+{
+	return chunk_size;
+}
+
 
 void VoxelContainer::set_isolated(const bool& value)
 {
 	isolated = value;
 }
 
-bool VoxelContainer::get_isolated() const
+bool VoxelContainer::is_isolated() const
 {
 	return isolated;
 }
@@ -57,6 +82,46 @@ void VoxelContainer::set_voxel(const Vector3i& position, const Voxel& value)
 Voxel VoxelContainer::get_voxel(const Vector3i& position) const
 {
 	return EMPTY_VOXEL;
+}
+
+VoxelContainerData* VoxelContainer::copy(const Vector3i& from, const Vector3i& to)
+{
+	VoxelContainerData* replica_voxel_data = memnew(VoxelContainerData);
+	Vector3i chunk_size = Vector3i(abs(from.x - to.x) + 1, abs(from.y - to.y) + 1, abs(from.z - to.z) + 1);
+	replica_voxel_data->set_container_size(chunk_size);
+	int step_x = from.x > to.x ? -1 : 1;
+	int step_y = from.y > to.y ? -1 : 1;
+	int step_z = from.z > to.z ? -1 : 1;
+	for (int x = from.x; x != to.x + step_x; x += step_x)
+	{
+		for (int y = from.y; y != to.y + step_y; y += step_y)
+		{
+			for (int z = from.z; z != to.z + step_z; z += step_z)
+			{
+				Vector3i position = Vector3i(x, y, z);
+				Vector3i replica_position = Vector3i(abs(x - from.x), abs(y - from.y), abs(z - from.z));
+				Voxel voxel = get_voxel(position);
+				replica_voxel_data->set_voxel(replica_position, voxel);
+			}
+		}
+	}
+	return replica_voxel_data;
+}
+
+void VoxelContainer::paste(const Ref<VoxelContainerData>& voxel_container_data, const Vector3i& position, const Vector3i& direction)
+{
+	ERR_FAIL_COND_MSG((direction.x != 1 && direction.x == -1) || (direction.y != 1 && direction.y == -1) || (direction.z != 1 && direction.z == -1), "Invalid direction");
+	for (int x = position.x; x != position.x + voxel_container_data->get_container_size().x * direction.x; x += direction.x)
+	{
+		for (int y = position.y; y != position.y + voxel_container_data->get_container_size().y * direction.y; y += direction.y)
+		{
+			for (int z = position.z; z != position.z + voxel_container_data->get_container_size().z * direction.z; z += direction.z)
+			{
+				Vector3i position = Vector3i(x, y, z);
+				set_voxel(position, get_voxel(Vector3i(abs(x - position.x), abs(y - position.y), abs(z - position.z))));
+			}
+		}
+	}
 }
 
 Vector3i VoxelContainer::get_voxel_direction(const Vector3i& direction, const Vector3i& rotation)
@@ -100,7 +165,7 @@ Voxel VoxelContainer::basics_voxel(const int& id, const Vector3i& rotation, cons
 
 Voxel VoxelContainer::mesh_voxel(const int& id, const Vector3i& rotation, const int& flag)
 {
-	return DEVICE_VOXEL(id, rotation, flag);
+	return MESH_VOXEL(id, rotation, flag);
 }
 
 Voxel VoxelContainer::device_voxel(const int& id, const Vector3i& rotation, const int& flag)

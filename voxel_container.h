@@ -1,7 +1,7 @@
 #ifndef VOXEL_CONTAINER_H
 #define VOXEL_CONTAINER_H
 
-#include "voxel_room_data.h"
+#include "voxel_container_data.h"
 #include "presets_data.h"
 
 class VoxelContainer : public Node3D
@@ -11,19 +11,30 @@ private:
 
 protected:
 	Ref<PresetsData> presets_data;
+	Vector3i chunk_size;
 	bool isolated;
 
 	static void _bind_methods();
 public:
+	VoxelContainer();
+	~VoxelContainer();
+
 	void set_presets_data(const Ref<PresetsData>& value);
 	Ref<PresetsData> get_presets_data() const;
 
+	void set_chunk_size(const Vector3i& value);
+	Vector3i get_chunk_size() const;
+
+
 	void set_isolated(const bool& value);
-	bool get_isolated() const;
+	bool is_isolated() const;
 
 	virtual void set_voxel(const Vector3i& position, const Voxel& value);
 	virtual Voxel get_voxel(const Vector3i& position) const;
 	
+	VoxelContainerData* copy(const Vector3i& from, const Vector3i& to);
+	void paste(const Ref<VoxelContainerData>& voxel_container_data, const Vector3i& position, const Vector3i& direction);
+
 	static Vector3i get_voxel_direction(const Vector3i& direction, const Vector3i& rotation);
 
 	static int get_voxel_type(const Voxel& value);

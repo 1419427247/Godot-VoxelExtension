@@ -24,6 +24,8 @@ void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 	mesh = value;
 	if (value.is_null())
 	{
+		mesh_arrays.resize(0);
+		materials.resize(0);
 		return;
 	}
 	mesh_arrays.resize(mesh->get_surface_count());
@@ -42,25 +44,49 @@ void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 		Array surface_normal_array;
 		Array surface_tex_uv_array;
 
-		for (size_t i = 0; i < packed_array_index.size(); i += 3)
+		if (packed_array_index.size() == 0)
 		{
-			Vector3 vertex_a = packed_array_vertex[packed_array_index[i]];
-			Vector3 vertex_b = packed_array_vertex[packed_array_index[i + 1]];
-			Vector3 vertex_c = packed_array_vertex[packed_array_index[i + 2]];
+			for (size_t i = 0; i < packed_array_vertex.size(); i += 3)
+			{
+				Vector3 vertex_a = packed_array_vertex[i];
+				Vector3 vertex_b = packed_array_vertex[i + 1];
+				Vector3 vertex_c = packed_array_vertex[i + 2];
+				surface_vertex_array.push_back(vertex_a);
+				surface_vertex_array.push_back(vertex_b);
+				surface_vertex_array.push_back(vertex_c);
 
-			surface_vertex_array.push_back(vertex_a);
-			surface_vertex_array.push_back(vertex_b);
-			surface_vertex_array.push_back(vertex_c);
+				Vector3 normal = Plane(vertex_a, vertex_b, vertex_c).get_normal();
 
-			Vector3 normal = Plane(vertex_a, vertex_b, vertex_c).get_normal();
+				surface_normal_array.push_back(normal);
+				surface_normal_array.push_back(normal);
+				surface_normal_array.push_back(normal);
 
-			surface_normal_array.push_back(normal);
-			surface_normal_array.push_back(normal);
-			surface_normal_array.push_back(normal);
+				surface_tex_uv_array.push_back(packed_array_tex_uv[i]);
+				surface_tex_uv_array.push_back(packed_array_tex_uv[i + 1]);
+				surface_tex_uv_array.push_back(packed_array_tex_uv[i + 2]);
+			}
+		}
+		else {
+			for (size_t i = 0; i < packed_array_index.size(); i += 3)
+			{
+				Vector3 vertex_a = packed_array_vertex[packed_array_index[i]];
+				Vector3 vertex_b = packed_array_vertex[packed_array_index[i + 1]];
+				Vector3 vertex_c = packed_array_vertex[packed_array_index[i + 2]];
 
-			surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i]]);
-			surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i + 1]]);
-			surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i + 2]]);
+				surface_vertex_array.push_back(vertex_a);
+				surface_vertex_array.push_back(vertex_b);
+				surface_vertex_array.push_back(vertex_c);
+
+				Vector3 normal = Plane(vertex_a, vertex_b, vertex_c).get_normal();
+
+				surface_normal_array.push_back(normal);
+				surface_normal_array.push_back(normal);
+				surface_normal_array.push_back(normal);
+
+				surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i]]);
+				surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i + 1]]);
+				surface_tex_uv_array.push_back(packed_array_tex_uv[packed_array_index[i + 2]]);
+			}
 		}
 		surface[Mesh::ARRAY_VERTEX] = surface_vertex_array;
 		surface[Mesh::ARRAY_NORMAL] = surface_normal_array;
@@ -77,10 +103,6 @@ Ref<Mesh> MeshPreset::get_mesh() const
 }
 
 void MeshPreset::set_materials(const TypedArray<int>& value) {
-	if (mesh.is_null())
-	{
-		return;
-	}
 	materials = value;
 	materials.resize(mesh_arrays.size());
 }

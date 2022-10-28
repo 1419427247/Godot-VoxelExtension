@@ -39,13 +39,19 @@
     <ClInclude Include="device_preset.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="voxel_room_data.h">
+    <ClInclude Include="voxel_container_data.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="presets_data.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="device.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="voxel_container.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="voxel_world.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,13 +80,19 @@
     <ClCompile Include="device_preset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="voxel_room_data.cpp">
+    <ClCompile Include="voxel_container_data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="presets_data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="device.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="voxel_container.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="voxel_world.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

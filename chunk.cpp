@@ -1,6 +1,6 @@
 #include "chunk.h"
 
-void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRoomData>& voxel_room_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation) {
+void Chunk::build_basics(const Ref<PresetsData>& presets_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation) {
 
 #define BUILD_MESH_NO_CONDITION(direction)\
 	do{\
@@ -15,7 +15,7 @@ void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRo
 		Voxel direction##voxel = get_voxel(local_position + VoxelRoom::get_voxel_direction(axis, rotation));\
 		int direction##voxel_type = VoxelRoom::get_voxel_type(direction##voxel);\
 		int direction##voxel_id = VoxelRoom::get_voxel_id(direction##voxel);\
-		if (direction##voxel_type != VoxelRoomData::BASICS) {\
+		if (direction##voxel_type != VoxelContainerData::BASICS) {\
 			int material_id = basics_preset->get_##direction();\
 			ERR_FAIL_INDEX(material_id, mesh_arrays.size());\
 			Array arrays = mesh_arrays[material_id];\
@@ -53,7 +53,7 @@ void Chunk::build_basics(const Ref<PresetsData>& presets_data, const Ref<VoxelRo
 #undef BUILD_MESH
 }
 
-void Chunk::build_mesh(const Ref<VoxelRoomData>& voxel_room_data, Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation)
+void Chunk::build_mesh(Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation)
 {
 	Ref<Mesh> mesh = mesh_preset->get_mesh();
 	ERR_FAIL_NULL(mesh);
@@ -99,9 +99,9 @@ Chunk::~Chunk() {
 
 }
 
-VoxelRoom* Chunk::get_voxel_room() const
+VoxelContainer* Chunk::get_voxel_container() const
 {
-	return cast_to<VoxelRoom>(get_parent());
+	return cast_to<VoxelContainer>(get_parent());
 }
 
 void Chunk::set_chunk_position(const Vector3i& value) {
@@ -126,20 +126,18 @@ Dictionary Chunk::get_devices() const
 /// <param name="value"></param>
 void Chunk::set_voxel(const Vector3i& local_position, const Voxel& value)
 {
-	VoxelRoom* voxel_room = get_voxel_room();
-	ERR_FAIL_NULL_MSG(voxel_room, "Chunk node must be a direct child of VoxelRoom");
-	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
-	ERR_FAIL_NULL(voxel_room_data);
+	VoxelContainer* voxel_container = get_voxel_container();
+	ERR_FAIL_NULL_MSG(voxel_container, "Chunk node must be a direct child of VoxelVontainer");
 
-	Vector3i chunk_size = voxel_room_data->get_chunk_size();
-	if (voxel_room->get_isolated() == true) {
+	Vector3i chunk_size = voxel_container->get_chunk_size();
+	if (voxel_container->is_isolated() == true) {
 		if (local_position.x < 0 || local_position.x >= chunk_size.x ||
 			local_position.y < 0 || local_position.y >= chunk_size.y ||
 			local_position.z < 0 || local_position.z >= chunk_size.z) {
 			return;
 		}
 	}
-	voxel_room->set_voxel(local_position + chunk_position * voxel_room_data->get_chunk_size(), value);
+	voxel_container->set_voxel(local_position + chunk_position * chunk_size, value);
 }
 
 /// <summary>
@@ -149,20 +147,18 @@ void Chunk::set_voxel(const Vector3i& local_position, const Voxel& value)
 /// <returns></returns>
 Voxel Chunk::get_voxel(const Vector3i& local_position) const
 {
-	VoxelRoom* voxel_room = get_voxel_room();
-	ERR_FAIL_NULL_V_MSG(voxel_room, EMPTY_VOXEL, "Chunk node must be a direct child of VoxelRoom");
-	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
-	ERR_FAIL_NULL_V(voxel_room_data, EMPTY_VOXEL);
+	VoxelContainer* voxel_container = get_voxel_container();
+	ERR_FAIL_NULL_V_MSG(voxel_container, EMPTY_VOXEL, "Chunk node must be a direct child of VoxelVontainer");
 
-	Vector3i chunk_size = voxel_room_data->get_chunk_size();
-	if (voxel_room->get_isolated() == true) {
+	Vector3i chunk_size = voxel_container->get_chunk_size();
+	if (voxel_container->is_isolated() == true) {
 		if (local_position.x < 0 || local_position.x >= chunk_size.x ||
 			local_position.y < 0 || local_position.y >= chunk_size.y ||
 			local_position.z < 0 || local_position.z >= chunk_size.z) {
 			return EMPTY_VOXEL;
 		}
 	}
-	return voxel_room->get_voxel(local_position + chunk_position * voxel_room_data->get_chunk_size());
+	return voxel_container->get_voxel(local_position + chunk_position * chunk_size);
 }
 
 Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& normal) const
@@ -193,15 +189,12 @@ Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& no
 /// 生成区块内所有可渲染网格
 /// </summary>
 /// <returns></returns>
-Ref<ArrayMesh> Chunk::generate_mesh(const int& filter)
+ArrayMesh* Chunk::generate_mesh(const int& filter)
 {
-	VoxelRoom* voxel_room = get_voxel_room();
-	ERR_FAIL_NULL_V_MSG(voxel_room, nullptr, "Chunk node must be a direct child of VoxelRoom");
+	VoxelContainer* voxel_container = get_voxel_container();
+	ERR_FAIL_NULL_V_MSG(voxel_container, nullptr, "Chunk node must be a direct child of VoxelVontainer");
 
-	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
-	ERR_FAIL_NULL_V(voxel_room_data, nullptr);
-
-	Ref<PresetsData> presets_data = voxel_room->get_presets_data();
+	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
 	ERR_FAIL_NULL_V(presets_data, nullptr);
 
 
@@ -232,7 +225,7 @@ Ref<ArrayMesh> Chunk::generate_mesh(const int& filter)
 		mesh_arrays[i] = arrays;
 	}
 
-	Vector3i chunk_size = voxel_room_data->get_chunk_size();
+	Vector3i chunk_size = voxel_container->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -246,7 +239,7 @@ Ref<ArrayMesh> Chunk::generate_mesh(const int& filter)
 				int flag = VoxelRoom::get_voxel_flag(voxel);
 				switch (type)
 				{
-				case VoxelRoomData::BASICS: {
+				case VoxelContainerData::BASICS: {
 					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 
 					ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
@@ -279,10 +272,10 @@ Ref<ArrayMesh> Chunk::generate_mesh(const int& filter)
 							continue;
 						}
 					}
-					build_basics(presets_data, voxel_room_data, basics_preset, local_position, rotation);
+					build_basics(presets_data, basics_preset, local_position, rotation);
 					break;
 				}
-				case VoxelRoomData::MESH: {
+				case VoxelContainerData::MESH: {
 
 					ERR_FAIL_INDEX_V(id, mesh_presets.size(), nullptr);
 					Ref<MeshPreset> mesh_preset = mesh_presets[id];
@@ -315,22 +308,24 @@ Ref<ArrayMesh> Chunk::generate_mesh(const int& filter)
 						}
 					}
 					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
-					build_mesh(voxel_room_data, mesh_preset, local_position, rotation);
+					build_mesh(mesh_preset, local_position, rotation);
 					break;
 				}
 				}
 			}
 		}
 	}
-	Ref<ArrayMesh> result;
-	result.instantiate();
+	ArrayMesh* result = memnew(ArrayMesh);
 	for (int i = 0; i < mesh_arrays.size(); i++)
 	{
-		if (mesh_arrays[i].get_type() != Variant::NIL) {
-			Array arrays = mesh_arrays[i];
-			arrays[ArrayMesh::ARRAY_VERTEX] = PackedVector3Array((Array)arrays[ArrayMesh::ARRAY_VERTEX]);
-			arrays[ArrayMesh::ARRAY_NORMAL] = PackedVector3Array((Array)arrays[ArrayMesh::ARRAY_NORMAL]);
-			arrays[ArrayMesh::ARRAY_TEX_UV] = PackedVector2Array((Array)arrays[ArrayMesh::ARRAY_TEX_UV]);
+		Array arrays = mesh_arrays[i];
+		Array vertex_array = (Array)arrays[ArrayMesh::ARRAY_VERTEX];
+		Array normal_array = (Array)arrays[ArrayMesh::ARRAY_NORMAL];
+		Array tex_uv_array = (Array)arrays[ArrayMesh::ARRAY_TEX_UV];
+		if (vertex_array.size() > 0) {
+			arrays[ArrayMesh::ARRAY_VERTEX] = PackedVector3Array(vertex_array);
+			arrays[ArrayMesh::ARRAY_NORMAL] = PackedVector3Array(normal_array);
+			arrays[ArrayMesh::ARRAY_TEX_UV] = PackedVector2Array(tex_uv_array);
 			Ref<ShaderMaterial> material = cast_to<CustomMaterial>(custom_materials[i])->get_shader_material();
 			result->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
 			result->surface_set_material(result->get_surface_count() - 1, material);
@@ -342,15 +337,12 @@ Ref<ArrayMesh> Chunk::generate_mesh(const int& filter)
 /// 将每个体素视作正方体，以生成区块的碰撞网格
 /// </summary>
 /// <returns></returns>
-Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
+ConcavePolygonShape3D* Chunk::generate_collider(const int& filter)
 {
-	VoxelRoom* voxel_room = get_voxel_room();
-	ERR_FAIL_NULL_V_MSG(voxel_room, nullptr, "Chunk node must be a direct child of VoxelRoom");
+	VoxelContainer* voxel_container = get_voxel_container();
+	ERR_FAIL_NULL_V_MSG(voxel_container, nullptr, "Chunk node must be a direct child of VoxelVontainer");
 
-	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
-	ERR_FAIL_NULL_V(voxel_room_data, nullptr);
-
-	Ref<PresetsData> presets_data = voxel_room->get_presets_data();
+	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
 	ERR_FAIL_NULL_V(presets_data, nullptr);
 
 	Array basics_presets = presets_data->get_basics_presets();
@@ -370,7 +362,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 	bool is_generate_collider_all = is_generate_collider_true == is_generate_collider_false;
 
 	PackedVector3Array collider_faces;
-	Vector3i chunk_size = voxel_room_data->get_chunk_size();
+	Vector3i chunk_size = voxel_container->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -381,7 +373,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 				Voxel voxel = get_voxel(local_position);
 				int type = VoxelRoom::get_voxel_type(voxel);
 				int id = VoxelRoom::get_voxel_id(voxel);
-				if (type == VoxelRoomData::EMPTY)
+				if (type == VoxelContainerData::EMPTY)
 				{
 					continue;
 				}
@@ -389,7 +381,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 					Ref<Preset> preset;
 					switch (type)
 					{
-					case VoxelRoomData::BASICS:
+					case VoxelContainerData::BASICS:
 					{
 						if (is_generate_basics == false)
 						{
@@ -399,7 +391,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 						preset = basics_presets[id];
 						break;
 					}
-					case VoxelRoomData::MESH:
+					case VoxelContainerData::MESH:
 					{
 						if (is_generate_mesh == false)
 						{
@@ -409,7 +401,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 						preset = mesh_presets[id];
 						break;
 					}
-					case VoxelRoomData::DEVICE:
+					case VoxelContainerData::DEVICE:
 					{
 						if (is_generate_device == false)
 						{
@@ -459,7 +451,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 					int left_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(-1, 0, 0)));
 					int right_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(1, 0, 0)));
 
-					if (up_voxel_type == VoxelRoomData::EMPTY)
+					if (up_voxel_type == VoxelContainerData::EMPTY)
 					{
 						collider_faces.push_back(vertexs[2]);
 						collider_faces.push_back(vertexs[1]);
@@ -468,7 +460,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 						collider_faces.push_back(vertexs[5]);
 						collider_faces.push_back(vertexs[6]);
 					}
-					if (down_voxel_type == VoxelRoomData::EMPTY)
+					if (down_voxel_type == VoxelContainerData::EMPTY)
 					{
 						collider_faces.push_back(vertexs[0]);
 						collider_faces.push_back(vertexs[3]);
@@ -477,7 +469,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 						collider_faces.push_back(vertexs[7]);
 						collider_faces.push_back(vertexs[4]);
 					}
-					if (front_voxel_type == VoxelRoomData::EMPTY)
+					if (front_voxel_type == VoxelContainerData::EMPTY)
 					{
 						collider_faces.push_back(vertexs[1]);
 						collider_faces.push_back(vertexs[2]);
@@ -486,7 +478,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 						collider_faces.push_back(vertexs[3]);
 						collider_faces.push_back(vertexs[0]);
 					}
-					if (back_voxel_type == VoxelRoomData::EMPTY)
+					if (back_voxel_type == VoxelContainerData::EMPTY)
 					{
 						collider_faces.push_back(vertexs[6]);
 						collider_faces.push_back(vertexs[5]);
@@ -495,7 +487,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 						collider_faces.push_back(vertexs[4]);
 						collider_faces.push_back(vertexs[7]);
 					}
-					if (left_voxel_type == VoxelRoomData::EMPTY)
+					if (left_voxel_type == VoxelContainerData::EMPTY)
 					{
 						collider_faces.push_back(vertexs[2]);
 						collider_faces.push_back(vertexs[6]);
@@ -504,7 +496,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 						collider_faces.push_back(vertexs[7]);
 						collider_faces.push_back(vertexs[3]);
 					}
-					if (right_voxel_type == VoxelRoomData::EMPTY)
+					if (right_voxel_type == VoxelContainerData::EMPTY)
 					{
 						collider_faces.push_back(vertexs[5]);
 						collider_faces.push_back(vertexs[1]);
@@ -519,8 +511,7 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 		}
 	}
 
-	Ref<ConcavePolygonShape3D> result;
-	result.instantiate();
+	ConcavePolygonShape3D* result = memnew(ConcavePolygonShape3D);
 	if (collider_faces.size() > 0) {
 		result->set_faces(collider_faces);
 	}
@@ -529,14 +520,13 @@ Ref<ConcavePolygonShape3D> Chunk::generate_collider(const int& filter)
 
 void Chunk::generate_device()
 {
-	VoxelRoom* voxel_room = get_voxel_room();
-	Ref<VoxelRoomData> voxel_room_data = voxel_room->get_voxel_room_data();
-	ERR_FAIL_NULL(voxel_room_data);
+	VoxelContainer* voxel_container = get_voxel_container();
+	ERR_FAIL_NULL_MSG(voxel_container, "Chunk node must be a direct child of VoxelVontainer");
 
-	Ref<PresetsData> presets_data = voxel_room->get_presets_data();
+	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
 	Array device_presets = presets_data->get_device_presets();
 
-	Vector3i chunk_size = voxel_room_data->get_chunk_size();
+	Vector3i chunk_size = voxel_container->get_chunk_size();
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -551,7 +541,7 @@ void Chunk::generate_device()
 
 				Device* device = cast_to<Device>(devices[local_position]);
 
-				if (type == VoxelRoomData::DEVICE)
+				if (type == VoxelContainerData::DEVICE)
 				{
 					Ref<DevicePreset> device_preset = device_presets[id];
 					if (device != nullptr) {

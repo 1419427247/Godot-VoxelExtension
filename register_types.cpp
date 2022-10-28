@@ -18,7 +18,8 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 	}
 	ClassDB::register_class<VoxelContainer>();
 	ClassDB::register_class<VoxelRoom>();
-	ClassDB::register_class<VoxelRoomData>();
+	ClassDB::register_class<VoxelContainerData>();
+	ClassDB::register_class<VoxelWorld>();
 	ClassDB::register_class<Chunk>();
 
 	ClassDB::register_class<Preset>();
