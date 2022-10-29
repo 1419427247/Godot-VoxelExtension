@@ -84,6 +84,11 @@ Voxel VoxelContainer::get_voxel(const Vector3i& position) const
 	return EMPTY_VOXEL;
 }
 
+Vector3i VoxelContainer::get_chunk_position(const Vector3i& position) const
+{
+	return Vector3i();
+}
+
 VoxelContainerData* VoxelContainer::copy(const Vector3i& from, const Vector3i& to)
 {
 	VoxelContainerData* replica_voxel_data = memnew(VoxelContainerData);

@@ -105,7 +105,6 @@ VoxelContainer* Chunk::get_voxel_container() const
 }
 
 void Chunk::set_chunk_position(const Vector3i& value) {
-	ERR_FAIL_COND_MSG(value.x < 0 || value.y < 0 || value.z < 0, "Chunk position is an invalid value");
 	chunk_position = value;
 }
 

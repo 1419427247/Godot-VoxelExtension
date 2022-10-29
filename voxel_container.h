@@ -25,13 +25,14 @@ public:
 	void set_chunk_size(const Vector3i& value);
 	Vector3i get_chunk_size() const;
 
-
 	void set_isolated(const bool& value);
 	bool is_isolated() const;
 
 	virtual void set_voxel(const Vector3i& position, const Voxel& value);
 	virtual Voxel get_voxel(const Vector3i& position) const;
 	
+	virtual Vector3i get_chunk_position(const Vector3i& position) const;
+
 	VoxelContainerData* copy(const Vector3i& from, const Vector3i& to);
 	void paste(const Ref<VoxelContainerData>& voxel_container_data, const Vector3i& position, const Vector3i& direction);
 

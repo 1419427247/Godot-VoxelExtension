@@ -8,7 +8,6 @@ class VoxelWorld : public VoxelContainer
 	GDCLASS(VoxelWorld, VoxelContainer);
 private:
 	Dictionary voxel_container_datas;
-	//Ref<VoxelContainerData> voxel_container_data;
 protected:
 	static void _bind_methods();
 
@@ -19,8 +18,10 @@ public:
 	//void set_voxel_container_data(const Ref<VoxelContainerData>& value);
 	//Ref<VoxelContainerData> get_voxel_container_data() const;
 
-	void set_voxel(const Vector3i& position, const Voxel& value);
-	Voxel get_voxel(const Vector3i& position) const;
+	void set_voxel(const Vector3i& position, const Voxel& value) override;
+	Voxel get_voxel(const Vector3i& position) const override;
+
+	Vector3i get_chunk_position(const Vector3i& position) const override;
 };
 
 #endif // !VOXEL_WORLD_H
