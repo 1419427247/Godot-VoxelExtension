@@ -32,6 +32,7 @@ void VoxelWorld::set_voxel(const Vector3i& position, const Voxel& value)
 		position.y < 0 ? chunk_size.y - ((-1 * position.y - 1) % chunk_size.y) - 1 : (position.y % chunk_size.y),
 		position.z < 0 ? chunk_size.z - ((-1 * position.z - 1) % chunk_size.z) - 1 : (position.z % chunk_size.z)
 		}, value);
+
 }
 
 Voxel VoxelWorld::get_voxel(const Vector3i& position) const

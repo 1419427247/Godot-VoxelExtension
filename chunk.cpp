@@ -362,6 +362,110 @@ ConcavePolygonShape3D* Chunk::generate_collider(const int& filter)
 
 	PackedVector3Array collider_faces;
 	Vector3i chunk_size = voxel_container->get_chunk_size();
+
+	class Area
+	{
+	private:
+		bool* flags;
+	public:
+		Vector3i size;
+		Area(Vector3i size) {
+			this->flags = new bool[(size.x + 1) * (size.y + 1) * (size.z + 1)]();
+			this->size = size + Vector3i(1, 1, 1);
+		}
+		~Area() {
+			delete[] this->flags;
+		}
+		void set_flag(int x, int y, int z, bool v) {
+			flags[((x * size.y * size.z) + (y * size.z) + z)] = v;
+		}
+		bool get_flag(int x, int y, int z) const {
+			//return flags[x][y][z];
+			return flags[((x * size.y * size.z) + (y * size.z) + z)];
+		}
+	};
+
+	class Box
+	{
+		Area* area;
+	public:
+		Vector3i from;
+		Vector3i to;
+		Box() {
+
+		}
+		Box(const Vector3i& from, const Vector3i& to, Area* area) {
+			this->from = from;
+			this->to = to;
+			this->area = area;
+		}
+		void increase() {
+			for (int i = from.x; i < area->size.x; i++)
+			{
+				Box box = Box(Vector3i(to.x + 1, from.y, from.z), Vector3i(to.x + 1, to.y, to.z), area);
+				if (box.is_full() == false)
+				{
+					break;
+				}
+				box.set_flag(false);
+				to.x++;
+			}
+			for (int i = from.y; i < area->size.y; i++)
+			{
+				Box box(Vector3i(from.x, to.y + 1, from.z), Vector3i(to.x, to.y + 1, to.z), area);
+				if (box.is_full() == false)
+				{
+					break;
+				}
+				box.set_flag(false);
+				to.y++;
+			}
+			for (int i = from.z; i < area->size.z; i++)
+			{
+				Box box(Vector3i(from.x, from.y, to.z + 1), Vector3i(to.x, to.y, to.z + 1), area);
+				if (box.is_full() == false)
+				{
+					break;
+				}
+				box.set_flag(false);
+				to.z++;
+			}
+		}
+
+		void set_flag(const bool& value) {
+			for (int x = from.x; x <= to.x; x++)
+			{
+				for (int y = from.y; y <= to.y; y++)
+				{
+					for (int z = from.z; z <= to.z; z++)
+					{
+						area->set_flag(x, y, z, value);
+					}
+				}
+			}
+		}
+
+		bool is_full() {
+			for (int x = from.x; x <= to.x; x++)
+			{
+				for (int y = from.y; y <= to.y; y++)
+				{
+					for (int z = from.z; z <= to.z; z++)
+					{
+						if (area->get_flag(x, y, z) == false)
+						{
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+	};
+
+	Area area = Area(chunk_size);
+	List<Box> boxs;
+
 	for (int x = 0; x < chunk_size.x; x++)
 	{
 		for (int y = 0; y < chunk_size.y; y++)
@@ -370,144 +474,143 @@ ConcavePolygonShape3D* Chunk::generate_collider(const int& filter)
 			{
 				Vector3i local_position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(local_position);
-				int type = VoxelRoom::get_voxel_type(voxel);
-				int id = VoxelRoom::get_voxel_id(voxel);
-				if (type == VoxelContainerData::EMPTY)
+				int type = VoxelContainer::get_voxel_type(voxel);
+				int id = VoxelContainer::get_voxel_id(voxel);
+				Ref<Preset> preset;
+				switch (type)
+				{
+				case VoxelContainerData::EMPTY:
+					continue;
+					break;
+				case VoxelContainerData::BASICS:
+				{
+					if (is_generate_basics == false)
+					{
+						continue;
+					}
+					ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
+					preset = basics_presets[id];
+					break;
+				}
+				case VoxelContainerData::MESH:
+				{
+					if (is_generate_mesh == false)
+					{
+						continue;
+					}
+					ERR_FAIL_INDEX_V(id, mesh_presets.size(), nullptr);
+					preset = mesh_presets[id];
+					break;
+				}
+				case VoxelContainerData::DEVICE:
+				{
+					if (is_generate_device == false)
+					{
+						continue;
+					}
+					ERR_FAIL_INDEX_V(id, device_presets.size(), nullptr);
+					preset = device_presets[id];
+				}
+				}
+				ERR_FAIL_NULL_V_MSG(preset, nullptr, "The preset is null [type = " + String::num_int64(type) + ",id = " + String::num_int64(id) + "]");
+				if (is_generate_transparent_all == false)
+				{
+					if (is_generate_transparent_true == true && preset->get_transparent() == true)
+					{
+						continue;
+					}
+					if (is_generate_transparent_false == true && preset->get_transparent() == false)
+					{
+						continue;
+					}
+				}
+				if (is_generate_collider_all == false)
+				{
+					if (is_generate_collider_true == true && preset->get_collider() == true)
+					{
+						continue;
+					}
+					if (is_generate_collider_false == true && preset->get_collider() == false)
+					{
+						continue;
+					}
+				}
+				area.set_flag(x, y, z, true);
+			}
+		}
+	}
+	for (int x = 0; x < chunk_size.x; x++)
+	{
+		for (int y = 0; y < chunk_size.y; y++)
+		{
+			for (int z = 0; z < chunk_size.z; z++)
+			{
+				if (area.get_flag(x, y, z) == false)
 				{
 					continue;
 				}
-				else {
-					Ref<Preset> preset;
-					switch (type)
-					{
-					case VoxelContainerData::BASICS:
-					{
-						if (is_generate_basics == false)
-						{
-							continue;
-						}
-						ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
-						preset = basics_presets[id];
-						break;
-					}
-					case VoxelContainerData::MESH:
-					{
-						if (is_generate_mesh == false)
-						{
-							continue;
-						}
-						ERR_FAIL_INDEX_V(id, mesh_presets.size(), nullptr);
-						preset = mesh_presets[id];
-						break;
-					}
-					case VoxelContainerData::DEVICE:
-					{
-						if (is_generate_device == false)
-						{
-							continue;
-						}
-						ERR_FAIL_INDEX_V(id, device_presets.size(), nullptr);
-						preset = device_presets[id];
-					}
-					}
-					ERR_FAIL_NULL_V_MSG(preset, nullptr, "The preset is null [type = " + String::num_int64(type) + ",id = " + String::num_int64(id) + "]");
-					if (is_generate_transparent_all == false)
-					{
-						if (is_generate_transparent_true == true && preset->get_transparent() == true)
-						{
-							continue;
-						}
-						if (is_generate_transparent_false == true && preset->get_transparent() == false)
-						{
-							continue;
-						}
-					}
-					if (is_generate_collider_all == false)
-					{
-						if (is_generate_collider_true == true && preset->get_collider() == true)
-						{
-							continue;
-						}
-						if (is_generate_collider_false == true && preset->get_collider() == false)
-						{
-							continue;
-						}
-					}
-					Vector3 vertexs[] = {
-						Vector3(0.5, -0.5, -0.5) + Vector3(local_position),
-						Vector3(0.5, 0.5, -0.5) + Vector3(local_position),
-						Vector3(-0.5, 0.5, -0.5) + Vector3(local_position),
-						Vector3(-0.5, -0.5, -0.5) + Vector3(local_position),
-						Vector3(0.5, -0.5, 0.5) + Vector3(local_position),
-						Vector3(0.5, 0.5, 0.5) + Vector3(local_position),
-						Vector3(-0.5, 0.5, 0.5) + Vector3(local_position),
-						Vector3(-0.5, -0.5, 0.5) + Vector3(local_position),
-					};
-					int up_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, 1, 0)));
-					int down_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, -1, 0)));
-					int front_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, -1)));
-					int back_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(0, 0, 1)));
-					int left_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(-1, 0, 0)));
-					int right_voxel_type = VoxelRoom::get_voxel_type(get_voxel(local_position + Vector3i(1, 0, 0)));
-
-					if (up_voxel_type == VoxelContainerData::EMPTY)
-					{
-						collider_faces.push_back(vertexs[2]);
-						collider_faces.push_back(vertexs[1]);
-						collider_faces.push_back(vertexs[5]);
-						collider_faces.push_back(vertexs[2]);
-						collider_faces.push_back(vertexs[5]);
-						collider_faces.push_back(vertexs[6]);
-					}
-					if (down_voxel_type == VoxelContainerData::EMPTY)
-					{
-						collider_faces.push_back(vertexs[0]);
-						collider_faces.push_back(vertexs[3]);
-						collider_faces.push_back(vertexs[7]);
-						collider_faces.push_back(vertexs[0]);
-						collider_faces.push_back(vertexs[7]);
-						collider_faces.push_back(vertexs[4]);
-					}
-					if (front_voxel_type == VoxelContainerData::EMPTY)
-					{
-						collider_faces.push_back(vertexs[1]);
-						collider_faces.push_back(vertexs[2]);
-						collider_faces.push_back(vertexs[3]);
-						collider_faces.push_back(vertexs[1]);
-						collider_faces.push_back(vertexs[3]);
-						collider_faces.push_back(vertexs[0]);
-					}
-					if (back_voxel_type == VoxelContainerData::EMPTY)
-					{
-						collider_faces.push_back(vertexs[6]);
-						collider_faces.push_back(vertexs[5]);
-						collider_faces.push_back(vertexs[4]);
-						collider_faces.push_back(vertexs[6]);
-						collider_faces.push_back(vertexs[4]);
-						collider_faces.push_back(vertexs[7]);
-					}
-					if (left_voxel_type == VoxelContainerData::EMPTY)
-					{
-						collider_faces.push_back(vertexs[2]);
-						collider_faces.push_back(vertexs[6]);
-						collider_faces.push_back(vertexs[7]);
-						collider_faces.push_back(vertexs[2]);
-						collider_faces.push_back(vertexs[7]);
-						collider_faces.push_back(vertexs[3]);
-					}
-					if (right_voxel_type == VoxelContainerData::EMPTY)
-					{
-						collider_faces.push_back(vertexs[5]);
-						collider_faces.push_back(vertexs[1]);
-						collider_faces.push_back(vertexs[0]);
-						collider_faces.push_back(vertexs[5]);
-						collider_faces.push_back(vertexs[0]);
-						collider_faces.push_back(vertexs[4]);
-					}
-
-				}
+				Box box = Box(Vector3i(x, y, z), Vector3i(x, y, z), &area);
+				box.increase();
+				boxs.push_back(box);
 			}
 		}
+	}
+
+	for (int i = 0; i < boxs.size(); i++)
+	{
+		Box box = boxs[i];
+
+		Vector3 vertexs[] = {
+			Vector3(box.to.x + 0.5,box.from.y + -0.5,box.from.z + -0.5),
+			Vector3(box.to.x + 0.5,box.to.y + 0.5,box.from.z + -0.5),
+			Vector3(box.from.x + -0.5,box.to.y + 0.5,box.from.z + -0.5),
+			Vector3(box.from.x + -0.5,box.from.y + -0.5,box.from.z + -0.5),
+			Vector3(box.to.x + 0.5,box.from.y + -0.5,box.to.z + 0.5),
+			Vector3(box.to.x + 0.5,box.to.y + 0.5,box.to.z + 0.5),
+			Vector3(box.from.x + -0.5,box.to.y + 0.5,box.to.z + 0.5),
+			Vector3(box.from.x + -0.5,box.from.y + -0.5, box.to.z + 0.5),
+		};
+		collider_faces.push_back(vertexs[2]);
+		collider_faces.push_back(vertexs[1]);
+		collider_faces.push_back(vertexs[5]);
+		collider_faces.push_back(vertexs[2]);
+		collider_faces.push_back(vertexs[5]);
+		collider_faces.push_back(vertexs[6]);
+
+		collider_faces.push_back(vertexs[0]);
+		collider_faces.push_back(vertexs[3]);
+		collider_faces.push_back(vertexs[7]);
+		collider_faces.push_back(vertexs[0]);
+		collider_faces.push_back(vertexs[7]);
+		collider_faces.push_back(vertexs[4]);
+
+		collider_faces.push_back(vertexs[1]);
+		collider_faces.push_back(vertexs[2]);
+		collider_faces.push_back(vertexs[3]);
+		collider_faces.push_back(vertexs[1]);
+		collider_faces.push_back(vertexs[3]);
+		collider_faces.push_back(vertexs[0]);
+
+		collider_faces.push_back(vertexs[6]);
+		collider_faces.push_back(vertexs[5]);
+		collider_faces.push_back(vertexs[4]);
+		collider_faces.push_back(vertexs[6]);
+		collider_faces.push_back(vertexs[4]);
+		collider_faces.push_back(vertexs[7]);
+
+		collider_faces.push_back(vertexs[2]);
+		collider_faces.push_back(vertexs[6]);
+		collider_faces.push_back(vertexs[7]);
+		collider_faces.push_back(vertexs[2]);
+		collider_faces.push_back(vertexs[7]);
+		collider_faces.push_back(vertexs[3]);
+
+		collider_faces.push_back(vertexs[5]);
+		collider_faces.push_back(vertexs[1]);
+		collider_faces.push_back(vertexs[0]);
+		collider_faces.push_back(vertexs[5]);
+		collider_faces.push_back(vertexs[0]);
+		collider_faces.push_back(vertexs[4]);
 	}
 
 	ConcavePolygonShape3D* result = memnew(ConcavePolygonShape3D);

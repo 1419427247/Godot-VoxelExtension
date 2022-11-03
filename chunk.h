@@ -19,10 +19,12 @@ class Chunk : public Node3D
 		COLLIDER_FALSE_FILTER = 0b100000000,
 	};
 private:
+
 	Vector3i chunk_position;
 	Array mesh_arrays;
 
 	Dictionary devices;
+
 protected:
 	void build_basics(const Ref<PresetsData>& presets_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation);
 	void build_mesh(Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation);

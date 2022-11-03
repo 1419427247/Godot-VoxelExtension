@@ -59,6 +59,7 @@ void VoxelContainerData::set_voxel(const Vector3i& position, const Voxel& value)
 		return;
 	}
 	int index = ((position.x * container_size.y * container_size.z) + (position.y * container_size.z) + position.z);
+	UtilityFunctions::print(voxels.size());
 	voxels[index] = value;
 }
 
