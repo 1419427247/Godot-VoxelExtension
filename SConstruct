@@ -13,7 +13,7 @@ env = SConscript("./godot-cpp/SConstruct")
 # - LINKFLAGS are for linking flags
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
-env.Append(CPPPATH=["src/"])
+env.Append(CPPPATH=["./"])
 sources = Glob("./*.cpp")
 
 if env["platform"] == "macos":
@@ -25,9 +25,7 @@ if env["platform"] == "macos":
     )
 else:
     library = env.SharedLibrary(
-        "bin/voxel_expansion.{}.{}.{}{}".format(
-            env["platform"], env["target"], env["arch_suffix"], env["SHLIBSUFFIX"]
-        ),
+        "bin/voxel_expansion{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 
