@@ -44,6 +44,10 @@ public:
 	void set_voxel(const Vector3i& local_position, const Voxel& value);
 	Voxel get_voxel(const Vector3i& local_position) const;
 
+	Vector3 point_converted_to_chunk(const Vector3& point)const;
+
+	Vector3 normal_converted_to_chunk(const Vector3& point)const;
+
 	Vector3i get_voxel_local_position(const Vector3& point, const Vector3& normal) const;
 
 	ArrayMesh* generate_mesh(const int& filter = BASICS_FILTER | MESH_FILTER);

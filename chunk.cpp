@@ -12,17 +12,18 @@ void Chunk::build_basics(const Ref<PresetsData>& presets_data, Ref<BasicsPreset>
 
 #define BUILD_MESH(direction,axis)\
 	do{\
-		Voxel direction##voxel = get_voxel(local_position + VoxelRoom::get_voxel_direction(axis, rotation));\
-		int direction##voxel_type = VoxelRoom::get_voxel_type(direction##voxel);\
-		int direction##voxel_id = VoxelRoom::get_voxel_id(direction##voxel);\
+		Voxel direction##voxel = get_voxel(local_position + VoxelContainer::get_voxel_direction(axis, rotation));\
+		int direction##voxel_type = VoxelContainer::get_voxel_type(direction##voxel);\
+		int direction##voxel_id = VoxelContainer::get_voxel_id(direction##voxel);\
 		if (direction##voxel_type != VoxelContainerData::BASICS) {\
 			int material_id = basics_preset->get_##direction();\
 			ERR_FAIL_INDEX(material_id, mesh_arrays.size());\
 			Array arrays = mesh_arrays[material_id];\
 			BasicsPreset::build_##direction####_mesh(arrays, local_position, rotation);\
 		}else{\
+			Vector3i direction##voxel_rotation = VoxelContainer::get_voxel_rotation(direction##voxel);\
 			Ref<BasicsPreset> direction##preset = basics_presets[direction##voxel_id];\
-			if(direction##preset->get_transparent() != basics_preset->get_transparent()){\
+			if(direction##preset->get_transparent() != basics_preset->get_transparent() || direction##voxel_rotation.x % 90 != 0 || direction##voxel_rotation.y % 90 != 0 || direction##voxel_rotation.z % 90 != 0){\
 				int material_id = basics_preset->get_##direction();\
 				ERR_FAIL_INDEX(material_id, mesh_arrays.size());\
 				Array arrays = mesh_arrays[material_id];\
@@ -32,7 +33,7 @@ void Chunk::build_basics(const Ref<PresetsData>& presets_data, Ref<BasicsPreset>
 	}while(false)
 
 	Array basics_presets = presets_data->get_basics_presets();
-	if (rotation.x % 90 != 0 && rotation.y % 90 != 0 && rotation.z % 90 != 0)
+	if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
 	{
 		BUILD_MESH_NO_CONDITION(up);
 		BUILD_MESH_NO_CONDITION(down);
@@ -74,6 +75,11 @@ void Chunk::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("set_voxel", "local_position", "value"), &Chunk::set_voxel);
 	ClassDB::bind_method(D_METHOD("get_voxel", "local_position"), &Chunk::get_voxel);
+
+	ClassDB::bind_method(D_METHOD("point_converted_to_chunk", "point"), &Chunk::point_converted_to_chunk);
+	ClassDB::bind_method(D_METHOD("normal_converted_to_chunk", "normal"), &Chunk::normal_converted_to_chunk);
+
+	ClassDB::bind_method(D_METHOD("get_voxel_local_position", "point", "normal"), &Chunk::get_voxel_local_position);
 
 	ClassDB::bind_method(D_METHOD("generate_mesh", "filter"), &Chunk::generate_mesh, BASICS_FILTER | MESH_FILTER);
 	ClassDB::bind_method(D_METHOD("generate_collider", "filter"), &Chunk::generate_collider, BASICS_FILTER | MESH_FILTER);
@@ -160,28 +166,45 @@ Voxel Chunk::get_voxel(const Vector3i& local_position) const
 	return voxel_container->get_voxel(local_position + chunk_position * chunk_size);
 }
 
+Vector3 Chunk::point_converted_to_chunk(const Vector3& point) const {
+	return (
+		get_global_transform().affine_inverse() *
+		Transform3D(get_global_transform().basis, point)
+		).origin;
+}
+
+Vector3 Chunk::normal_converted_to_chunk(const Vector3& normal) const {
+	return (
+		Transform3D(get_global_transform().basis, Vector3()).affine_inverse() *
+		Transform3D(get_global_transform().basis, normal)
+		).origin.normalized();
+}
+
 Vector3i Chunk::get_voxel_local_position(const Vector3& point, const Vector3& normal) const
 {
-	Vector3 voxel_position = point - get_position();
-	if (normal.y == 1) {
-		voxel_position.y -= 0.05;
+	Vector3 _point = point_converted_to_chunk(point);
+
+	Vector3 _normal = normal_converted_to_chunk(normal);
+
+	if (_normal.y == 1) {
+		_point.y -= 0.05;
 	}
-	else if (normal.y == -1) {
-		voxel_position.y += 0.05;
+	else if (_normal.y == -1) {
+		_point.y += 0.05;
 	}
-	else if (normal.x == 1) {
-		voxel_position.x -= 0.05;
+	else if (_normal.x == 1) {
+		_point.x -= 0.05;
 	}
-	else if (normal.x == -1) {
-		voxel_position.x += 0.05;
+	else if (_normal.x == -1) {
+		_point.x += 0.05;
 	}
-	else if (normal.z == 1) {
-		voxel_position.z -= 0.05;
+	else if (_normal.z == 1) {
+		_point.z -= 0.05;
 	}
-	else if (normal.z == -1) {
-		voxel_position.z += 0.05;
+	else if (_normal.z == -1) {
+		_point.z += 0.05;
 	}
-	return Vector3i(voxel_position.round());
+	return Vector3i(_point.round());
 }
 
 /// <summary>

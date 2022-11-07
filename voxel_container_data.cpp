@@ -33,7 +33,6 @@ VoxelContainerData::~VoxelContainerData()
 void VoxelContainerData::set_container_size(const Vector3i& value) {
 	ERR_FAIL_COND_MSG(value.x <= 0 || value.y <= 0 || value.z <= 0, "The container size is an invalid value");
 	container_size = value;
-
 	voxels.resize(container_size.x * container_size.y * container_size.z);
 }
 
@@ -43,12 +42,13 @@ Vector3i VoxelContainerData::get_container_size() const {
 
 void VoxelContainerData::set_voxels(const PackedByteArray& value)
 {
-	voxels = value.decompress(4096).to_int32_array();
+	//voxels = value.decompress(4096).to_int32_array();
 }
 
 PackedByteArray VoxelContainerData::get_voxels() const
 {
-	return voxels.to_byte_array().compress();
+	//return voxels.to_byte_array().compress();
+	return PackedByteArray();
 }
 
 void VoxelContainerData::set_voxel(const Vector3i& position, const Voxel& value)
@@ -59,7 +59,6 @@ void VoxelContainerData::set_voxel(const Vector3i& position, const Voxel& value)
 		return;
 	}
 	int index = ((position.x * container_size.y * container_size.z) + (position.y * container_size.z) + position.z);
-	UtilityFunctions::print(voxels.size());
 	voxels[index] = value;
 }
 

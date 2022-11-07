@@ -25,9 +25,6 @@ void VoxelContainer::_bind_methods()
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("mesh_voxel", "id", "rotation", "flag"), &VoxelContainer::mesh_voxel, Vector3i(), 0);
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("device_voxel", "id", "rotation", "flag"), &VoxelContainer::device_voxel, Vector3i(), 0);
 
-	//BIND_VIRTUAL_METHOD(VoxelContainer, set_voxel);
-	//BIND_VIRTUAL_METHOD(VoxelContainer, get_voxel);
-
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_size"), "set_chunk_size", "get_chunk_size");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "isolated"), "set_isolated", "is_isolated");

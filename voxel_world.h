@@ -15,9 +15,6 @@ public:
 	VoxelWorld();
 	~VoxelWorld();
 
-	//void set_voxel_container_data(const Ref<VoxelContainerData>& value);
-	//Ref<VoxelContainerData> get_voxel_container_data() const;
-
 	void set_voxel(const Vector3i& position, const Voxel& value) override;
 	Voxel get_voxel(const Vector3i& position) const override;
 
