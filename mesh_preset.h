@@ -10,8 +10,7 @@ protected:
 private:
 	Ref<Mesh> mesh;
 	TypedArray<int> materials;
-
-	Array mesh_arrays;
+	Array mesh_data_memorandum;
 public:
 	MeshPreset();
 	~MeshPreset();
@@ -23,7 +22,6 @@ public:
 	TypedArray<int> get_materials();
 
 	void build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation);
-
 	static Ref<MeshPreset> instantiate(const String& name, const Ref<Mesh>& mesh, Array materials);
 };
 

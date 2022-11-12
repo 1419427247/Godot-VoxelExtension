@@ -22,14 +22,19 @@ MeshPreset::~MeshPreset() {
 
 void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 	mesh = value;
-	if (value.is_null())
+	if (mesh.is_null())
 	{
-		mesh_arrays.resize(0);
-		materials.resize(0);
+		materials.clear();
 		return;
 	}
-	mesh_arrays.resize(mesh->get_surface_count());
-	for (size_t i = 0; i < mesh->get_surface_count(); i++)
+
+	mesh_data_memorandum.clear();
+	mesh_data_memorandum.resize(24 * 24 * 24);
+
+	Array surfaces = Array();
+	surfaces.resize(mesh->get_surface_count());
+	materials.resize(surfaces.size());
+	for (int i = 0; i < surfaces.size(); i++)
 	{
 		Array mesh_surface_arrays = mesh->surface_get_arrays(i);
 
@@ -37,7 +42,7 @@ void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 		PackedVector2Array packed_array_tex_uv = mesh_surface_arrays[Mesh::ARRAY_TEX_UV];
 		PackedInt32Array packed_array_index = mesh_surface_arrays[Mesh::ARRAY_INDEX];
 
-		Array surface;
+		Array surface = Array();
 		surface.resize(Mesh::ARRAY_MAX);
 
 		Array surface_vertex_array;
@@ -92,9 +97,9 @@ void MeshPreset::set_mesh(const Ref<Mesh>& value) {
 		surface[Mesh::ARRAY_NORMAL] = surface_normal_array;
 		surface[Mesh::ARRAY_TEX_UV] = surface_tex_uv_array;
 
-		mesh_arrays[i] = surface;
+		surfaces[i] = surface;
 	}
-	materials.resize(mesh_arrays.size());
+	mesh_data_memorandum[0] = surfaces;
 }
 
 Ref<Mesh> MeshPreset::get_mesh() const
@@ -104,7 +109,12 @@ Ref<Mesh> MeshPreset::get_mesh() const
 
 void MeshPreset::set_materials(const TypedArray<int>& value) {
 	materials = value;
-	materials.resize(mesh_arrays.size());
+	if (mesh.is_null())
+	{
+		materials.clear();
+		return;
+	}
+	materials.resize(((Array)mesh_data_memorandum[0]).size());
 }
 
 TypedArray<int> MeshPreset::get_materials() {
@@ -113,21 +123,62 @@ TypedArray<int> MeshPreset::get_materials() {
 
 void MeshPreset::build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation)
 {
-	Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
-	Array array_normal = arrays[Mesh::ARRAY_NORMAL];
-	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
+	return;
+	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
 
-	Array surface = mesh_arrays[surface_index];
+	if (mesh_data_memorandum[index].get_type() == Variant::NIL) {
+		Array surfaces = mesh_data_memorandum[0];
+		mesh_data_memorandum[index] = Array();
+		for (int i = 0; i < surfaces.size(); i++)
+		{
+			Array surface_vertex_array = ((Array)surfaces[i])[Mesh::ARRAY_VERTEX];
+			Array surface_normal_array = ((Array)surfaces[i])[Mesh::ARRAY_NORMAL];
+			Array surface_tex_uv_array = ((Array)surfaces[i])[Mesh::ARRAY_TEX_UV];
 
-	Array surface_vertex_array = surface[Mesh::ARRAY_VERTEX];
-	Array surface_normal_array = surface[Mesh::ARRAY_NORMAL];
-	Array surface_tex_uv_array = surface[Mesh::ARRAY_TEX_UV];
-	for (size_t i = 0; i < surface_vertex_array.size(); i++)
-	{
-		array_vertex.push_back(BasicsPreset::rotate_vertex(surface_vertex_array[i], rotation) + position);
+			Array surface = Array();
+			surface.resize(Mesh::ARRAY_MAX);
+			Array array_vertex = Array();
+			Array array_normal = Array();
+			Array array_tex_uv = Array();
+
+			for (int i = 0; i < surface_vertex_array.size(); i++)
+			{
+				array_vertex.push_back(BasicsPreset::rotate_vertex(surface_vertex_array[i], rotation));
+			}
+			for (int i = 0; i < surface_normal_array.size(); i++)
+			{
+				array_normal.push_back(BasicsPreset::rotate_vertex(surface_normal_array[i], rotation));
+			}
+			array_tex_uv.append_array(surface_tex_uv_array);
+
+			surface[Mesh::ARRAY_VERTEX] = array_vertex;
+			surface[Mesh::ARRAY_NORMAL] = array_normal;
+			surface[Mesh::ARRAY_TEX_UV] = array_tex_uv;
+
+			((Array)mesh_data_memorandum[index]).push_back(surface);
+		}
 	}
-	array_normal.append_array(surface_normal_array);
-	array_tex_uv.append_array(surface_tex_uv_array);
+
+	Array surfaces = mesh_data_memorandum[index];
+	for (int i = 0; i < surfaces.size(); i++)
+	{
+		Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
+		Array array_normal = arrays[Mesh::ARRAY_NORMAL];
+		Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
+
+		Array surface = surfaces[surface_index];
+
+		Array surface_vertex_array = surface[Mesh::ARRAY_VERTEX];
+		Array surface_normal_array = surface[Mesh::ARRAY_NORMAL];
+		Array surface_tex_uv_array = surface[Mesh::ARRAY_TEX_UV];
+
+		for (size_t i = 0; i < surface_vertex_array.size(); i++)
+		{
+			array_vertex.push_back(((Vector3)surface_vertex_array[i]) + position);
+		}
+		array_normal.append_array(surface_normal_array);
+		array_tex_uv.append_array(surface_tex_uv_array);
+	}
 }
 
 Ref<MeshPreset> MeshPreset::instantiate(const String& name, const Ref<Mesh>& mesh, Array materials) {

@@ -134,7 +134,6 @@
     <ClInclude Include="chunk.h" />
     <ClInclude Include="device.h" />
     <ClInclude Include="device_preset.h" />
-    <ClInclude Include="custom_material.h" />
     <ClInclude Include="mesh_preset.h" />
     <ClInclude Include="preset.h" />
     <ClInclude Include="presets_data.h" />
@@ -149,7 +148,6 @@
     <ClCompile Include="chunk.cpp" />
     <ClCompile Include="device.cpp" />
     <ClCompile Include="device_preset.cpp" />
-    <ClCompile Include="custom_material.cpp" />
     <ClCompile Include="mesh_preset.cpp" />
     <ClCompile Include="preset.cpp" />
     <ClCompile Include="presets_data.cpp" />
@@ -158,9 +156,6 @@
     <ClCompile Include="voxel_room.cpp" />
     <ClCompile Include="voxel_container_data.cpp" />
     <ClCompile Include="voxel_world.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

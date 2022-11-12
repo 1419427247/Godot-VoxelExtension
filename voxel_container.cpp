@@ -81,7 +81,7 @@ Voxel VoxelContainer::get_voxel(const Vector3i& position) const
 	return EMPTY_VOXEL;
 }
 
-Vector3i VoxelContainer::get_chunk_position(const Vector3i& position) const
+Vector3i VoxelContainer::get_chunk_key(const Vector3i& position) const
 {
 	return Vector3i();
 }

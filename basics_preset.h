@@ -16,6 +16,11 @@ class BasicsPreset : public Preset
 		LEFT = 4,
 		RIGHT = 5,
 	};
+	struct BasicsData
+	{
+		Vector3 vertexs[6][6];
+		Vector3 normals[6][2];
+	};
 private:
 	int up;
 	int down;

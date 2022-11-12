@@ -1,5 +1,5 @@
-#ifndef VOXEL_WORLD_DATA_H
-#define VOXEL_WORLD_DATA_H
+#ifndef VOXEL_CONTAINER_DATA_H
+#define VOXEL_CONTAINER_DATA_H
 
 #include "preset.h"
 

@@ -4,22 +4,21 @@
 #include "basics_preset.h"
 #include "mesh_preset.h"
 #include "device_preset.h"
-#include "custom_material.h"
 #include "device.h"
 
 class PresetsData : public Resource
 {
 	GDCLASS(PresetsData, Resource);
 private:
-	TypedArray<CustomMaterial> custom_materials;
+	TypedArray<Material> materials;
 	TypedArray<BasicsPreset> basics_presets;
 	TypedArray<MeshPreset> mesh_presets;
 	TypedArray<DevicePreset> device_presets;
 protected:
 	static void _bind_methods();
 public:
-	void set_custom_materials(const TypedArray <CustomMaterial>& value);
-	TypedArray <CustomMaterial> get_custom_materials() const;
+	void set_materials(const TypedArray <Material>& value);
+	TypedArray <Material> get_materials() const;
 
 	void set_basics_presets(const TypedArray <BasicsPreset>& value);
 	TypedArray <BasicsPreset> get_basics_presets() const;

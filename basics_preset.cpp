@@ -129,7 +129,6 @@ static Vector2 uvs[] = {
 };
 
 static Vector3 brick_vertexs[][6] = {
-
 	{
 		Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),
 		Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),Vector3(-0.5, 0.5, 0.5),
@@ -156,22 +155,16 @@ static Vector3 brick_vertexs[][6] = {
 	}
 };
 
-struct BasicsMeshData
-{
-	Vector3 vertexs[6][6];
-	Vector3 normals[6][2];
-};
-
-static BasicsMeshData* basics_data_memorandum[24 * 24 * 24] = { nullptr };
+static BasicsPreset::BasicsData* basics_data_memorandum[24 * 24 * 24] = { nullptr };
 
 void BasicsPreset::build_mesh(const int& mesh_key, const Array& arrays, const Vector3& position, const Vector3& rotation)
 {
 	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
 
-	BasicsMeshData* basics_mesh_data = basics_data_memorandum[index];
+	BasicsData* basics_mesh_data = basics_data_memorandum[index];
 	if (basics_mesh_data == nullptr)
 	{
-		basics_mesh_data = (BasicsMeshData*)memalloc(sizeof(BasicsMeshData));
+		basics_mesh_data = (BasicsData*)memalloc(sizeof(BasicsData));
 		for (int i = 0; i < 6; i++)
 		{
 			Vector3 vertexs[6];

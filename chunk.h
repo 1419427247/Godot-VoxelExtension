@@ -18,17 +18,14 @@ class Chunk : public Node3D
 		COLLIDER_TRUE_FILTER = 0b10000000,
 		COLLIDER_FALSE_FILTER = 0b100000000,
 	};
+
 private:
-
-	Vector3i chunk_position;
+	Vector3i chunk_key;
 	Array mesh_arrays;
-
 	Dictionary devices;
-
 protected:
-	void build_basics(const Ref<PresetsData>& presets_data, Ref<BasicsPreset>& basics_preset, const Vector3i& local_position, const Vector3i& rotation);
-	void build_mesh(Ref<MeshPreset>& mesh_preset, const Vector3i& local_position, const Vector3i& rotation);
-
+	void build_basics(const Ref<PresetsData>& presets_data, Ref<BasicsPreset>& basics_preset, const Vector3i& position, const Vector3i& rotation);
+	void build_mesh(Ref<MeshPreset>& mesh_preset, const Vector3i& position, const Vector3i& rotation);
 	static void _bind_methods();
 public:
 	Chunk();
@@ -36,13 +33,13 @@ public:
 
 	VoxelContainer* get_voxel_container() const;
 
-	void set_chunk_position(const Vector3i& value);
-	Vector3i get_chunk_position() const;
+	void set_chunk_key(const Vector3i& value);
+	Vector3i get_chunk_key() const;
 
 	Dictionary get_devices() const;
 
-	void set_voxel(const Vector3i& local_position, const Voxel& value);
-	Voxel get_voxel(const Vector3i& local_position) const;
+	void set_voxel(const Vector3i& position, const Voxel& value);
+	Voxel get_voxel(const Vector3i& position) const;
 
 	Vector3 point_converted_to_chunk(const Vector3& point)const;
 
@@ -50,8 +47,8 @@ public:
 
 	Vector3i get_voxel_local_position(const Vector3& point, const Vector3& normal) const;
 
-	ArrayMesh* generate_mesh(const int& filter = BASICS_FILTER | MESH_FILTER);
-	ConcavePolygonShape3D* generate_collider(const int& filter = BASICS_FILTER | MESH_FILTER);
+	ArrayMesh* generate_mesh(const int& filter = BASICS_FILTER | MESH_FILTER | COLLIDER_TRUE_FILTER);
+	ConcavePolygonShape3D* generate_collider(const int& filter = BASICS_FILTER | MESH_FILTER | COLLIDER_TRUE_FILTER);
 	void generate_device();
 };
 

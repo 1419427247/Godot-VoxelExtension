@@ -21,8 +21,7 @@ public:
 	void set_voxel(const Vector3i& position, const Voxel& value) override;
 	Voxel get_voxel(const Vector3i& position) const override;
 
-	Vector3i get_chunk_position(const Vector3i& position) const override;
-
+	Vector3i get_chunk_key(const Vector3i& position) const override;
 };
 
 #endif // !VOXEL_ROOM_H
