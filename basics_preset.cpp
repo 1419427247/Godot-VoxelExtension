@@ -157,7 +157,7 @@ static Vector3 brick_vertexs[][6] = {
 
 static BasicsPreset::BasicsData* basics_data_memorandum[24 * 24 * 24] = { nullptr };
 
-void BasicsPreset::build_mesh(const int& mesh_key, const Array& arrays, const Vector3& position, const Vector3& rotation)
+void BasicsPreset::build_mesh(Vector3* vertexs, const Array& arrays, const Vector3& position, const Vector3& rotation)
 {
 	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
 
