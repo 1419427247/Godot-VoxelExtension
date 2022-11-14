@@ -5,8 +5,8 @@ void VoxelContainer::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_presets_data", "value"), &VoxelContainer::set_presets_data);
 	ClassDB::bind_method(D_METHOD("get_presets_data"), &VoxelContainer::get_presets_data);
 
-	ClassDB::bind_method(D_METHOD("set_chunk_size", "value"), &VoxelContainer::set_chunk_size);
-	ClassDB::bind_method(D_METHOD("get_chunk_size"), &VoxelContainer::get_chunk_size);
+	ClassDB::bind_method(D_METHOD("set_block_size", "value"), &VoxelContainer::set_block_size);
+	ClassDB::bind_method(D_METHOD("get_block_size"), &VoxelContainer::get_block_size);
 
 	ClassDB::bind_method(D_METHOD("set_isolated", "value"), &VoxelContainer::set_isolated);
 	ClassDB::bind_method(D_METHOD("is_isolated"), &VoxelContainer::is_isolated);
@@ -26,13 +26,13 @@ void VoxelContainer::_bind_methods()
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("device_voxel", "id", "rotation", "flag"), &VoxelContainer::device_voxel, Vector3i(), 0);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "chunk_size"), "set_chunk_size", "get_chunk_size");
+	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "block_size"), "set_block_size", "get_block_size");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "isolated"), "set_isolated", "is_isolated");
 }
 
 VoxelContainer::VoxelContainer()
 {
-	chunk_size = Vector3i(8, 8, 8);
+	block_size = Vector3i(8, 8, 8);
 	isolated = false;
 }
 
@@ -50,15 +50,15 @@ Ref<PresetsData> VoxelContainer::get_presets_data() const
 	return presets_data;
 }
 
-void VoxelContainer::set_chunk_size(const Vector3i& value)
+void VoxelContainer::set_block_size(const Vector3i& value)
 {
 	ERR_FAIL_COND_MSG(value.x <= 0 || value.y <= 0 || value.z <= 0, "The chunk size is an invalid value");
-	chunk_size = value;
+	block_size = value;
 }
 
-Vector3i VoxelContainer::get_chunk_size() const
+Vector3i VoxelContainer::get_block_size() const
 {
-	return chunk_size;
+	return block_size;
 }
 
 
@@ -81,7 +81,7 @@ Voxel VoxelContainer::get_voxel(const Vector3i& position) const
 	return EMPTY_VOXEL;
 }
 
-Vector3i VoxelContainer::get_chunk_key(const Vector3i& position) const
+Vector3i VoxelContainer::get_block_key(const Vector3i& position) const
 {
 	return Vector3i();
 }
@@ -89,8 +89,8 @@ Vector3i VoxelContainer::get_chunk_key(const Vector3i& position) const
 VoxelContainerData* VoxelContainer::copy(const Vector3i& from, const Vector3i& to)
 {
 	VoxelContainerData* replica_voxel_data = memnew(VoxelContainerData);
-	Vector3i chunk_size = Vector3i(abs(from.x - to.x) + 1, abs(from.y - to.y) + 1, abs(from.z - to.z) + 1);
-	replica_voxel_data->set_container_size(chunk_size);
+	Vector3i block_size = Vector3i(abs(from.x - to.x) + 1, abs(from.y - to.y) + 1, abs(from.z - to.z) + 1);
+	replica_voxel_data->set_container_size(block_size);
 	int step_x = from.x > to.x ? -1 : 1;
 	int step_y = from.y > to.y ? -1 : 1;
 	int step_z = from.z > to.z ? -1 : 1;
@@ -126,14 +126,28 @@ void VoxelContainer::paste(const Ref<VoxelContainerData>& voxel_container_data, 
 	}
 }
 
-Vector3i VoxelContainer::get_voxel_direction(const Vector3i& direction, const Vector3i& rotation)
+static Vector3 direction_memorandum[6][24 * 24 * 24] = { Vector3() };
+Vector3i VoxelContainer::get_voxel_direction(const int& direction, const Vector3i& rotation)
 {
-	Vector3 result = direction;
-	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-	return Vector3i(result);
+	Vector3* result = &direction_memorandum[direction][rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15];
+	if (*result == Vector3i())
+	{
+		*result = DIRCTIONS[direction];
+		result->rotate(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+		result->rotate(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+		result->rotate(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+	}
+	return Vector3i(*result);
 }
+
+//Vector3i VoxelContainer::get_voxel_direction(const Vector3i& direction, const Vector3i& rotation)
+//{
+//	Vector3 result = direction;
+//	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+//	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+//	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+//	return Vector3i(result);
+//}
 
 int VoxelContainer::get_voxel_type(const Voxel& value)
 {

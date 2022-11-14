@@ -2,7 +2,7 @@
 #define PRESETS_DATA_H
 
 #include "basics_preset.h"
-#include "mesh_preset.h"
+#include "model_preset.h"
 #include "device_preset.h"
 #include "device.h"
 
@@ -12,7 +12,7 @@ class PresetsData : public Resource
 private:
 	TypedArray<Material> materials;
 	TypedArray<BasicsPreset> basics_presets;
-	TypedArray<MeshPreset> mesh_presets;
+	TypedArray<ModelPreset> model_presets;
 	TypedArray<DevicePreset> device_presets;
 protected:
 	static void _bind_methods();
@@ -23,8 +23,8 @@ public:
 	void set_basics_presets(const TypedArray <BasicsPreset>& value);
 	TypedArray <BasicsPreset> get_basics_presets() const;
 
-	void set_mesh_presets(const TypedArray <MeshPreset>& value);
-	TypedArray <MeshPreset> get_mesh_presets() const;
+	void set_model_presets(const TypedArray <ModelPreset>& value);
+	TypedArray <ModelPreset> get_model_presets() const;
 
 	void set_device_presets(const TypedArray <DevicePreset>& value);
 	TypedArray <DevicePreset> get_device_presets() const;

@@ -2,109 +2,108 @@
 
 void BasicsPreset::_bind_methods()
 {
-
-
-	ClassDB::bind_method(D_METHOD("set_up", "value"), &BasicsPreset::set_up);
-	ClassDB::bind_method(D_METHOD("get_up"), &BasicsPreset::get_up);
-
-	ClassDB::bind_method(D_METHOD("set_down", "value"), &BasicsPreset::set_down);
-	ClassDB::bind_method(D_METHOD("get_down"), &BasicsPreset::get_down);
-
-	ClassDB::bind_method(D_METHOD("set_front", "value"), &BasicsPreset::set_front);
-	ClassDB::bind_method(D_METHOD("get_front"), &BasicsPreset::get_front);
-
-	ClassDB::bind_method(D_METHOD("set_back", "value"), &BasicsPreset::set_back);
-	ClassDB::bind_method(D_METHOD("get_back"), &BasicsPreset::get_back);
-
-	ClassDB::bind_method(D_METHOD("set_left", "value"), &BasicsPreset::set_left);
-	ClassDB::bind_method(D_METHOD("get_left"), &BasicsPreset::get_left);
-
-	ClassDB::bind_method(D_METHOD("set_right", "value"), &BasicsPreset::set_right);
-	ClassDB::bind_method(D_METHOD("get_right"), &BasicsPreset::get_right);
+	ClassDB::bind_method(D_METHOD("set_up_material_id", "value"), &BasicsPreset::set_up_material_id);
+	ClassDB::bind_method(D_METHOD("get_up_material_id"), &BasicsPreset::get_up_material_id);
+	ClassDB::bind_method(D_METHOD("set_down_material_id", "value"), &BasicsPreset::set_down_material_id);
+	ClassDB::bind_method(D_METHOD("get_down_material_id"), &BasicsPreset::get_down_material_id);
+	ClassDB::bind_method(D_METHOD("set_front_material_id", "value"), &BasicsPreset::set_front_material_id);
+	ClassDB::bind_method(D_METHOD("get_front_material_id"), &BasicsPreset::get_front_material_id);
+	ClassDB::bind_method(D_METHOD("set_back_material_id", "value"), &BasicsPreset::set_back_material_id);
+	ClassDB::bind_method(D_METHOD("get_back_material_id"), &BasicsPreset::get_back_material_id);
+	ClassDB::bind_method(D_METHOD("set_left_material_id", "value"), &BasicsPreset::set_left_material_id);
+	ClassDB::bind_method(D_METHOD("get_left_material_id"), &BasicsPreset::get_left_material_id);
+	ClassDB::bind_method(D_METHOD("set_right_material_id", "value"), &BasicsPreset::set_right_material_id);
+	ClassDB::bind_method(D_METHOD("get_right_material_id"), &BasicsPreset::get_right_material_id);
 
 	ClassDB::bind_static_method("BasicsPreset", D_METHOD("instantiate", "name", "materials"), &BasicsPreset::instantiate);
 
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "up_material_id"), "set_up_material_id", "get_up_material_id");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "down_material_id"), "set_down_material_id", "get_down_material_id");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "front_material_id"), "set_front_material_id", "get_front_material_id");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "back_material_id"), "set_back_material_id", "get_back_material_id");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "left_material_id"), "set_left_material_id", "get_left_material_id");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "right_material_id"), "set_right_material_id", "get_right_material_id");
 
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "up"), "set_up", "get_up");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "down"), "set_down", "get_down");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "front"), "set_front", "get_front");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "back"), "set_back", "get_back");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "left"), "set_left", "get_left");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "right"), "set_right", "get_right");
+	BIND_ENUM_CONSTANT(UP);
+	BIND_ENUM_CONSTANT(DOWN);
+	BIND_ENUM_CONSTANT(FRONT);
+	BIND_ENUM_CONSTANT(BACK);
+	BIND_ENUM_CONSTANT(LEFT);
+	BIND_ENUM_CONSTANT(RIGHT);
 }
 
 BasicsPreset::BasicsPreset()
 {
-	up = 0;
-	down = 0;
-	front = 0;
-	back = 0;
-	left = 0;
-	right = 0;
+	materials[0] = materials[1] = materials[2] = materials[3] = materials[4] = materials[5] = 0;
+	filter = 0b01;
 }
 
 BasicsPreset::~BasicsPreset()
 {
 }
 
-void BasicsPreset::set_up(const int& value)
+void BasicsPreset::set_up_material_id(const int& value)
 {
-	up = value;
+	materials[UP] = value;
 }
 
-int BasicsPreset::get_up() const
+int BasicsPreset::get_up_material_id() const
 {
-	return up;
+	return materials[UP];
 }
 
-void BasicsPreset::set_down(const int& value)
+void BasicsPreset::set_down_material_id(const int& value)
 {
-	down = value;
+	materials[DOWN] = value;
 }
 
-int BasicsPreset::get_down() const
+int BasicsPreset::get_down_material_id() const
 {
-	return down;
+	return materials[DOWN];
 }
 
-void BasicsPreset::set_front(const int& value)
+void BasicsPreset::set_front_material_id(const int& value)
 {
-	front = value;
+	materials[FRONT] = value;
 }
 
-int BasicsPreset::get_front() const
+int BasicsPreset::get_front_material_id() const
 {
-	return front;
+	return materials[FRONT];
 }
 
-void BasicsPreset::set_back(const int& value)
+void BasicsPreset::set_back_material_id(const int& value)
 {
-	back = value;
+	materials[BACK] = value;
 }
 
-int BasicsPreset::get_back() const
+int BasicsPreset::get_back_material_id() const
 {
-	return back;
+	return materials[BACK];
 }
 
-void BasicsPreset::set_left(const int& value)
+void BasicsPreset::set_left_material_id(const int& value)
 {
-	left = value;
+	materials[LEFT] = value;
 }
 
-int BasicsPreset::get_left() const
+int BasicsPreset::get_left_material_id() const
 {
-	return left;
+	return materials[LEFT];
 }
 
-void BasicsPreset::set_right(const int& value)
+void BasicsPreset::set_right_material_id(const int& value)
 {
-	right = value;
+	materials[RIGHT] = value;
 }
 
-int BasicsPreset::get_right() const
+int BasicsPreset::get_right_material_id() const
 {
-	return right;
+	return materials[RIGHT];
+}
+
+int BasicsPreset::get_material_id(const int& value) {
+	return materials[value];
 }
 
 Ref<BasicsPreset> BasicsPreset::instantiate(const String& name, const Dictionary& materials)
@@ -113,12 +112,12 @@ Ref<BasicsPreset> BasicsPreset::instantiate(const String& name, const Dictionary
 	basics_preset.instantiate();
 	basics_preset->name = name;
 
-	basics_preset->set_up((int)materials.get("up", 0));
-	basics_preset->set_down((int)materials.get("down", 0));
-	basics_preset->set_front((int)materials.get("front", 0));
-	basics_preset->set_back((int)materials.get("back", 0));
-	basics_preset->set_left((int)materials.get("left", 0));
-	basics_preset->set_right((int)materials.get("right", 0));
+	basics_preset->set_up_material_id((int)materials.get(UP, 0));
+	basics_preset->set_down_material_id((int)materials.get(DOWN, 0));
+	basics_preset->set_front_material_id((int)materials.get(FRONT, 0));
+	basics_preset->set_back_material_id((int)materials.get(BACK, 0));
+	basics_preset->set_left_material_id((int)materials.get(LEFT, 0));
+	basics_preset->set_right_material_id((int)materials.get(RIGHT, 0));
 
 	return basics_preset;
 }
@@ -156,11 +155,9 @@ static Vector3 brick_vertexs[][6] = {
 };
 
 static BasicsPreset::BasicsData* basics_data_memorandum[24 * 24 * 24] = { nullptr };
-
-void BasicsPreset::build_mesh(Vector3* vertexs, const Array& arrays, const Vector3& position, const Vector3& rotation)
+void BasicsPreset::build_mesh(const int& direction, const Array& arrays, const Vector3& position, const Vector3& rotation)
 {
 	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
-
 	BasicsData* basics_mesh_data = basics_data_memorandum[index];
 	if (basics_mesh_data == nullptr)
 	{
@@ -183,58 +180,19 @@ void BasicsPreset::build_mesh(Vector3* vertexs, const Array& arrays, const Vecto
 	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
 	for (int i = 0; i < 6; i++)
 	{
-		array_vertex.push_back(basics_mesh_data->vertexs[mesh_key][i] + position);
+		array_vertex.push_back(basics_mesh_data->vertexs[direction][i] + position);
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
-		array_normal.push_back(basics_mesh_data->normals[mesh_key][0]);
+		array_normal.push_back(basics_mesh_data->normals[direction][0]);
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		array_normal.push_back(basics_mesh_data->normals[mesh_key][1]);
+		array_normal.push_back(basics_mesh_data->normals[direction][1]);
 	}
 	for (int i = 0; i < 6; i++)
 	{
 		array_tex_uv.push_back(uvs[i]);
 	}
-}
-
-void BasicsPreset::build_up_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
-{
-	build_mesh(UP, arrays, position, rotation);
-}
-
-void BasicsPreset::build_down_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
-{
-	build_mesh(DOWN, arrays, position, rotation);
-}
-
-void BasicsPreset::build_front_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
-{
-	build_mesh(FRONT, arrays, position, rotation);
-}
-
-void BasicsPreset::build_back_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
-{
-	build_mesh(BACK, arrays, position, rotation);
-}
-
-void BasicsPreset::build_left_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
-{
-	build_mesh(LEFT, arrays, position, rotation);
-}
-
-void BasicsPreset::build_right_mesh(const Array& arrays, const Vector3& position, const Vector3& rotation)
-{
-	build_mesh(RIGHT, arrays, position, rotation);
-}
-
-Vector3 BasicsPreset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
-{
-	Vector3 result = vertex;
-	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-	return result;
 }

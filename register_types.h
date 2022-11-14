@@ -1,7 +1,7 @@
 #ifndef REGISTER_TYPES_H
 #define REGISTER_TYPES_H
 
-#include "chunk.h"
+#include "voxel_block.h"
 
 using namespace godot;
 

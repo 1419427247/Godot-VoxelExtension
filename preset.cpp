@@ -12,19 +12,19 @@ void Preset::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_transparent", "value"), &Preset::set_transparent);
 	ClassDB::bind_method(D_METHOD("get_transparent"), &Preset::get_transparent);
 
-	ClassDB::bind_method(D_METHOD("set_collider", "value"), &Preset::set_collider);
-	ClassDB::bind_method(D_METHOD("get_collider"), &Preset::get_collider);
+	ClassDB::bind_method(D_METHOD("set_filter", "value"), &Preset::set_filter);
+	ClassDB::bind_method(D_METHOD("get_filter"), &Preset::get_filter);
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transparent"), "set_transparent", "get_transparent");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "collider"), "set_collider", "get_collider");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "transparent"), "set_transparent", "get_transparent");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "filter",PROPERTY_HINT_LAYERS_3D_RENDER), "set_filter", "get_filter");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "script", PROPERTY_HINT_RESOURCE_TYPE, "Script"), "set_script", "get_script");
 }
 
 Preset::Preset()
 {
-	transparent = false;
-	collider = true;
+	transparent = 0;
+	filter = 0b0;
 }
 
 Preset::~Preset()
@@ -41,24 +41,24 @@ String Preset::get_name() const
 	return name;
 }
 
-void Preset::set_transparent(const bool& value)
+void Preset::set_transparent(const int& value)
 {
 	transparent = value;
 }
 
-bool Preset::get_transparent() const
+int Preset::get_transparent() const
 {
 	return transparent;
 }
 
-void Preset::set_collider(const bool& value)
+void Preset::set_filter(const int& value)
 {
-	collider = value;
+	filter = value;
 }
 
-bool Preset::get_collider() const
+int Preset::get_filter() const
 {
-	return collider;
+	return filter;
 }
 
 void Preset::set_script(const Ref<Script>& value)
@@ -77,4 +77,19 @@ void Preset::_on_voxel_new(VoxelRoom* voxel_room, const Voxel& voxel, const Vect
 
 void Preset::_on_voxel_delete(VoxelRoom* voxel_room, const Voxel& voxel, const Vector3i& position)
 {
+}
+
+
+Vector3 Preset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
+{
+	Vector3 result = vertex;
+	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+	return result;
+}
+
+Vector3 Preset::get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c)
+{
+	return (c - a).cross(b - a);
 }

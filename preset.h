@@ -41,8 +41,8 @@ private:
 
 protected:
 	String name;
-	bool transparent;
-	bool collider;
+	int transparent;
+	int filter;
 	Ref<Script> script;
 	static void _bind_methods();
 public:
@@ -51,16 +51,19 @@ public:
 	void set_name(const String& value);
 	String get_name() const;
 
-	void set_transparent(const bool& value);
-	bool get_transparent() const;
+	void set_transparent(const int& value);
+	int get_transparent() const;
 
-	void set_collider(const bool& value);
-	bool get_collider() const;
+	void set_filter(const int& value);
+	int get_filter() const;
 
 	void set_script(const Ref<Script>& value);
 	Ref<Script> get_script() const;
 
-	virtual void _on_voxel_new(VoxelRoom* voxel_room, const Voxel& voxel, const Vector3i& position);
+	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
+	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
+
+	virtual void _on_voxel_new(VoxelRoom * voxel_room, const Voxel & voxel, const Vector3i & position);
 	virtual void _on_voxel_delete(VoxelRoom* voxel_room, const Voxel& voxel, const Vector3i& position);
 };
 

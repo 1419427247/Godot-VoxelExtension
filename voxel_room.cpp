@@ -6,7 +6,7 @@ void VoxelRoom::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_voxel_container_data"), &VoxelRoom::get_voxel_container_data);
 	ClassDB::bind_method(D_METHOD("set_voxel", "position", "value"), &VoxelRoom::set_voxel);
 	ClassDB::bind_method(D_METHOD("get_voxel", "position"), &VoxelRoom::get_voxel);
-	ClassDB::bind_method(D_METHOD("get_chunk_key", "position"), &VoxelRoom::get_chunk_key);
+	ClassDB::bind_method(D_METHOD("get_block_key", "position"), &VoxelRoom::get_block_key);
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "voxel_container_data", PROPERTY_HINT_RESOURCE_TYPE, "VoxelContainerData"), "set_voxel_container_data", "get_voxel_container_data");
 }
 
@@ -42,11 +42,12 @@ Voxel VoxelRoom::get_voxel(const Vector3i& position) const
 	return voxel_container_data->get_voxel(position);
 }
 
-Vector3i VoxelRoom::get_chunk_key(const Vector3i& position) const
+Vector3i VoxelRoom::get_block_key(const Vector3i& position) const
 {
+	Vector3i block_size = get_block_size();
 	return Vector3i(
-		position.x / chunk_size.x,
-		position.y / chunk_size.y,
-		position.z / chunk_size.z
+		position.x / block_size.x,
+		position.y / block_size.y,
+		position.z / block_size.z
 	);
 }

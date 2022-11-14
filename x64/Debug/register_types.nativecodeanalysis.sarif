@@ -16,9 +16,9 @@
                   "uri": "file:///C:/Users/StarNightFlower/Desktop/godot/VoxelExpansion/godot-cpp/include/godot_cpp/core/math.hpp"
                 },
                 "region": {
-                  "startLine": 656,
+                  "startLine": 677,
                   "startColumn": 37,
-                  "endLine": 656,
+                  "endLine": 677,
                   "endColumn": 48
                 }
               },
@@ -44,9 +44,9 @@
                   "uri": "file:///C:/Users/StarNightFlower/Desktop/godot/VoxelExpansion/godot-cpp/include/godot_cpp/core/math.hpp"
                 },
                 "region": {
-                  "startLine": 661,
+                  "startLine": 682,
                   "startColumn": 27,
-                  "endLine": 661,
+                  "endLine": 682,
                   "endColumn": 38
                 }
               },
@@ -72,9 +72,9 @@
                   "uri": "file:///C:/Users/StarNightFlower/Desktop/godot/VoxelExpansion/godot-cpp/include/godot_cpp/core/math.hpp"
                 },
                 "region": {
-                  "startLine": 661,
+                  "startLine": 682,
                   "startColumn": 48,
-                  "endLine": 661,
+                  "endLine": 682,
                   "endColumn": 57
                 }
               },
@@ -82,90 +82,6 @@
                 {
                   "fullyQualifiedName": "godot::Math::snap_scalar_separation",
                   "decoratedName": "?snap_scalar_separation@Math@godot@@YAMMMMM@Z",
-                  "kind": "function"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "C26451",
-          "message": {
-            "text": "算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "file:///C:/Users/StarNightFlower/Desktop/godot/VoxelExpansion/godot-cpp/include/godot_cpp/variant/color.hpp"
-                },
-                "region": {
-                  "startLine": 178,
-                  "startColumn": 50,
-                  "endLine": 178,
-                  "endColumn": 54
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "godot::Color::srgb_to_linear",
-                  "decoratedName": "?srgb_to_linear@Color@godot@@QEBA?AV12@XZ",
-                  "kind": "function"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "C26451",
-          "message": {
-            "text": "算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "file:///C:/Users/StarNightFlower/Desktop/godot/VoxelExpansion/godot-cpp/include/godot_cpp/variant/color.hpp"
-                },
-                "region": {
-                  "startLine": 177,
-                  "startColumn": 50,
-                  "endLine": 177,
-                  "endColumn": 54
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "godot::Color::srgb_to_linear",
-                  "decoratedName": "?srgb_to_linear@Color@godot@@QEBA?AV12@XZ",
-                  "kind": "function"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "C26451",
-          "message": {
-            "text": "算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "file:///C:/Users/StarNightFlower/Desktop/godot/VoxelExpansion/godot-cpp/include/godot_cpp/variant/color.hpp"
-                },
-                "region": {
-                  "startLine": 176,
-                  "startColumn": 50,
-                  "endLine": 176,
-                  "endColumn": 54
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "godot::Color::srgb_to_linear",
-                  "decoratedName": "?srgb_to_linear@Color@godot@@QEBA?AV12@XZ",
                   "kind": "function"
                 }
               ]
@@ -335,18 +251,7 @@
             "resultFile"
           ],
           "hashes": {
-            "sha-256": "30c4cd25bda4d6d58936287b18c5851240bc4f2e48cc78f1a975389102e67ef6"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///C:/Users/StarNightFlower/Desktop/godot/VoxelExpansion/godot-cpp/include/godot_cpp/variant/color.hpp"
-          },
-          "roles": [
-            "resultFile"
-          ],
-          "hashes": {
-            "sha-256": "4c2b4049da10d6fb4026f8c38b63813b6a61135c2642b6ba87461a97f0ad24ba"
+            "sha-256": "650cde0ac15cf6a574e2ecbff95f415ca555274fd77fc27c207244fc8bdaa0de"
           }
         },
         {
@@ -357,7 +262,7 @@
             "resultFile"
           ],
           "hashes": {
-            "sha-256": "f6f70f51929093fbd2406533cb379635a14bffd06fb3879c3d73184825fbe1f7"
+            "sha-256": "d615c51586ba6ea4e26ae9bde82547f66e57da586f5faa1ab472038bdcb86984"
           }
         },
         {
@@ -368,7 +273,7 @@
             "analysisTarget"
           ],
           "hashes": {
-            "sha-256": "0128ffa9252438b5402282ad874614db8f848206c4e983f16621f03f781a6d15"
+            "sha-256": "d6d248a5a8f7e7adaf053e44e3ae232a0ceab23497d1b3523a2e42c7a1cc4164"
           }
         },
         {
@@ -376,7 +281,55 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/register_types.h"
           },
           "hashes": {
-            "sha-256": "c9df7ab09e0538281594af82d83a19edc8de54cea5a4fe937d8b6ccdfa0e6141"
+            "sha-256": "98fa8b66d4362057cf38258cb9bff8c3b397de8e0ab525a46e7aa5f240bd0714"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/voxel_block.h"
+          },
+          "hashes": {
+            "sha-256": "6f3f1beaa4617e0444c7c07b56c808f9e3a720ab4a5dc76e70cc2180f9b045ed"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/voxel_room.h"
+          },
+          "hashes": {
+            "sha-256": "c116be7057a39b88aa1e3b858286ab1ec95c2f321829ba3b434ffec57fa7e3f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/voxel_container.h"
+          },
+          "hashes": {
+            "sha-256": "83300321b32a569f399cf7b818d94fad25e176cdf41cc632b7c5b689739b7d86"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/voxel_container_data.h"
+          },
+          "hashes": {
+            "sha-256": "4c4bff9046e3099d368330d6f7dd14efdbe1eac0a5c9419ee2dd4ea40b15869e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/presets_data.h"
+          },
+          "hashes": {
+            "sha-256": "e83231a40d069fb4e4d905f5e09ecd399a078ebdbe289911380e95b1728bf488"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/basics_preset.h"
+          },
+          "hashes": {
+            "sha-256": "00780d468a952051010b5cf7cbb7e4ec00ab9a2ffcf739eb2486d31013af58fc"
           }
         },
         {
@@ -384,7 +337,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/preset.h"
           },
           "hashes": {
-            "sha-256": "42a8126b4aaf9191ecf5be01da99510871f9c8ad3e2d5b2a675c2937809bb58c"
+            "sha-256": "8477357b58b16b0ffa27fe73d5df4cf606faf9ccc4cfcfb73a1e6db28d6db77a"
           }
         },
         {
@@ -392,7 +345,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/class_db.hpp"
           },
           "hashes": {
-            "sha-256": "e79456c5fcfb1f3d60d8c1cd01e70ccfc96cd31a9e5f542a6f5812ea7e0abd22"
+            "sha-256": "3fa8afbec02cd0137bc8a0899c05cc567a73f486c1b4551c31d54ea59e4a0e74"
           }
         },
         {
@@ -400,7 +353,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/godot-headers/godot/gdnative_interface.h"
           },
           "hashes": {
-            "sha-256": "81415df2086761ef951a98b271cdf534af41e0cc81a74319655d3e12c1be69d2"
+            "sha-256": "9389e3ccc6d1e793401b9a6205dd5c7d39e8a3172827b494911f32900d49dece"
           }
         },
         {
@@ -408,7 +361,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/defs.hpp"
           },
           "hashes": {
-            "sha-256": "a3c371369c6f1e3c4b6992809ffbbd9f98e94fbbe2d1617d48996e617053bb01"
+            "sha-256": "1583c5499fc0550ef7974937b7e0f1b0a2fff5c6a30375cf987a92e9f2410eec"
           }
         },
         {
@@ -416,7 +369,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/error_macros.hpp"
           },
           "hashes": {
-            "sha-256": "e4b57468f1537c1f30ce2562cbe09acc0c83ed2a8e0a535f19fb9904ddd037df"
+            "sha-256": "b68393936a714ec846a7be062f2b0cc5f569a3b5f61e01f9cb882e93fd587b2e"
           }
         },
         {
@@ -424,7 +377,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/string.hpp"
           },
           "hashes": {
-            "sha-256": "7cda01a2487f9531ab555cb55e86eea6d104069b4c29abc8a5343dc03f3189ee"
+            "sha-256": "23cb07c27a5184edd111893ad57e1dbb3afebd00f4630b1e04008da4c6952076"
           }
         },
         {
@@ -432,7 +385,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/char_string.hpp"
           },
           "hashes": {
-            "sha-256": "f8f2d021d11045d3f85961dede2a8f612225292dc876804660c6770081bfd505"
+            "sha-256": "3dd692babb2439075d7c32198ca258ad95df3155bf1313eca06b078d06d5606b"
           }
         },
         {
@@ -440,7 +393,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/char_utils.hpp"
           },
           "hashes": {
-            "sha-256": "4a33da577fd7d0a4223578ca58329c5819ac7e3309db7a3ff7fa04f9f4e6a0fc"
+            "sha-256": "9efa11ae1ad55efcab7d4b1069c6af3fcecea70e492948015569528fb07dd80f"
           }
         },
         {
@@ -448,7 +401,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/ucaps.hpp"
           },
           "hashes": {
-            "sha-256": "7130d18a4596e17076c1c1830f29ef10ce4fe440b7fb94471ecfa918ac67222d"
+            "sha-256": "75436fe6e95f9051e640a2af72136d92c7652c1871c4da21de3b737cd6c344d7"
           }
         },
         {
@@ -456,7 +409,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/method_bind.hpp"
           },
           "hashes": {
-            "sha-256": "3ac6ccefdb2c625ab9899db7f1f831a799f95e45bbe27a108f3dde26cd5cb8c1"
+            "sha-256": "e9316a37fa227ba80f25c0fdd979f11e9f8d41ef561f7aaf7147bfaeec7d7da6"
           }
         },
         {
@@ -464,7 +417,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/binder_common.hpp"
           },
           "hashes": {
-            "sha-256": "000789883a98ee321e6ae32f1d4090f4672f7f9b9a5c53d78b01cf131b93106a"
+            "sha-256": "96924af0e3b40dc72808d403c067ced494ab1b5e9cf6a08e5e5eabc3bf4a58db"
           }
         },
         {
@@ -472,7 +425,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/method_ptrcall.hpp"
           },
           "hashes": {
-            "sha-256": "bb3de303673f78d5c3f36c728ba4ec329da732be2fa2730e04e89f0a76f9d4a4"
+            "sha-256": "2e0dc7724b75c46f1d681815745859455509d4976207f131f38054d4e68d433f"
           }
         },
         {
@@ -480,7 +433,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/godot.hpp"
           },
           "hashes": {
-            "sha-256": "ecf1583d5cff82829954dfeb1fb1e1faac864259934c4a70138979d965dea0c0"
+            "sha-256": "400549fc149ffd5b4c18d9ed28a19c0a0c5eafb254295ab488a721f6ec614efa"
           }
         },
         {
@@ -488,7 +441,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/variant.hpp"
           },
           "hashes": {
-            "sha-256": "7c43d95e48ff91c64d51fa9c6cd2874408910746a7580b05c32c510fc076fcd7"
+            "sha-256": "55d4845504294bf7223f9c43ed199e989361fa3cf3a7f57dc37fd3f53a95ae21"
           }
         },
         {
@@ -504,7 +457,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/vector2.hpp"
           },
           "hashes": {
-            "sha-256": "63a350afef9d77bea6b931bc85e9330d8f2ac4197eab626112d3136f917f8e94"
+            "sha-256": "9a0de139d63ee396f1e9b6c82fc4b843b05a3229e3b94dc7182d3446da6f1bc5"
           }
         },
         {
@@ -512,7 +465,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/vector2i.hpp"
           },
           "hashes": {
-            "sha-256": "904adffece0d6d88601976769a0044da2ea78b2331574d0b73aa869397911577"
+            "sha-256": "588448af8142999445b9b1121cbf20cf29e59c84ba14e1c289a16a58ef301613"
           }
         },
         {
@@ -520,7 +473,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/rect2.hpp"
           },
           "hashes": {
-            "sha-256": "68dd75e9773d4405459bc855739fdeb51741b7270551d76bd0e3f679fd6e542d"
+            "sha-256": "1f8e3ad03f57de6f590dd51ddb4937efa39a2db95be12bbde05fe21f126d3b56"
           }
         },
         {
@@ -536,7 +489,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/rect2i.hpp"
           },
           "hashes": {
-            "sha-256": "3246ec2a5b0c9bfb41366ed10e6a6be578a7d5fce8dd6ae1f0bcc0fd0108c851"
+            "sha-256": "2d0d886b2ecdf3dca0872d46a6da08e17f3c6adce162925688cbbe3fe0ac7f4c"
           }
         },
         {
@@ -544,7 +497,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/vector3.hpp"
           },
           "hashes": {
-            "sha-256": "a427ebf0a5741598dbfa9d25258432c7fc5d4b75c1255c0442852423b3431d95"
+            "sha-256": "05876e3a64705aeeef202c99cfc72c41e8d0779ae5def16336b095679edd8e8b"
           }
         },
         {
@@ -552,7 +505,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/vector3i.hpp"
           },
           "hashes": {
-            "sha-256": "31a5d9a8bf590a3f0c2960f3c4ef6e9a2baf68289731d01703ad293861939598"
+            "sha-256": "6c706332a3e1ee423f61fe31fecc3826a4ea1032efa3b4040896f526cdd2d55f"
           }
         },
         {
@@ -560,7 +513,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/transform2d.hpp"
           },
           "hashes": {
-            "sha-256": "006bcd813bac6398e4bb304743e57be7d9ce9adfdafeda987469412799aca064"
+            "sha-256": "5310306837949f97892043e24fab18891c056c22615b412b3282a9a0428f809f"
           }
         },
         {
@@ -568,7 +521,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_vector2_array.hpp"
           },
           "hashes": {
-            "sha-256": "abfb3a931f45e4124cf4bbc787dbd51382b908192413aef0decd5650f96ee21c"
+            "sha-256": "fbec4ad631ff3d935f1da2f1ab99f66c9984583f7623c68ee9058643a1d7867c"
           }
         },
         {
@@ -576,7 +529,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/vector4.hpp"
           },
           "hashes": {
-            "sha-256": "9fb6e2b474479464d614f1b60a1cd2f37bacbbf730edabda9ba530a83b9748cc"
+            "sha-256": "a4bdedcb47f8413239799f079a383bdfb20e8b8b4ae265e98ca3cf7c5a95e646"
           }
         },
         {
@@ -584,7 +537,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/vector4i.hpp"
           },
           "hashes": {
-            "sha-256": "d0ea82952f4c7eb4c386111fb74bb31128e18f7294ded9c0e98738cbf9e8d120"
+            "sha-256": "c854435f011587b0cbf8925d8cf7c87bb338e192952e9127e36e417518955c81"
           }
         },
         {
@@ -592,7 +545,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/plane.hpp"
           },
           "hashes": {
-            "sha-256": "59ea42dd6f7cb6b2353e48c83f35840cca27f620faeeecef9c414cae5da92ec5"
+            "sha-256": "78efe62e28eb5086fd40cf5bd2298f0304a0860db8bed1e3537e49bd4c18795d"
           }
         },
         {
@@ -600,7 +553,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/quaternion.hpp"
           },
           "hashes": {
-            "sha-256": "663a969720c8f4a2e44ae351160dbc7e1a584c54e61c1ed24dcee191f38a57b9"
+            "sha-256": "25312dd9c49f71b9030f02ecb5d81a2bb2fe361fa5ab81b8cb6d7573c506c7af"
           }
         },
         {
@@ -608,7 +561,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/aabb.hpp"
           },
           "hashes": {
-            "sha-256": "1c86f159eb91ad5b1f81da196d80b1f5e5d18a389a690dfd21bda6898b6c5d40"
+            "sha-256": "3836d5fe6f594eb79814bb4e0fabe9df660dba79f4cd37812c14a294e25e8c24"
           }
         },
         {
@@ -616,7 +569,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/basis.hpp"
           },
           "hashes": {
-            "sha-256": "37cce64e9929f510b5110e1607e01ca847d6f7c4b65a7ace4e40a1e0addb2042"
+            "sha-256": "485ab9d0eff423ef31984531c8cef4d7efa8c97ca53c2d5410a922f7dafa8cfa"
           }
         },
         {
@@ -624,7 +577,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/transform3d.hpp"
           },
           "hashes": {
-            "sha-256": "90efed58dd8e6aebff71cecb24285b9edba9b7fbeb746bb6c7d6a493e1e40735"
+            "sha-256": "a8633247d4199a73a55c547217ebf28388f6cbe3c1298f6583b4c7b4eea0d462"
           }
         },
         {
@@ -632,7 +585,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_vector3_array.hpp"
           },
           "hashes": {
-            "sha-256": "904cc0960c85342b68cda9e2a5cc34bafda4b3a53522635f64569928d1131287"
+            "sha-256": "f3efbdf8c9c0d51c8b9bc4216e9473b45325c5fa06ba71b6b88d470f2a743cff"
           }
         },
         {
@@ -640,7 +593,63 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/projection.hpp"
           },
           "hashes": {
-            "sha-256": "6772a527af145cb3a1819ac566c13dce8fd0c7824e8b6a49a8b8dcd525c91cb5"
+            "sha-256": "f86adb2d62239bb1f8294acdbd5cb807cb2bca4f8f7792baa5045a49df419608"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/color.hpp"
+          },
+          "hashes": {
+            "sha-256": "7707ebe6bcd7215e3814d7c18bfeef5a83b6bd7d28c6e3d2e3c7727ac91e69aa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/string_name.hpp"
+          },
+          "hashes": {
+            "sha-256": "49f8c3eaee7bb61f83c9075f3d4ce394ddd42d3fc729387b528cbbd6606aae6c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/node_path.hpp"
+          },
+          "hashes": {
+            "sha-256": "9df052a6fd8716b6e2d2c40b4b1070a4e11c4eb47cebe6b11f150be3fe2fe94d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/rid.hpp"
+          },
+          "hashes": {
+            "sha-256": "4eaeed9389400fa129ec98cf48a9a4dba150a5682ac6a469a14783c548c70dbb"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/callable.hpp"
+          },
+          "hashes": {
+            "sha-256": "9cfa31c1ddf5aba8fb9c072a0c55b5a52d3952cf151b0269da2c8dd25fbdab4c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/signal.hpp"
+          },
+          "hashes": {
+            "sha-256": "42ff10d90bb32acea6f2d8e240a1539a5b0dfaaf90e6830cb5fc1527d4b64724"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/dictionary.hpp"
+          },
+          "hashes": {
+            "sha-256": "99bbc78bc7b8f6a0abb96617f05213e63b638e371a49f42369e99a8db632aceb"
           }
         },
         {
@@ -648,7 +657,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/array.hpp"
           },
           "hashes": {
-            "sha-256": "a798ec1a0348d156e0456e6068b6d8c0fe9537c0db2262c6e0d87038df8e51d9"
+            "sha-256": "277e160cb61a7d27f7377b059b1318ec2998965d7d6af7e56f9d78c0334d1b58"
           }
         },
         {
@@ -661,58 +670,10 @@
         },
         {
           "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/string_name.hpp"
-          },
-          "hashes": {
-            "sha-256": "94aebd7598b9f1ac54b115e777f2821958f0921ed2ba32431fc45223f08dd75a"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/node_path.hpp"
-          },
-          "hashes": {
-            "sha-256": "cc2aea505f564925085c57b9c4c271903c784b719c54d583ccdaea7a16587d2e"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/rid.hpp"
-          },
-          "hashes": {
-            "sha-256": "6b48deeef50c61ed7ec4cfd5b154cce07586cfb02297f2e7c47b345dd0d7e6bc"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/callable.hpp"
-          },
-          "hashes": {
-            "sha-256": "6039abaf700dcc9a34a1cb12e1b54cac8df0062e0907766c07c48ea7b8f3c39a"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/signal.hpp"
-          },
-          "hashes": {
-            "sha-256": "462c9fb1d5d9f38047959a8f02dcac44791e4026d9212829fadcbbb1a5341b55"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/dictionary.hpp"
-          },
-          "hashes": {
-            "sha-256": "e1dd11dada27abf5e52e544b646f21852fe1c8d47f0055c63497e894cccc5562"
-          }
-        },
-        {
-          "location": {
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_byte_array.hpp"
           },
           "hashes": {
-            "sha-256": "06206067a44d1c45cdd256abc62fc80131f484a045e11b70c009b9d5ebd37fe4"
+            "sha-256": "117139c31b916a63731ea3461d287f3568b15cb4ce68b13eb69e1b1668ffe3e1"
           }
         },
         {
@@ -720,7 +681,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_int32_array.hpp"
           },
           "hashes": {
-            "sha-256": "c926cd4a42660be993559229d1f0941a264223c2840dc3e2b76486601c2744ea"
+            "sha-256": "4578aa12691dd23d3b0475ce6194840b560fc613c54a364743044738324254a6"
           }
         },
         {
@@ -728,7 +689,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_int64_array.hpp"
           },
           "hashes": {
-            "sha-256": "6fe9fead5cd03d442229be49fa48e5d0360877cc8dd7eed1e0229c05a1e60078"
+            "sha-256": "f6506ab3be7a2aaaa372a2c1dac92c9de611150652274d1b0356e4f650489138"
           }
         },
         {
@@ -736,7 +697,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_float32_array.hpp"
           },
           "hashes": {
-            "sha-256": "49a496874c8cf1b588ea1f760385f00322f14962d1141322a797a5ece215dc0f"
+            "sha-256": "cbba8eee6adb0cd402d25851e85cee19bbcd12546d7f336ba44dd485f0317644"
           }
         },
         {
@@ -744,7 +705,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_float64_array.hpp"
           },
           "hashes": {
-            "sha-256": "b6578f7a48088e1e7bc0a65afd5d9f07432a208e4c77aa8fb47818ad56cb21ff"
+            "sha-256": "bd942d3c746d221f773bee43651470af5a68873f6f432efe0433e1b5448de357"
           }
         },
         {
@@ -752,7 +713,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_string_array.hpp"
           },
           "hashes": {
-            "sha-256": "aa0235102c3168ae545fc658524bc942932ff697abf93a2b89dd085a5b2a28be"
+            "sha-256": "db9a15a9f3224fe240c33bd48fcc3c69af3f53a7658c15824506d8684c889ea9"
           }
         },
         {
@@ -760,7 +721,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/packed_color_array.hpp"
           },
           "hashes": {
-            "sha-256": "4c78682084fa15683513caeed61a96c6b544828d0ec74b15ea9df4757f514547"
+            "sha-256": "2070f7b9c38390742a086faa4db56700faf9004179ffe9d09e440cd68aa227df"
           }
         },
         {
@@ -776,7 +737,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/type_info.hpp"
           },
           "hashes": {
-            "sha-256": "f3154971d57923e1de496c0b89331c2eddea22e959b3d016edafde15622f3c74"
+            "sha-256": "f02eac10d0a304c4c84185c62dadb12c7f7c6f78e1eca33792cc1b6811ccb206"
           }
         },
         {
@@ -784,7 +745,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/object.hpp"
           },
           "hashes": {
-            "sha-256": "4542346de3fc12188b62c026a4797b93f6f7b732b359af5f75186998f078c740"
+            "sha-256": "2ac4be0641ed4b37ee4b907b0b56aa7ba07a337035477458c7ddf9556c54e362"
           }
         },
         {
@@ -792,7 +753,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/property_info.hpp"
           },
           "hashes": {
-            "sha-256": "0b998f528b517b94c2a96966e5e36f531270b80baf91978e3ad77a809b29d7f5"
+            "sha-256": "1356f1c0163522ac95d99f9e6b900a25db2455f72ed80a2b88a647cea8a9a79d"
           }
         },
         {
@@ -800,7 +761,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/object.hpp"
           },
           "hashes": {
-            "sha-256": "9fcfedc2cfc867421797047a6c06d3e49cef888ef9134f94f1ab45220809d8f5"
+            "sha-256": "1d77977dc76e79dcbf0fb6ad64b8bb3b1ad2074fa8cf69a6b1ddf7f06f641bca"
           }
         },
         {
@@ -808,7 +769,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/variant/typed_array.hpp"
           },
           "hashes": {
-            "sha-256": "969efbf6a399952562e967498e1f6f6516ab47b1d3592a58798c51a704d29ba6"
+            "sha-256": "56019d56139df8600fc31e190d501fa62021f34a04fab751263ea438b0dffe01"
           }
         },
         {
@@ -816,7 +777,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/classes/wrapped.hpp"
           },
           "hashes": {
-            "sha-256": "4cc083a6e2bf779e57aaaff4b28959a1f598d18a31979d64c489f35408c0a77f"
+            "sha-256": "32edb77ab92d8d54b92af66874a5e8d22ba17b09c41ecf5289b48b3a11480fde"
           }
         },
         {
@@ -824,7 +785,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/core/memory.hpp"
           },
           "hashes": {
-            "sha-256": "5f8d3b19ed3fe3795f077e8a317c4ca12662af43357027da67646797376266b4"
+            "sha-256": "69dfb9c5b924328176dca43957cd804f5ad7cda907f0480a4d4e8b664541f33b"
           }
         },
         {
@@ -832,7 +793,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/templates/list.hpp"
           },
           "hashes": {
-            "sha-256": "6d640c50b362ce87d79afadc7178638859c22e3dfe78009e4cd1585c4f4bddfb"
+            "sha-256": "53d40fc902ad167689381735677fd114a1f60f1a263a07df9eb8e40930bdaf7e"
           }
         },
         {
@@ -840,7 +801,23 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/templates/sort_array.hpp"
           },
           "hashes": {
-            "sha-256": "a1064876453f626f3dae0468a21e27f2e5c606c369a0643ee4f686aeee3af17e"
+            "sha-256": "dc03275204e1fdd9e3875bf1461ba2f8015fb1a4eedfbc55cbeb91349d47de02"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/global_constants_binds.hpp"
+          },
+          "hashes": {
+            "sha-256": "967472b2170ed0b657b7cb73d18b3471a288d467ce12a62a82e81e7130bf56b0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/builtin_binds.hpp"
+          },
+          "hashes": {
+            "sha-256": "8212e458c008d98135f16c8ca95813a1c8101c7d9b8d7cd4cacf2657818295a8"
           }
         },
         {
@@ -848,7 +825,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/ref_counted.hpp"
           },
           "hashes": {
-            "sha-256": "9c65cabc06c0d3294a81f70aeb5ab99c80536002727ce44da234651779d95529"
+            "sha-256": "e991a956dac184b6ea396a598def7d58a1a8cf849315a49842df5ff631a69c1b"
           }
         },
         {
@@ -856,7 +833,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/classes/ref.hpp"
           },
           "hashes": {
-            "sha-256": "0be6ed70181f8c0727434daf321e9abeda00e0de91d7d067c813e2b3947b11a6"
+            "sha-256": "b603a16b6093d389c3d76728fe84b446054accc6c37bf35c0847eab0a404c289"
           }
         },
         {
@@ -864,7 +841,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/mesh.hpp"
           },
           "hashes": {
-            "sha-256": "5a8e6044a70a85261a06ac1a03d8515d6caff77c8931b14fdeaacf0aa290f533"
+            "sha-256": "41399149e0e03678705d239bd113608d2d9acd600a2b53845b7775d31692b352"
           }
         },
         {
@@ -872,7 +849,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/resource.hpp"
           },
           "hashes": {
-            "sha-256": "62f9376a84ecaf11860eca7a9cc37b32a60262ed3a7c894bb9d7c1e75f3e38de"
+            "sha-256": "ce99ff5eebdc3c5a4919e1fa3cad362db8742bb12cd860b86a579282a52c0d3f"
           }
         },
         {
@@ -880,7 +857,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/rendering_server.hpp"
           },
           "hashes": {
-            "sha-256": "b7055b18105b5a826a9cecbccbd4cc586f763fbdf063530fcfbf563f653bb7a7"
+            "sha-256": "1d54083af051818d1ca204151d1c7474743771ea107a69d6d00f4207ff18827f"
           }
         },
         {
@@ -888,7 +865,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/image.hpp"
           },
           "hashes": {
-            "sha-256": "52ec261cde18f0bff9253fb9a89e28e2e3294ac88cc701f23913b32d213496e0"
+            "sha-256": "f0c571d1f8d3b46eb1659a85bd11e927085650dae9dcdaa5b7e82ac0d309a620"
           }
         },
         {
@@ -896,7 +873,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/rendering_device.hpp"
           },
           "hashes": {
-            "sha-256": "1c053c5e72057a4e045671aab3d8e25f4cd04995dbfdfef9f61e501a29f4e5c6"
+            "sha-256": "bb8efee2fa61ea1bf14239c5d7d9a2d538706949c8347ddd04bafacf9edc0425"
           }
         },
         {
@@ -904,7 +881,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/rd_pipeline_specialization_constant.hpp"
           },
           "hashes": {
-            "sha-256": "8e4dd15f4941010deccccde5075356b1e9a8f33fe2c8ffa15dfdcef939b58d35"
+            "sha-256": "c15fab9f615a49cdd413ae58a34f652bd011952e36984fc80308b80abdc55cf5"
           }
         },
         {
@@ -912,7 +889,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/texture2d.hpp"
           },
           "hashes": {
-            "sha-256": "b441c15edf77c60e07b906ecffe07eeeab815ffedfff3c2741ab53d2756d7258"
+            "sha-256": "b152cc23b562bb06f5fd4eb17b9d58dcca9b2528ea13d4522de6ff7abf51bdb0"
           }
         },
         {
@@ -920,7 +897,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/texture.hpp"
           },
           "hashes": {
-            "sha-256": "6527b000fd977a93d2135e222756d573f4ee9387d800353e982c2890c975fe27"
+            "sha-256": "45cc851d45cc020e1985c616d098b0172789fd9b45a1fde9f6d64942dfe44a00"
           }
         },
         {
@@ -928,7 +905,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/node3d.hpp"
           },
           "hashes": {
-            "sha-256": "10a35385ef0cbd26ca363da61c118f1215cbf53cbe9e0bd3ada15ace8b8a5a9e"
+            "sha-256": "18cfb71097b3eb3345e9d459be8ed4b2be36c1c5ebda90adfbd86d799b8d512e"
           }
         },
         {
@@ -936,7 +913,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/node.hpp"
           },
           "hashes": {
-            "sha-256": "2d5e212013417d864235897e812658ebdd59fe2a73657d757ba79e857a316c66"
+            "sha-256": "cbf2fa03d334a44d7ed174df317dba17bd6fc2cd5e29fa3b3395971e927bf3d8"
           }
         },
         {
@@ -944,7 +921,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/timer.hpp"
           },
           "hashes": {
-            "sha-256": "8e643744d604510b2f16a157af62da28bf07da804b55bdb8901576e2c9d2741c"
+            "sha-256": "54bd3edcaa472625a08463bd344e59dbdad3ea007fed727ef0318889d62375b0"
           }
         },
         {
@@ -952,7 +929,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/mesh_instance3d.hpp"
           },
           "hashes": {
-            "sha-256": "738b77c46494b68ae8d4e3fec1d7a7591b12b986809c27881f7a11f5f5c59fe7"
+            "sha-256": "1164867c1002b71d1847b296365f9ff8d4a63e0992cccd7c5f9cf8cbdc3adcbc"
           }
         },
         {
@@ -960,7 +937,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/geometry_instance3d.hpp"
           },
           "hashes": {
-            "sha-256": "49ed8594c1ac17ba45197e57a6119561d3e73713b6d11019499fc70c2cbd3a2c"
+            "sha-256": "5e4daaf23a29fce8ac1e4eb826aa34c8a3902e52dc673782aedfaa53d1cbd70a"
           }
         },
         {
@@ -968,7 +945,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/visual_instance3d.hpp"
           },
           "hashes": {
-            "sha-256": "9ca684b448a2cc6f55d32e7694ebdd0dbfd41187c1ca0de8fcb2b114be04c8fe"
+            "sha-256": "7560cb0ced8d62be3309217794341855529cfb84d02a3157b9246d22952eb407"
           }
         },
         {
@@ -976,7 +953,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/static_body3d.hpp"
           },
           "hashes": {
-            "sha-256": "b5c6a69aab57ec2336c31110ed2fa815171feda902d5a38e74d464bad0e6419c"
+            "sha-256": "ee9d1748534ddc51040eb0425cc0eb8748614f024baf137fae69d8273a6641ab"
           }
         },
         {
@@ -984,7 +961,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/physics_body3d.hpp"
           },
           "hashes": {
-            "sha-256": "763b4bd92aa7b06b12f1409b97d98f899208fc09833971946bc386a3fad7b191"
+            "sha-256": "b0d91bb773580ac88edfbff504cd1e9c5b90ba505b2d14ab7b7a81c71b1d015b"
           }
         },
         {
@@ -992,7 +969,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/collision_object3d.hpp"
           },
           "hashes": {
-            "sha-256": "2231fe6cda97ae466f359d9af52dcaa5366aa4bb5e104aad8fdece91ded02380"
+            "sha-256": "dc54cf329c4a9729b980e204b3114ba492bdacf075da57552b31b863daf1dd2e"
           }
         },
         {
@@ -1000,7 +977,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/kinematic_collision3d.hpp"
           },
           "hashes": {
-            "sha-256": "b43dd5b2f4d411edfd6b68ec4af474ccb6455cb591716cd9a0894534eb1d6f50"
+            "sha-256": "2b9e5ddae1c340262c07dc37422212e886e865fbb337155d0188446095fec21d"
           }
         },
         {
@@ -1008,7 +985,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/physics_server3d.hpp"
           },
           "hashes": {
-            "sha-256": "64366209e2b961901a83511ce703cf6b4e0daee7fb2c6cabc40d238bd8862e9f"
+            "sha-256": "16e687bc81048abc8a96329446ca355fe58f9505a024accd5346b6165fb45257"
           }
         },
         {
@@ -1016,7 +993,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/physics_test_motion_result3d.hpp"
           },
           "hashes": {
-            "sha-256": "56ea75f0c927b1cb45c8ae0a436c1bcd782754715944d85ebef89c3074f23803"
+            "sha-256": "e3cd179a7b97eef71dc986a062a508c1cb0ebce9f523eaf502d8b11a8be2160e"
           }
         },
         {
@@ -1024,7 +1001,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/collision_shape3d.hpp"
           },
           "hashes": {
-            "sha-256": "5be237bed7634a1ede6494e213abab7397f20db78e17856ed4d9a2ffbe193559"
+            "sha-256": "1acad6015e5973736050f6d71f99a3415f26323484a3acc1a01479efb4ae6989"
           }
         },
         {
@@ -1032,7 +1009,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/area3d.hpp"
           },
           "hashes": {
-            "sha-256": "c5d9efefffa953f89594003d59f983c9dc00d7a6c1bb78c1b78efee949c15d6a"
+            "sha-256": "d7e310b83aca5752a407abded3bd7b04b87a57f345ffc6f9948e3e050225682b"
           }
         },
         {
@@ -1040,7 +1017,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/array_mesh.hpp"
           },
           "hashes": {
-            "sha-256": "04564aad7ea141d485f553bce0f4d174e035e67cd5f626483486bbcf94297aeb"
+            "sha-256": "3e25cb8ffceeb6fca3b7ad3e68d8f4e27a51fc290798f63d6d2382b235ee76d8"
           }
         },
         {
@@ -1048,7 +1025,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/concave_polygon_shape3d.hpp"
           },
           "hashes": {
-            "sha-256": "d4eaeb862dbc0480fde77a9c8d32eded126d9aeabda2a577bfa94e851f08c120"
+            "sha-256": "91e02a1392010b7acb1e90b55a51748f2ad3b870febd5ed58cd4626e6d5ed5cf"
           }
         },
         {
@@ -1056,7 +1033,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/shape3d.hpp"
           },
           "hashes": {
-            "sha-256": "096d1f89d0643c88a21a9d72c5fb6fd2db35248d82cc996f76291a8d4a9a3678"
+            "sha-256": "a5fed5c5c4034a67c4e35cfd0bf37455aebf62e756165b22ca5b136b9e943e15"
           }
         },
         {
@@ -1064,7 +1041,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/stream_peer_buffer.hpp"
           },
           "hashes": {
-            "sha-256": "931ca9e5baf7ed5466589e4d6a18b3615f87f159f43ca497ade383648e38631e"
+            "sha-256": "0465b96633d2449a7da09eb53d7f9b7d9f43d6f0eb65388e359ba895f15588f9"
           }
         },
         {
@@ -1072,7 +1049,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/stream_peer.hpp"
           },
           "hashes": {
-            "sha-256": "222a85fa825e66ee78fa6e38e2369b4aeb3693f2701087023d1c56cc1055aa1b"
+            "sha-256": "16fc7c9b4fdec1dd13cf2db8d2d4a72ebf97c115c81fde07386ea657a19938a7"
           }
         },
         {
@@ -1080,7 +1057,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/shader_material.hpp"
           },
           "hashes": {
-            "sha-256": "7e673ea5d0488ebc01ff75c68db23837abd0c205e8465c9c1765ea24b3c36dd9"
+            "sha-256": "208d7bc3d66078aa495fbb7ccb3872157aee592258bd2f1eb845e86e14f4c7b0"
           }
         },
         {
@@ -1088,7 +1065,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/material.hpp"
           },
           "hashes": {
-            "sha-256": "138bf0749e8a0afff72453893c0d7c1d6c4ccd893ec96c7bc7fe31cafcd9799c"
+            "sha-256": "53eed51b081345941dd1716a76ba4dea172740352977a87a490dbd6ddea3d185"
           }
         },
         {
@@ -1096,7 +1073,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/shader.hpp"
           },
           "hashes": {
-            "sha-256": "212f49bcc1e43f2a2aece443f8477174b1d0932e79603aeb5b4ab93356980a42"
+            "sha-256": "792dd994d6e35341ededd5ce1a99fdcec63c62511e5befa387450c9683edffec"
           }
         },
         {
@@ -1104,7 +1081,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/packed_scene.hpp"
           },
           "hashes": {
-            "sha-256": "b1b5774feb52f11b637c341ddd811e92fbe2d074b7fc4bcafaa83298841d7b2c"
+            "sha-256": "8432e0ca7b626574ac59cae0380bb155128d66ab46d670ba93b38d255ab58858"
           }
         },
         {
@@ -1112,7 +1089,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/engine.hpp"
           },
           "hashes": {
-            "sha-256": "0e59b1f061447fd380eca08dcfbc822c192195ef82707055aca95dce87aa4b36"
+            "sha-256": "337c8d0829225f493883a1198dc508ab8a85377bf7ae3c36ac8bf101604fca07"
           }
         },
         {
@@ -1120,7 +1097,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/mutex.hpp"
           },
           "hashes": {
-            "sha-256": "6488ab4c8a925be09206bec4c8f9975ff3a64d4b7a0146385899c0252f3f0cb9"
+            "sha-256": "83aea49eb98fb4fbd75f5906bddc954fd9f61f3d7881fef901faff3d963e5089"
           }
         },
         {
@@ -1128,7 +1105,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/classes/script.hpp"
           },
           "hashes": {
-            "sha-256": "6236e6f9367466db3e76f136f2d19117a1381db3e4a3344899bcddd875ced6cf"
+            "sha-256": "9a1f33393d09b5973f43bf98672764b6c913ad401aeb253a454935413c29aefe"
           }
         },
         {
@@ -1136,7 +1113,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/gen/include/godot_cpp/variant/utility_functions.hpp"
           },
           "hashes": {
-            "sha-256": "82af82988b27e5aaca69b660b33dd2a1d9b0f42049d6e0c6c6c1f074769153a0"
+            "sha-256": "e4c7655ea8e815f2182fbc18ceac99b1ad89cf5e9fee4651c93b14f1f21ff91e"
           }
         },
         {
@@ -1144,7 +1121,7 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/templates/hash_map.hpp"
           },
           "hashes": {
-            "sha-256": "8c47df10464e2a55b0336836b79ac4bd9f3be1498a2a8136cb153a44eadb2739"
+            "sha-256": "8ea6436545a271e93cf91a631f461f5cd9cbdaf35e028a0cafa35eff9ab5ecaa"
           }
         },
         {
@@ -1152,47 +1129,15 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/godot-cpp/include/godot_cpp/templates/pair.hpp"
           },
           "hashes": {
-            "sha-256": "3998f4f1d34f392d22093c169d485dacc61d329cd21590b5cf6fad181105a6ea"
+            "sha-256": "1d37a76bbc94771feedc4a8ce68a5d4953fec9e4b1bf90383cd822b8d7271f2c"
           }
         },
         {
           "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/chunk.h"
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/model_preset.h"
           },
           "hashes": {
-            "sha-256": "9e913a45228a663c066fc1c6a70e19c7988966c6b41cff081870a39e60f9c0ce"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/voxel_world.h"
-          },
-          "hashes": {
-            "sha-256": "caedb76d6444087ed47de77b906df4e2ab6dffec16ceb81eadbd96598ac7ec3f"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/voxel_world_data.h"
-          },
-          "hashes": {
-            "sha-256": "acdb3dd2b9380151ea04b0deadd53277f42f0e8a812e6994358a35f94d47ff5f"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/basics_preset.h"
-          },
-          "hashes": {
-            "sha-256": "42e0085d004ab7dc2c470656aa4e3f4da2c43fa7eaa916b84d256f8e0966bb67"
-          }
-        },
-        {
-          "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/mesh_preset.h"
-          },
-          "hashes": {
-            "sha-256": "587a1be9115eb373f83c0e303743692de570087e96b96dc7bdf7a9c7af7d4792"
+            "sha-256": "0f90cfa0cbd3f9029ee1dee786d8e080aba85f68f2b974993c97eb924e3ddf6a"
           }
         },
         {
@@ -1200,23 +1145,23 @@
             "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/device_preset.h"
           },
           "hashes": {
-            "sha-256": "a4db2410992a65f6fda86219d0eb9b8a7ecfbced81c175352250ade4fd73a882"
+            "sha-256": "5d4f646f49cc286561b9f38819e8bbc8da8a91479a7c0414baf49dc4c7eb321b"
           }
         },
         {
           "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/custom_material.h"
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/device.h"
           },
           "hashes": {
-            "sha-256": "412a77edfce746cbbbf1c0b5008550c329cc3bd17cb5ee3a3a9c7225788d424a"
+            "sha-256": "b3751b85f67141f73b4a6d0c996e9c86dd594cbb473d0f745f470c50814db451"
           }
         },
         {
           "location": {
-            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/presets_data.h"
+            "uri": "file:///c:/users/starnightflower/desktop/godot/voxelexpansion/voxel_world.h"
           },
           "hashes": {
-            "sha-256": "357974381472f943e87d144d33ee110e50bc4078476a746937cb99e2e1489ba9"
+            "sha-256": "8e18d7d8f850efb524078b4facf4bb0005fc2525e8d04c2bf94afd95033a7f63"
           }
         }
       ]

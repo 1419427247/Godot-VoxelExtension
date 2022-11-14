@@ -131,10 +131,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="basics_preset.h" />
-    <ClInclude Include="chunk.h" />
+    <ClInclude Include="voxel_block.h" />
     <ClInclude Include="device.h" />
     <ClInclude Include="device_preset.h" />
-    <ClInclude Include="mesh_preset.h" />
+    <ClInclude Include="model_preset.h" />
     <ClInclude Include="preset.h" />
     <ClInclude Include="presets_data.h" />
     <ClInclude Include="register_types.h" />
@@ -145,10 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="basics_preset.cpp" />
-    <ClCompile Include="chunk.cpp" />
+    <ClCompile Include="voxel_block.cpp" />
     <ClCompile Include="device.cpp" />
     <ClCompile Include="device_preset.cpp" />
-    <ClCompile Include="mesh_preset.cpp" />
+    <ClCompile Include="model_preset.cpp" />
     <ClCompile Include="preset.cpp" />
     <ClCompile Include="presets_data.cpp" />
     <ClCompile Include="register_types.cpp" />
