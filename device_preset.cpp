@@ -13,6 +13,7 @@ void DevicePreset::_bind_methods()
 
 DevicePreset::DevicePreset()
 {
+    filter = 0b1;
 }
 
 DevicePreset::~DevicePreset()

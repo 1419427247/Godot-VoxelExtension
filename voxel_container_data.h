@@ -12,8 +12,8 @@
 
 #define EMPTY_VOXEL 0 
 #define BASICS_VOXEL(id,rotation,flag) VOXEL(VoxelContainerData::BASICS, id, rotation, flag)
-#define MESH_VOXEL(id,rotation,flag) VOXEL(VoxelContainerData::MESH, id, rotation, flag)
-#define DEVICE_VOXEL(id,rotation,flag) VOXEL(VoxelContainerData::EMPTY, id, rotation, flag)
+#define MODEL_VOXEL(id,rotation,flag) VOXEL(VoxelContainerData::MODEL, id, rotation, flag)
+#define DEVICE_VOXEL(id,rotation,flag) VOXEL(VoxelContainerData::DEVICE, id, rotation, flag)
 
 class VoxelContainerData : public Resource
 {
@@ -22,7 +22,7 @@ class VoxelContainerData : public Resource
 	{
 		EMPTY = 0,
 		BASICS = 1,
-		MESH = 2,
+		MODEL = 2,
 		DEVICE = 3,
 	};
 private:
@@ -43,6 +43,9 @@ public:
 
 	void set_voxel(const Vector3i& position, const Voxel& value);
 	Voxel get_voxel(const Vector3i& position) const;
+
+	void fill(const Voxel& voxel);
+	bool is_filled(const Voxel& voxel) const;
 };
 #endif // !VOXEL_WORLD_DATA_H
 

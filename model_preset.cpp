@@ -14,7 +14,7 @@ void ModelPreset::_bind_methods() {
 }
 
 ModelPreset::ModelPreset() {
-	filter = 0b10;
+	filter = 0b1;
 }
 ModelPreset::~ModelPreset() {
 
@@ -27,9 +27,8 @@ void ModelPreset::set_mesh(const Ref<Mesh>& value) {
 		materials.clear();
 		return;
 	}
-
-	mesh_data_memorandum.clear();
-	mesh_data_memorandum.resize(24 * 24 * 24);
+	memorandum.clear();
+	memorandum.resize(24 * 24 * 24);
 
 	Array surfaces = Array();
 	surfaces.resize(mesh->get_surface_count());
@@ -99,7 +98,7 @@ void ModelPreset::set_mesh(const Ref<Mesh>& value) {
 
 		surfaces[i] = surface;
 	}
-	mesh_data_memorandum[0] = surfaces;
+	memorandum[0] = surfaces;
 }
 
 Ref<Mesh> ModelPreset::get_mesh() const
@@ -114,7 +113,7 @@ void ModelPreset::set_materials(const TypedArray<int>& value) {
 		materials.clear();
 		return;
 	}
-	materials.resize(((Array)mesh_data_memorandum[0]).size());
+	materials.resize(((Array)memorandum[0]).size());
 }
 
 TypedArray<int> ModelPreset::get_materials() {
@@ -125,9 +124,9 @@ void ModelPreset::build_mesh(const Array& arrays, const int& surface_index, cons
 {
 	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
 
-	if (mesh_data_memorandum[index].get_type() == Variant::NIL) {
-		Array surfaces = mesh_data_memorandum[0];
-		mesh_data_memorandum[index] = Array();
+	if (memorandum[index].get_type() == Variant::NIL) {
+		Array surfaces = memorandum[0];
+		memorandum[index] = Array();
 		for (int i = 0; i < surfaces.size(); i++)
 		{
 			Array surface_vertex_array = ((Array)surfaces[i])[Mesh::ARRAY_VERTEX];
@@ -154,11 +153,11 @@ void ModelPreset::build_mesh(const Array& arrays, const int& surface_index, cons
 			surface[Mesh::ARRAY_NORMAL] = array_normal;
 			surface[Mesh::ARRAY_TEX_UV] = array_tex_uv;
 
-			((Array)mesh_data_memorandum[index]).push_back(surface);
+			((Array)memorandum[index]).push_back(surface);
 		}
 	}
 
-	Array surfaces = mesh_data_memorandum[index];
+	Array surfaces = memorandum[index];
 	for (int i = 0; i < surfaces.size(); i++)
 	{
 		Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
@@ -181,10 +180,10 @@ void ModelPreset::build_mesh(const Array& arrays, const int& surface_index, cons
 }
 
 Ref<ModelPreset> ModelPreset::instantiate(const String& name, const Ref<Mesh>& mesh, Array materials) {
-	Ref<ModelPreset> mesh_preset;
-	mesh_preset.instantiate();
-	mesh_preset->name = name;
-	mesh_preset->mesh = mesh;
-	mesh_preset->materials = materials;
-	return mesh_preset;
+	Ref<ModelPreset> model_preset;
+	model_preset.instantiate();
+	model_preset->name = name;
+	model_preset->mesh = mesh;
+	model_preset->materials = materials;
+	return model_preset;
 }

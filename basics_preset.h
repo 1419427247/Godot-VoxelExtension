@@ -14,11 +14,6 @@ static const Vector3i DIRCTIONS[6] = {
 class BasicsPreset : public Preset
 {
 	GDCLASS(BasicsPreset, Preset);
-	struct BasicsData
-	{
-		Vector3 vertexs[6][6];
-		Vector3 normals[6][2];
-	};
 	enum Dirction {
 		UP = 0,
 		DOWN = 1,

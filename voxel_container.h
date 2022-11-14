@@ -32,6 +32,7 @@ public:
 
 	VoxelContainerData* copy(const Vector3i& from, const Vector3i& to);
 	void paste(const Ref<VoxelContainerData>& voxel_container_data, const Vector3i& position, const Vector3i& direction);
+	void fill(const Voxel& voxel,const Vector3i& from,const Vector3i& to);
 
 	static Vector3i get_voxel_direction(const int& direction, const Vector3i& rotation);
 
@@ -42,7 +43,7 @@ public:
 
 	static Voxel empty_voxel();
 	static Voxel basics_voxel(const int& id, const Vector3i& rotation = Vector3i(), const int& flag = 0);
-	static Voxel mesh_voxel(const int& id, const Vector3i& rotation = Vector3i(), const int& flag = 0);
+	static Voxel model_voxel(const int& id, const Vector3i& rotation = Vector3i(), const int& flag = 0);
 	static Voxel device_voxel(const int& id, const Vector3i& rotation = Vector3i(), const int& flag = 0);
 };
 

@@ -13,6 +13,7 @@ void VoxelContainer::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("copy", "from", "to"), &VoxelContainer::copy);
 	ClassDB::bind_method(D_METHOD("paste", "voxel_container_data", "position", "direction"), &VoxelContainer::paste);
+	ClassDB::bind_method(D_METHOD("fill", "voxel", "from", "to"), &VoxelContainer::fill);
 
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("get_voxel_direction", "direction", "rotation"), &VoxelContainer::get_voxel_direction);
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("get_voxel_type", "value"), &VoxelContainer::get_voxel_type);
@@ -22,7 +23,7 @@ void VoxelContainer::_bind_methods()
 
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("empty_voxel"), &VoxelContainer::empty_voxel);
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("basics_voxel", "id", "rotation", "flag"), &VoxelContainer::basics_voxel, Vector3i(), 0);
-	ClassDB::bind_static_method("VoxelContainer", D_METHOD("mesh_voxel", "id", "rotation", "flag"), &VoxelContainer::mesh_voxel, Vector3i(), 0);
+	ClassDB::bind_static_method("VoxelContainer", D_METHOD("model_voxel", "id", "rotation", "flag"), &VoxelContainer::model_voxel, Vector3i(), 0);
 	ClassDB::bind_static_method("VoxelContainer", D_METHOD("device_voxel", "id", "rotation", "flag"), &VoxelContainer::device_voxel, Vector3i(), 0);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
@@ -126,10 +127,29 @@ void VoxelContainer::paste(const Ref<VoxelContainerData>& voxel_container_data, 
 	}
 }
 
-static Vector3 direction_memorandum[6][24 * 24 * 24] = { Vector3() };
+void VoxelContainer::fill(const Voxel& voxel, const Vector3i& from, const Vector3i& to) {
+	int step_x = from.x > to.x ? -1 : 1;
+	int step_y = from.y > to.y ? -1 : 1;
+	int step_z = from.z > to.z ? -1 : 1;
+	for (int x = from.x; x != to.x + step_x; x += step_x)
+	{
+		for (int y = from.y; y != to.y + step_y; y += step_y)
+		{
+			for (int z = from.z; z != to.z + step_z; z += step_z)
+			{
+				Vector3i position = Vector3i(x, y, z);
+				Voxel voxel = get_voxel(position);
+				set_voxel(position, voxel);
+			}
+		}
+	}
+}
+
+
 Vector3i VoxelContainer::get_voxel_direction(const int& direction, const Vector3i& rotation)
 {
-	Vector3* result = &direction_memorandum[direction][rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15];
+	static Vector3 memorandum[6][24 * 24 * 24] = { Vector3() };
+	Vector3* result = &memorandum[direction][rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15];
 	if (*result == Vector3i())
 	{
 		*result = DIRCTIONS[direction];
@@ -179,9 +199,9 @@ Voxel VoxelContainer::basics_voxel(const int& id, const Vector3i& rotation, cons
 	return BASICS_VOXEL(id, rotation, flag);
 }
 
-Voxel VoxelContainer::mesh_voxel(const int& id, const Vector3i& rotation, const int& flag)
+Voxel VoxelContainer::model_voxel(const int& id, const Vector3i& rotation, const int& flag)
 {
-	return MESH_VOXEL(id, rotation, flag);
+	return MODEL_VOXEL(id, rotation, flag);
 }
 
 Voxel VoxelContainer::device_voxel(const int& id, const Vector3i& rotation, const int& flag)

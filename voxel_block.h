@@ -23,7 +23,7 @@ public:
 	Vector3i get_key() const;
 
 	Dictionary get_devices() const;
-	
+
 	void set_voxel(const Vector3i& position, const Voxel& value);
 	Voxel get_voxel(const Vector3i& position) const;
 
@@ -33,7 +33,10 @@ public:
 
 	ArrayMesh* generate_mesh(const int& filter = 0b1);
 	ConcavePolygonShape3D* generate_collider(const int& filter = 0b1);
-	void generate_device();
+	void generate_device(const int& filter = 0b1);
+
+
+	bool is_filled(const Voxel& voxel) const;
 };
 
 #endif

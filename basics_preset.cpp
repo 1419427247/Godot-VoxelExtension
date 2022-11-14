@@ -35,14 +35,14 @@ void BasicsPreset::_bind_methods()
 BasicsPreset::BasicsPreset()
 {
 	materials[0] = materials[1] = materials[2] = materials[3] = materials[4] = materials[5] = 0;
-	filter = 0b01;
+	filter = 0b1;
 }
 
 BasicsPreset::~BasicsPreset()
 {
 }
 
-void BasicsPreset::set_up_material_id(const int& value)
+void BasicsPreset::set_up_material_id(const int &value)
 {
 	materials[UP] = value;
 }
@@ -52,7 +52,7 @@ int BasicsPreset::get_up_material_id() const
 	return materials[UP];
 }
 
-void BasicsPreset::set_down_material_id(const int& value)
+void BasicsPreset::set_down_material_id(const int &value)
 {
 	materials[DOWN] = value;
 }
@@ -62,7 +62,7 @@ int BasicsPreset::get_down_material_id() const
 	return materials[DOWN];
 }
 
-void BasicsPreset::set_front_material_id(const int& value)
+void BasicsPreset::set_front_material_id(const int &value)
 {
 	materials[FRONT] = value;
 }
@@ -72,7 +72,7 @@ int BasicsPreset::get_front_material_id() const
 	return materials[FRONT];
 }
 
-void BasicsPreset::set_back_material_id(const int& value)
+void BasicsPreset::set_back_material_id(const int &value)
 {
 	materials[BACK] = value;
 }
@@ -82,7 +82,7 @@ int BasicsPreset::get_back_material_id() const
 	return materials[BACK];
 }
 
-void BasicsPreset::set_left_material_id(const int& value)
+void BasicsPreset::set_left_material_id(const int &value)
 {
 	materials[LEFT] = value;
 }
@@ -92,7 +92,7 @@ int BasicsPreset::get_left_material_id() const
 	return materials[LEFT];
 }
 
-void BasicsPreset::set_right_material_id(const int& value)
+void BasicsPreset::set_right_material_id(const int &value)
 {
 	materials[RIGHT] = value;
 }
@@ -102,11 +102,12 @@ int BasicsPreset::get_right_material_id() const
 	return materials[RIGHT];
 }
 
-int BasicsPreset::get_material_id(const int& value) {
+int BasicsPreset::get_material_id(const int &value)
+{
 	return materials[value];
 }
 
-Ref<BasicsPreset> BasicsPreset::instantiate(const String& name, const Dictionary& materials)
+Ref<BasicsPreset> BasicsPreset::instantiate(const String &name, const Dictionary &materials)
 {
 	Ref<BasicsPreset> basics_preset;
 	basics_preset.instantiate();
@@ -122,57 +123,87 @@ Ref<BasicsPreset> BasicsPreset::instantiate(const String& name, const Dictionary
 	return basics_preset;
 }
 
-static Vector2 uvs[] = {
-	Vector2(0, 0), Vector2(1, 0), Vector2(1, 1),
-	Vector2(0, 0), Vector2(1, 1), Vector2(0, 1),
-};
-
-static Vector3 brick_vertexs[][6] = {
-	{
-		Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),
-		Vector3(-0.5, 0.5, -0.5),Vector3(0.5, 0.5, 0.5),Vector3(-0.5, 0.5, 0.5),
-	},
-	{
-		Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),
-		Vector3(0.5, -0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(0.5, -0.5, 0.5),
-	},
-	{
-		Vector3(0.5, 0.5, -0.5),Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),
-		Vector3(0.5, 0.5, -0.5),Vector3(-0.5, -0.5, -0.5),Vector3(0.5, -0.5, -0.5),
-	},
-	{
-		Vector3(-0.5, 0.5, 0.5),Vector3(0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),
-		Vector3(-0.5, 0.5, 0.5),Vector3(0.5, -0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
-	},
-	{
-		Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, 0.5, 0.5),Vector3(-0.5, -0.5, 0.5),
-		Vector3(-0.5, 0.5, -0.5),Vector3(-0.5, -0.5, 0.5),Vector3(-0.5, -0.5, -0.5),
-	},
-	{
-		Vector3(0.5, 0.5, 0.5), Vector3(0.5, 0.5, -0.5), Vector3(0.5, -0.5, -0.5),
-		Vector3(0.5, 0.5, 0.5), Vector3(0.5, -0.5, -0.5), Vector3(0.5, -0.5, 0.5),
-	}
-};
-
-static BasicsPreset::BasicsData* basics_data_memorandum[24 * 24 * 24] = { nullptr };
-void BasicsPreset::build_mesh(const int& direction, const Array& arrays, const Vector3& position, const Vector3& rotation)
+void BasicsPreset::build_mesh(const int &direction, const Array &arrays, const Vector3 &position, const Vector3 &rotation)
 {
-	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
-	BasicsData* basics_mesh_data = basics_data_memorandum[index];
-	if (basics_mesh_data == nullptr)
+	struct MemorandumData
 	{
-		basics_mesh_data = (BasicsData*)memalloc(sizeof(BasicsData));
+		Vector3 vertexs[6][6];
+		Vector3 normals[6][2];
+	};
+	static Vector2 uvs[] = {
+		Vector2(0, 0),
+		Vector2(1, 0),
+		Vector2(1, 1),
+		Vector2(0, 0),
+		Vector2(1, 1),
+		Vector2(0, 1),
+	};
+	static Vector3 brick_vertexs[][6] = {
+		{
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(0.5, 0.5, -0.5),
+			Vector3(0.5, 0.5, 0.5),
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(0.5, 0.5, 0.5),
+			Vector3(-0.5, 0.5, 0.5),
+		},
+		{
+			Vector3(0.5, -0.5, -0.5),
+			Vector3(-0.5, -0.5, -0.5),
+			Vector3(-0.5, -0.5, 0.5),
+			Vector3(0.5, -0.5, -0.5),
+			Vector3(-0.5, -0.5, 0.5),
+			Vector3(0.5, -0.5, 0.5),
+		},
+		{
+			Vector3(0.5, 0.5, -0.5),
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(-0.5, -0.5, -0.5),
+			Vector3(0.5, 0.5, -0.5),
+			Vector3(-0.5, -0.5, -0.5),
+			Vector3(0.5, -0.5, -0.5),
+		},
+		{
+			Vector3(-0.5, 0.5, 0.5),
+			Vector3(0.5, 0.5, 0.5),
+			Vector3(0.5, -0.5, 0.5),
+			Vector3(-0.5, 0.5, 0.5),
+			Vector3(0.5, -0.5, 0.5),
+			Vector3(-0.5, -0.5, 0.5),
+		},
+		{
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(-0.5, 0.5, 0.5),
+			Vector3(-0.5, -0.5, 0.5),
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(-0.5, -0.5, 0.5),
+			Vector3(-0.5, -0.5, -0.5),
+		},
+		{
+			Vector3(0.5, 0.5, 0.5),
+			Vector3(0.5, 0.5, -0.5),
+			Vector3(0.5, -0.5, -0.5),
+			Vector3(0.5, 0.5, 0.5),
+			Vector3(0.5, -0.5, -0.5),
+			Vector3(0.5, -0.5, 0.5),
+		}};
+	static MemorandumData *memorandum[24 * 24 * 24] = {nullptr};
+	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
+	MemorandumData * data = memorandum[index];
+	if (data == nullptr)
+	{
+		data = (MemorandumData *)memalloc(sizeof(MemorandumData));
 		for (int i = 0; i < 6; i++)
 		{
 			Vector3 vertexs[6];
 			for (int j = 0; j < 6; j++)
 			{
-				basics_mesh_data->vertexs[i][j] = (vertexs[j] = rotate_vertex(brick_vertexs[i][j], rotation));
+				data->vertexs[i][j] = (vertexs[j] = rotate_vertex(brick_vertexs[i][j], rotation));
 			}
-			basics_mesh_data->normals[i][0] = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
-			basics_mesh_data->normals[i][1] = Plane(vertexs[3], vertexs[4], vertexs[5]).get_normal();
+			data->normals[i][0] = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
+			data->normals[i][1] = Plane(vertexs[3], vertexs[4], vertexs[5]).get_normal();
 		}
-		basics_data_memorandum[index] = basics_mesh_data;
+		memorandum[index] = data;
 	}
 
 	Array array_vertex = arrays[Mesh::ARRAY_VERTEX];
@@ -180,16 +211,16 @@ void BasicsPreset::build_mesh(const int& direction, const Array& arrays, const V
 	Array array_tex_uv = arrays[Mesh::ARRAY_TEX_UV];
 	for (int i = 0; i < 6; i++)
 	{
-		array_vertex.push_back(basics_mesh_data->vertexs[direction][i] + position);
+		array_vertex.push_back(data->vertexs[direction][i] + position);
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
-		array_normal.push_back(basics_mesh_data->normals[direction][0]);
+		array_normal.push_back(data->normals[direction][0]);
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		array_normal.push_back(basics_mesh_data->normals[direction][1]);
+		array_normal.push_back(data->normals[direction][1]);
 	}
 	for (int i = 0; i < 6; i++)
 	{

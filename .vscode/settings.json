@@ -1,3 +1,7 @@
 {
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "array": "cpp",
+        "ios": "cpp"
+    }
 }

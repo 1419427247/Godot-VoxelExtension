@@ -29,10 +29,11 @@ void VoxelBlock::_bind_methods()
 	ClassDB::bind_method(D_METHOD("normal_converted_to_voxel_block", "normal"), &VoxelBlock::normal_converted_to_block);
 
 	ClassDB::bind_method(D_METHOD("get_voxel_local_position", "point", "normal"), &VoxelBlock::get_voxel_local_position);
+	ClassDB::bind_method(D_METHOD("is_filled","voxel"), &VoxelBlock::is_filled);
 
 	ClassDB::bind_method(D_METHOD("generate_mesh", "filter"), &VoxelBlock::generate_mesh, 0b1);
 	ClassDB::bind_method(D_METHOD("generate_collider", "filter"), &VoxelBlock::generate_collider, 0b1);
-	ClassDB::bind_method(D_METHOD("generate_device"), &VoxelBlock::generate_device);
+	ClassDB::bind_method(D_METHOD("generate_device"), &VoxelBlock::generate_device, 0b1);
 
 	//ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "voxel_container", PROPERTY_HINT_NODE_PATH_VALID_TYPES,"VoxelContainer"), "set_voxel_container", "get_voxel_container");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "key"), "set_key", "get_key");
@@ -219,7 +220,7 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 					}
 					break;
 				}
-				case VoxelContainerData::MESH: {
+				case VoxelContainerData::MODEL: {
 					ERR_FAIL_INDEX_V(id, model_presets.size(), nullptr);
 					Ref<ModelPreset> model_preset = model_presets[id];
 					ERR_FAIL_NULL_V_MSG(model_preset, nullptr, "The model_preset with id " + String::num_int64(id) + " is null");
@@ -229,7 +230,7 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 					}
 					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 					Ref<Mesh> mesh = model_preset->get_mesh();
-					ERR_FAIL_NULL_V(mesh,nullptr);
+					ERR_FAIL_NULL_V(mesh, nullptr);
 					TypedArray<int> materials = model_preset->get_materials();
 					for (int i = 0; i < mesh->get_surface_count(); i++)
 					{
@@ -404,7 +405,7 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 					preset = basics_presets[id];
 					break;
 				}
-				case VoxelContainerData::MESH:
+				case VoxelContainerData::MODEL:
 				{
 					ERR_FAIL_INDEX_V(id, model_presets.size(), nullptr);
 					preset = model_presets[id];
@@ -506,7 +507,7 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 	return result;
 }
 
-void VoxelBlock::generate_device()
+void VoxelBlock::generate_device(const int& filter)
 {
 	VoxelContainer* voxel_container = get_voxel_container();
 	ERR_FAIL_NULL_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer");
@@ -527,21 +528,20 @@ void VoxelBlock::generate_device()
 				int id = VoxelRoom::get_voxel_id(voxel);
 				Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
 				Device* device = cast_to<Device>(devices[position]);
-
 				if (type == VoxelContainerData::DEVICE)
 				{
 					Ref<DevicePreset> device_preset = device_presets[id];
 					if (device != nullptr) {
 						if (device->get_device_preset() != device_preset) {
 							devices.erase(position);
-							device->queue_free();
+							device->call_deferred("queue_free");
 							device = nullptr;
 						}
 					}
 					if (device == nullptr) {
 						Node* node = device_preset->get_packed_scene()->instantiate();
 						device = cast_to<Device>(node);
-						if (unlikely(device == nullptr))
+						if (device == nullptr)
 						{
 							node->queue_free();
 							ERR_FAIL_MSG("The DevicePreset with id " + String::num_int64(id) + " cannot be instantiated");
@@ -551,16 +551,37 @@ void VoxelBlock::generate_device()
 
 						device->set_position(position);
 						device->set_rotation(rotation);
-						add_child(device);
+						call_deferred("add_child", device);
 					}
 				}
 				else {
 					if (device != nullptr) {
 						devices.erase(position);
-						device->queue_free();
+						device->call_deferred("queue_free");
 					}
 				}
 			}
 		}
 	}
+}
+
+bool VoxelBlock::is_filled(const Voxel& voxel) const {
+	VoxelContainer* voxel_container = get_voxel_container();
+	ERR_FAIL_NULL_V_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer", true);
+
+	Vector3i block_size = voxel_container->get_block_size();
+	for (int x = 0; x < block_size.x; x++)
+	{
+		for (int y = 0; y < block_size.y; y++)
+		{
+			for (int z = 0; z < block_size.z; z++)
+			{
+				if (voxel != get_voxel(Vector3i(x, y, z)))
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }

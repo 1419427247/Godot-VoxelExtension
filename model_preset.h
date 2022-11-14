@@ -10,7 +10,7 @@ protected:
 private:
 	Ref<Mesh> mesh;
 	TypedArray<int> materials;
-	Array mesh_data_memorandum;
+	Array memorandum;
 public:
 	ModelPreset();
 	~ModelPreset();
@@ -25,4 +25,4 @@ public:
 	static Ref<ModelPreset> instantiate(const String& name, const Ref<Mesh>& mesh, Array materials);
 };
 
-#endif // !MESH_PRESET_H
+#endif // !MODEL_PRESET_H
