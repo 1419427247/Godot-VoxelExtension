@@ -4,7 +4,6 @@
 #include "basics_preset.h"
 #include "model_preset.h"
 #include "device_preset.h"
-#include "device.h"
 
 class PresetsData : public Resource
 {

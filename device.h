@@ -1,12 +1,14 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
-#include "device_preset.h"
+#include "voxel_container_data.h"
 
+class VoxelBlock;
 class Device : public Node3D
 {
 	GDCLASS(Device, Node3D);
 private:
+	Vector3i key;
 	Ref<DevicePreset> device_preset;
 protected:
 	static void _bind_methods();

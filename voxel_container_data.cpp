@@ -16,11 +16,6 @@ void VoxelContainerData::_bind_methods()
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "container_size"), "set_container_size", "get_container_size");
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_BYTE_ARRAY, "voxels"), "set_voxels", "get_voxels");
-
-	BIND_ENUM_CONSTANT(EMPTY);
-	BIND_ENUM_CONSTANT(BASICS);
-	BIND_ENUM_CONSTANT(MODEL);
-	BIND_ENUM_CONSTANT(DEVICE);
 }
 
 VoxelContainerData::VoxelContainerData()
@@ -31,7 +26,6 @@ VoxelContainerData::VoxelContainerData()
 VoxelContainerData::~VoxelContainerData()
 {
 }
-
 
 void VoxelContainerData::set_container_size(const Vector3i& value) {
 	ERR_FAIL_COND_MSG(value.x <= 0 || value.y <= 0 || value.z <= 0, "The container size is an invalid value");

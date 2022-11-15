@@ -139,9 +139,7 @@
     <ClInclude Include="presets_data.h" />
     <ClInclude Include="register_types.h" />
     <ClInclude Include="voxel_container.h" />
-    <ClInclude Include="voxel_room.h" />
     <ClInclude Include="voxel_container_data.h" />
-    <ClInclude Include="voxel_world.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="basics_preset.cpp" />
@@ -153,9 +151,7 @@
     <ClCompile Include="presets_data.cpp" />
     <ClCompile Include="register_types.cpp" />
     <ClCompile Include="voxel_container.cpp" />
-    <ClCompile Include="voxel_room.cpp" />
     <ClCompile Include="voxel_container_data.cpp" />
-    <ClCompile Include="voxel_world.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

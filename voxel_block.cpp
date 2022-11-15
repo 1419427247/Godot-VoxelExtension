@@ -1,24 +1,7 @@
 #include "voxel_block.h"
 
-
-//void VoxelBlock::build_mesh(Ref<ModelPreset>& model_preset, const Vector3i& position, const Vector3i& rotation)
-//{
-//	Ref<Mesh> mesh = model_preset->get_mesh();
-//	ERR_FAIL_NULL(mesh);
-//	TypedArray<int> materials = model_preset->get_materials();
-//	for (int i = 0; i < mesh->get_surface_count(); i++)
-//	{
-//		int material_id = materials[i];
-//		ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-//		Array arrays = mesh_arrays[material_id];
-//		model_preset->build_mesh(arrays, i, position, rotation);
-//	}
-//}
-
 void VoxelBlock::_bind_methods()
 {
-	ClassDB::bind_method(D_METHOD("get_voxel_container"), &VoxelBlock::get_voxel_container);
-
 	ClassDB::bind_method(D_METHOD("set_key", "value"), &VoxelBlock::set_key);
 	ClassDB::bind_method(D_METHOD("get_key"), &VoxelBlock::get_key);
 
@@ -29,13 +12,12 @@ void VoxelBlock::_bind_methods()
 	ClassDB::bind_method(D_METHOD("normal_converted_to_voxel_block", "normal"), &VoxelBlock::normal_converted_to_block);
 
 	ClassDB::bind_method(D_METHOD("get_voxel_local_position", "point", "normal"), &VoxelBlock::get_voxel_local_position);
-	ClassDB::bind_method(D_METHOD("is_filled","voxel"), &VoxelBlock::is_filled);
+	ClassDB::bind_method(D_METHOD("is_filled", "voxel"), &VoxelBlock::is_filled);
 
 	ClassDB::bind_method(D_METHOD("generate_mesh", "filter"), &VoxelBlock::generate_mesh, 0b1);
 	ClassDB::bind_method(D_METHOD("generate_collider", "filter"), &VoxelBlock::generate_collider, 0b1);
 	ClassDB::bind_method(D_METHOD("generate_device"), &VoxelBlock::generate_device, 0b1);
 
-	//ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "voxel_container", PROPERTY_HINT_NODE_PATH_VALID_TYPES,"VoxelContainer"), "set_voxel_container", "get_voxel_container");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "key"), "set_key", "get_key");
 }
 
@@ -47,10 +29,11 @@ VoxelBlock::~VoxelBlock() {
 
 }
 
-VoxelContainer* VoxelBlock::get_voxel_container() const
+void VoxelBlock::set_voxel_container_data(const Ref<VoxelContainerData>& value)
 {
-	return cast_to<VoxelContainer>(get_parent());
+	//voxel_container_data = value;
 }
+
 
 void VoxelBlock::set_key(const Vector3i& value) {
 	key = value;
@@ -68,34 +51,26 @@ Dictionary VoxelBlock::get_devices() const
 
 void VoxelBlock::set_voxel(const Vector3i& position, const Voxel& value)
 {
-	VoxelContainer* voxel_container = get_voxel_container();
 	ERR_FAIL_NULL_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer");
-
-	Vector3i block_size = voxel_container->get_block_size();
+	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
 	if (voxel_container->is_isolated() == true) {
-		if (position.x < 0 || position.x >= block_size.x ||
-			position.y < 0 || position.y >= block_size.y ||
-			position.z < 0 || position.z >= block_size.z) {
-			return;
-		}
+		Ref<VoxelContainerData> voxel_container_data = voxel_container->get_voxel_container_data(key);
+		voxel_container_data->set_voxel(position, value);
 	}
-	voxel_container->set_voxel(position + key * block_size, value);
+	else {
+		voxel_container->set_voxel(position + key * voxel_block_size, value);
+	}
 }
 
-Voxel VoxelBlock::get_voxel(const Vector3i& position) const
+Voxel VoxelBlock::get_voxel(const Vector3i& position)
 {
-	VoxelContainer* voxel_container = get_voxel_container();
 	ERR_FAIL_NULL_V_MSG(voxel_container, EMPTY_VOXEL, "VoxelBlock node must be a direct child of VoxelVontainer");
-
-	Vector3i block_size = voxel_container->get_block_size();
+	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
 	if (voxel_container->is_isolated() == true) {
-		if (position.x < 0 || position.x >= block_size.x ||
-			position.y < 0 || position.y >= block_size.y ||
-			position.z < 0 || position.z >= block_size.z) {
-			return EMPTY_VOXEL;
-		}
+		Ref<VoxelContainerData> voxel_container_data = voxel_container->get_voxel_container_data(key);
+		return voxel_container_data->get_voxel(position);
 	}
-	return voxel_container->get_voxel(position + key * block_size);
+	return voxel_container->get_voxel(position + key * voxel_block_size);
 }
 
 Vector3 VoxelBlock::point_converted_to_block(const Vector3& point) const {
@@ -139,7 +114,7 @@ Vector3i VoxelBlock::get_voxel_local_position(const Vector3& point, const Vector
 
 ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 {
-	VoxelContainer* voxel_container = get_voxel_container();
+
 	ERR_FAIL_NULL_V_MSG(voxel_container, nullptr, "VoxelBlock node must be a direct child of VoxelVontainer");
 
 	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
@@ -160,21 +135,21 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 		mesh_arrays[i] = arrays;
 	}
 
-	Vector3i block_size = voxel_container->get_block_size();
-	for (int x = 0; x < block_size.x; x++)
+	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
+	for (int x = 0; x < voxel_block_size.x; x++)
 	{
-		for (int y = 0; y < block_size.y; y++)
+		for (int y = 0; y < voxel_block_size.y; y++)
 		{
-			for (int z = 0; z < block_size.z; z++)
+			for (int z = 0; z < voxel_block_size.z; z++)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-				int type = VoxelRoom::get_voxel_type(voxel);
-				int id = VoxelRoom::get_voxel_id(voxel);
-				int flag = VoxelRoom::get_voxel_flag(voxel);
+				int type = VoxelContainer::get_voxel_type(voxel);
+				int id = VoxelContainer::get_voxel_id(voxel);
+				int flag = VoxelContainer::get_voxel_flag(voxel);
 				switch (type)
 				{
-				case VoxelContainerData::BASICS: {
+				case VoxelContainer::BASICS: {
 					ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
 					Ref<BasicsPreset> basics_preset = basics_presets[id];
 					ERR_FAIL_NULL_V_MSG(basics_preset, nullptr, "The basics_preset with id " + String::num_int64(id) + " is null");
@@ -182,7 +157,7 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 					{
 						continue;
 					}
-					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
+					Vector3i rotation = VoxelContainer::get_voxel_rotation(voxel);
 					Array basics_presets = presets_data->get_basics_presets();
 					if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
 					{
@@ -199,7 +174,8 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 							Voxel voxel = get_voxel(position + VoxelContainer::get_voxel_direction(direction, rotation));
 							int voxel_type = VoxelContainer::get_voxel_type(voxel);
 							int voxel_id = VoxelContainer::get_voxel_id(voxel);
-							if (voxel_type != VoxelContainerData::BASICS) {
+
+							if (voxel_type != VoxelContainer::BASICS) {
 								int material_id = basics_preset->get_material_id(direction);
 								ERR_FAIL_INDEX_V(material_id, mesh_arrays.size(), nullptr);
 								Array arrays = mesh_arrays[material_id];
@@ -220,7 +196,7 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 					}
 					break;
 				}
-				case VoxelContainerData::MODEL: {
+				case VoxelContainer::MODEL: {
 					ERR_FAIL_INDEX_V(id, model_presets.size(), nullptr);
 					Ref<ModelPreset> model_preset = model_presets[id];
 					ERR_FAIL_NULL_V_MSG(model_preset, nullptr, "The model_preset with id " + String::num_int64(id) + " is null");
@@ -228,7 +204,7 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 					{
 						continue;
 					}
-					Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
+					Vector3i rotation = VoxelContainer::get_voxel_rotation(voxel);
 					Ref<Mesh> mesh = model_preset->get_mesh();
 					ERR_FAIL_NULL_V(mesh, nullptr);
 					TypedArray<int> materials = model_preset->get_materials();
@@ -262,13 +238,10 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 	}
 	return result;
 }
-/// <summary>
-/// 将每个体素视作正方体，以生成区块的碰撞网格
-/// </summary>
-/// <returns></returns>
+
 ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 {
-	VoxelContainer* voxel_container = get_voxel_container();
+
 	ERR_FAIL_NULL_V_MSG(voxel_container, nullptr, "VoxelBlock node must be a direct child of VoxelVontainer");
 
 	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
@@ -279,7 +252,7 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 	Array device_presets = presets_data->get_device_presets();
 
 	PackedVector3Array collider_faces;
-	Vector3i block_size = voxel_container->get_block_size();
+	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
 
 	class Area
 	{
@@ -381,14 +354,14 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 		}
 	};
 
-	Area area = Area(block_size);
+	Area area = Area(voxel_block_size);
 	List<Box> boxs;
 
-	for (int x = 0; x < block_size.x; x++)
+	for (int x = 0; x < voxel_block_size.x; x++)
 	{
-		for (int y = 0; y < block_size.y; y++)
+		for (int y = 0; y < voxel_block_size.y; y++)
 		{
-			for (int z = 0; z < block_size.z; z++)
+			for (int z = 0; z < voxel_block_size.z; z++)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
@@ -397,21 +370,21 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 				Ref<Preset> preset;
 				switch (type)
 				{
-				case VoxelContainerData::EMPTY:
+				case VoxelContainer::EMPTY:
 					continue;
-				case VoxelContainerData::BASICS:
+				case VoxelContainer::BASICS:
 				{
 					ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
 					preset = basics_presets[id];
 					break;
 				}
-				case VoxelContainerData::MODEL:
+				case VoxelContainer::MODEL:
 				{
 					ERR_FAIL_INDEX_V(id, model_presets.size(), nullptr);
 					preset = model_presets[id];
 					break;
 				}
-				case VoxelContainerData::DEVICE:
+				case VoxelContainer::DEVICE:
 				{
 					ERR_FAIL_INDEX_V(id, device_presets.size(), nullptr);
 					preset = device_presets[id];
@@ -426,11 +399,11 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 			}
 		}
 	}
-	for (int x = 0; x < block_size.x; x++)
+	for (int x = 0; x < voxel_block_size.x; x++)
 	{
-		for (int y = 0; y < block_size.y; y++)
+		for (int y = 0; y < voxel_block_size.y; y++)
 		{
-			for (int z = 0; z < block_size.z; z++)
+			for (int z = 0; z < voxel_block_size.z; z++)
 			{
 				if (area.get_flag(x, y, z) == false)
 				{
@@ -509,26 +482,27 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 
 void VoxelBlock::generate_device(const int& filter)
 {
-	VoxelContainer* voxel_container = get_voxel_container();
+
 	ERR_FAIL_NULL_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer");
 
 	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
 	Array device_presets = presets_data->get_device_presets();
 
-	Vector3i block_size = voxel_container->get_block_size();
-	for (int x = 0; x < block_size.x; x++)
+	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
+	for (int x = 0; x < voxel_block_size.x; x++)
 	{
-		for (int y = 0; y < block_size.y; y++)
+		for (int y = 0; y < voxel_block_size.y; y++)
 		{
-			for (int z = 0; z < block_size.z; z++)
+			for (int z = 0; z < voxel_block_size.z; z++)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-				int type = VoxelRoom::get_voxel_type(voxel);
-				int id = VoxelRoom::get_voxel_id(voxel);
-				Vector3i rotation = VoxelRoom::get_voxel_rotation(voxel);
+				int type = VoxelContainer::get_voxel_type(voxel);
+				int id = VoxelContainer::get_voxel_id(voxel);
+				Vector3i rotation = VoxelContainer::get_voxel_rotation(voxel);
 				Device* device = cast_to<Device>(devices[position]);
-				if (type == VoxelContainerData::DEVICE)
+
+				if (type == VoxelContainer::DEVICE)
 				{
 					Ref<DevicePreset> device_preset = device_presets[id];
 					if (device != nullptr) {
@@ -565,16 +539,16 @@ void VoxelBlock::generate_device(const int& filter)
 	}
 }
 
-bool VoxelBlock::is_filled(const Voxel& voxel) const {
-	VoxelContainer* voxel_container = get_voxel_container();
+bool VoxelBlock::is_filled(const Voxel& voxel) {
+
 	ERR_FAIL_NULL_V_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer", true);
 
-	Vector3i block_size = voxel_container->get_block_size();
-	for (int x = 0; x < block_size.x; x++)
+	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
+	for (int x = 0; x < voxel_block_size.x; x++)
 	{
-		for (int y = 0; y < block_size.y; y++)
+		for (int y = 0; y < voxel_block_size.y; y++)
 		{
-			for (int z = 0; z < block_size.z; z++)
+			for (int z = 0; z < voxel_block_size.z; z++)
 			{
 				if (voxel != get_voxel(Vector3i(x, y, z)))
 				{
@@ -584,4 +558,14 @@ bool VoxelBlock::is_filled(const Voxel& voxel) const {
 		}
 	}
 	return true;
+}
+
+void VoxelBlock::_enter_tree()
+{
+	voxel_container = cast_to<VoxelContainer>(get_parent());
+}
+
+void VoxelBlock::_exit_tree()
+{
+	voxel_container = nullptr;
 }

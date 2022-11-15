@@ -1,5 +1,4 @@
 #include "device.h"
-
 void Device::_bind_methods()
 {
 	ClassDB::bind_method(D_METHOD("get_device_preset"), &Device::get_device_preset);

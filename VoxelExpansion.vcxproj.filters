@@ -18,9 +18,6 @@
     <ClInclude Include="register_types.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="voxel_room.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="voxel_block.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -48,15 +45,9 @@
     <ClInclude Include="voxel_container.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="voxel_world.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="register_types.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="voxel_room.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="voxel_block.cpp">
@@ -84,9 +75,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="voxel_container.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="voxel_world.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
