@@ -8,6 +8,7 @@ class VoxelBlock : public Node3D
 	GDCLASS(VoxelBlock, Node3D);
 protected:
 	VoxelContainer* voxel_container;
+	Ref<VoxelContainerData> voxel_container_data;
 	Vector3i key;
 	Dictionary devices;
 	Array mesh_arrays;
@@ -15,8 +16,6 @@ protected:
 public:
 	VoxelBlock();
 	~VoxelBlock();
-
-	void set_voxel_container_data(const Ref<VoxelContainerData>& value);
 
 	void set_key(const Vector3i& value);
 	Vector3i get_key() const;

@@ -22,21 +22,21 @@ void VoxelBlock::_bind_methods()
 }
 
 VoxelBlock::VoxelBlock() {
-	this->key = Vector3i(0, 0, 0);
+	voxel_container = nullptr;
+	set_key(Vector3i(0, 0, 0));
 }
 
 VoxelBlock::~VoxelBlock() {
 
 }
 
-void VoxelBlock::set_voxel_container_data(const Ref<VoxelContainerData>& value)
-{
-	//voxel_container_data = value;
-}
-
 
 void VoxelBlock::set_key(const Vector3i& value) {
 	key = value;
+	if (voxel_container != nullptr)
+	{
+		voxel_container_data = voxel_container->get_voxel_container_data(key);
+	}
 }
 
 Vector3i VoxelBlock::get_key() const {
@@ -54,23 +54,38 @@ void VoxelBlock::set_voxel(const Vector3i& position, const Voxel& value)
 	ERR_FAIL_NULL_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer");
 	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
 	if (voxel_container->is_isolated() == true) {
-		Ref<VoxelContainerData> voxel_container_data = voxel_container->get_voxel_container_data(key);
 		voxel_container_data->set_voxel(position, value);
 	}
 	else {
 		voxel_container->set_voxel(position + key * voxel_block_size, value);
 	}
+
+	if (position.x < 0 || position.x >= voxel_block_size.x ||
+		position.y < 0 || position.y >= voxel_block_size.y ||
+		position.z < 0 || position.z >= voxel_block_size.z)
+	{
+		if (voxel_container->is_isolated() == true) {
+			return;
+		}
+		return voxel_container->set_voxel(position + key * voxel_block_size, value);
+	}
+	return voxel_container_data->set_voxel(position, value);
 }
 
 Voxel VoxelBlock::get_voxel(const Vector3i& position)
 {
 	ERR_FAIL_NULL_V_MSG(voxel_container, EMPTY_VOXEL, "VoxelBlock node must be a direct child of VoxelVontainer");
 	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
-	if (voxel_container->is_isolated() == true) {
-		Ref<VoxelContainerData> voxel_container_data = voxel_container->get_voxel_container_data(key);
-		return voxel_container_data->get_voxel(position);
+	if (position.x < 0 || position.x >= voxel_block_size.x ||
+		position.y < 0 || position.y >= voxel_block_size.y ||
+		position.z < 0 || position.z >= voxel_block_size.z)
+	{
+		if (voxel_container->is_isolated() == true) {
+			return EMPTY_VOXEL;
+		}
+		return voxel_container->get_voxel(position + key * voxel_block_size);
 	}
-	return voxel_container->get_voxel(position + key * voxel_block_size);
+	return voxel_container_data->get_voxel(position);
 }
 
 Vector3 VoxelBlock::point_converted_to_block(const Vector3& point) const {
@@ -482,7 +497,6 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 
 void VoxelBlock::generate_device(const int& filter)
 {
-
 	ERR_FAIL_NULL_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer");
 
 	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
@@ -542,27 +556,16 @@ void VoxelBlock::generate_device(const int& filter)
 bool VoxelBlock::is_filled(const Voxel& voxel) {
 
 	ERR_FAIL_NULL_V_MSG(voxel_container, "VoxelBlock node must be a direct child of VoxelVontainer", true);
-
-	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
-	for (int x = 0; x < voxel_block_size.x; x++)
-	{
-		for (int y = 0; y < voxel_block_size.y; y++)
-		{
-			for (int z = 0; z < voxel_block_size.z; z++)
-			{
-				if (voxel != get_voxel(Vector3i(x, y, z)))
-				{
-					return false;
-				}
-			}
-		}
-	}
-	return true;
+	return voxel_container_data->is_filled(voxel);
 }
 
 void VoxelBlock::_enter_tree()
 {
 	voxel_container = cast_to<VoxelContainer>(get_parent());
+	if (voxel_container != nullptr)
+	{
+		voxel_container_data = voxel_container->get_voxel_container_data(key);
+	}
 }
 
 void VoxelBlock::_exit_tree()
