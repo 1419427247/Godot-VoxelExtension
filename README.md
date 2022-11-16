@@ -1,6 +1,6 @@
 # VoxelExpansion
 利用GDExpansion编写的高性能体素扩展，提供了相关的节点帮助用户生成自定义的体素世界而无需重新造轮子
-# 快速上手
+# 如何配置？
 在godot项目文件夹下新建一个文件夹并命名为`bin`，将编译好的二进制文件移动到`bin`文件夹内
 
 然后在项目目录中新建一个文件并命名为`voxel.gdextension`
@@ -17,3 +17,6 @@ windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.x86
 ![图片](docs/屏幕截图%202022-11-16%20183112.png)
 
 可以看到，大功告成！
+
+# 开始你的第一个体素世界
+(未完待续)
