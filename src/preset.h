@@ -31,17 +31,14 @@
 
 using namespace godot;
 
-#define VOXEL(type,id,rotation,flag) ((type << 30) | (id << 20) | (abs(rotation.x % 360 / 15) << 15) | (abs(rotation.y % 360 / 15)) << 10 | (abs(rotation.z % 360 / 15) << 5) | (flag & 0b11111))
+//#define VOXEL(type,id,rotation,flag) ((type << 30) | (id << 20) | (abs(rotation.x % 360 / 15) << 15) | (abs(rotation.y % 360 / 15)) << 10 | (abs(rotation.z % 360 / 15) << 5) | (flag & 0b11111))
+//
+//#define EMPTY_VOXEL 0 
+//#define BASICS_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::BASICS, id, rotation, flag)
+//#define MODEL_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::MODEL, id, rotation, flag)
+//#define DEVICE_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::DEVICE, id, rotation, flag)
 
-#define EMPTY_VOXEL 0 
-#define BASICS_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::BASICS, id, rotation, flag)
-#define MODEL_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::MODEL, id, rotation, flag)
-#define DEVICE_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::DEVICE, id, rotation, flag)
-
-typedef unsigned int Voxel;
-
-class VoxelContainer;
-class VoxelBlock;
+typedef uint64_t Voxel;
 
 class Preset : public Resource
 {
@@ -68,12 +65,6 @@ public:
 
 	void set_script(const Ref<Script>& value);
 	Ref<Script> get_script() const;
-
-	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
-	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
-
-	virtual void _on_voxel_new(VoxelContainer * voxel_container, const Voxel & voxel, const Vector3i & position);
-	virtual void _on_voxel_delete(VoxelContainer* voxel_container, const Voxel& voxel, const Vector3i& position);
 };
 
 

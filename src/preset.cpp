@@ -1,5 +1,4 @@
 #include "preset.h"
-#include "voxel_container.h"
 
 void Preset::_bind_methods()
 {
@@ -69,27 +68,4 @@ void Preset::set_script(const Ref<Script>& value)
 Ref<Script> Preset::get_script() const
 {
 	return script;
-}
-
-void Preset::_on_voxel_new(VoxelContainer* voxel_container, const Voxel& voxel, const Vector3i& position)
-{
-}
-
-void Preset::_on_voxel_delete(VoxelContainer* voxel_container, const Voxel& voxel, const Vector3i& position)
-{
-}
-
-
-Vector3 Preset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
-{
-	Vector3 result = vertex;
-	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-	return result;
-}
-
-Vector3 Preset::get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c)
-{
-	return (c - a).cross(b - a);
 }

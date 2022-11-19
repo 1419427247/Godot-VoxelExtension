@@ -1,12 +1,12 @@
 #include "voxel_block.h"
-
+#include "voxel_container.h"
 void VoxelBlock::_bind_methods()
 {
 	ClassDB::bind_method(D_METHOD("set_key", "value"), &VoxelBlock::set_key);
 	ClassDB::bind_method(D_METHOD("get_key"), &VoxelBlock::get_key);
 
-	ClassDB::bind_method(D_METHOD("set_voxel_container", "value"), &VoxelBlock::set_voxel_container);
-	ClassDB::bind_method(D_METHOD("get_voxel_container"), &VoxelBlock::get_voxel_container);
+	//ClassDB::bind_method(D_METHOD("set_voxel_container", "value"), &VoxelBlock::set_voxel_container);
+	//ClassDB::bind_method(D_METHOD("get_voxel_container"), &VoxelBlock::get_voxel_container);
 
 	ClassDB::bind_method(D_METHOD("set_voxel_block_data", "value"), &VoxelBlock::set_voxel_block_data);
 	ClassDB::bind_method(D_METHOD("get_voxel_block_data"), &VoxelBlock::get_voxel_block_data);
@@ -25,25 +25,15 @@ void VoxelBlock::_bind_methods()
 	ClassDB::bind_method(D_METHOD("generate_device"), &VoxelBlock::generate_device, 0b1);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "key"), "set_key", "get_key");
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "voxel_container", PROPERTY_HINT_NODE_TYPE, "VoxelContainer"), "set_voxel_container", "get_voxel_container");
+	//ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "voxel_container", PROPERTY_HINT_NODE_TYPE, "VoxelContainer"), "set_voxel_container", "get_voxel_container");
 }
 
 VoxelBlock::VoxelBlock() {
-	set_voxel_container(nullptr);
 	set_key(Vector3i(0, 0, 0));
 }
 
 VoxelBlock::~VoxelBlock() {
 
-}
-
-
-void VoxelBlock::set_key(const Vector3i& value) {
-	key = value;
-}
-
-Vector3i VoxelBlock::get_key() const {
-	return key;
 }
 
 void VoxelBlock::set_voxel_container(Variant value)
@@ -56,18 +46,23 @@ Variant VoxelBlock::get_voxel_container() const
 	return voxel_container;
 }
 
+void VoxelBlock::set_key(const Vector3i& value) {
+	key = value;
+}
+
+Vector3i VoxelBlock::get_key() const {
+	return key;
+}
+
 void VoxelBlock::set_voxel_block_data(const Ref<VoxelBlockData>& value)
 {
-	ERR_FAIL_NULL(voxel_container);
 	voxel_block_data = value;
 }
 
 Ref<VoxelBlockData> VoxelBlock::get_voxel_block_data() const
 {
-	ERR_FAIL_NULL_V(voxel_container, nullptr);
 	return voxel_block_data;
 }
-
 
 Dictionary VoxelBlock::get_devices() const
 {
@@ -76,43 +71,37 @@ Dictionary VoxelBlock::get_devices() const
 
 void VoxelBlock::set_voxel(const Vector3i& position, const Voxel& value)
 {
-	ERR_FAIL_NULL(voxel_container);
-	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
-	if (voxel_container->is_isolated() == true) {
-		ERR_FAIL_NULL(voxel_block_data);
+	ERR_FAIL_NULL(voxel_block_data);
+	Vector3i size = voxel_block_data->get_size();
+	if (position.x >= 0 && position.x < size.x &&
+		position.y >= 0 && position.y < size.y &&
+		position.z >= 0 && position.z < size.z)
+	{
 		voxel_block_data->set_voxel(position, value);
 	}
 	else {
-		voxel_container->set_voxel(position + key * voxel_block_size, value);
-	}
-
-	if (position.x < 0 || position.x >= voxel_block_size.x ||
-		position.y < 0 || position.y >= voxel_block_size.y ||
-		position.z < 0 || position.z >= voxel_block_size.z)
-	{
-		if (voxel_container->is_isolated() == true) {
-			return;
+		if (voxel_container->is_isolated() == false) {
+			ERR_FAIL_NULL(voxel_container);
+			voxel_container->set_voxel(position + key * size, value);
 		}
-		return voxel_container->set_voxel(position + key * voxel_block_size, value);
 	}
-	return voxel_block_data->set_voxel(position, value);
 }
 
 Voxel VoxelBlock::get_voxel(const Vector3i& position)
 {
-	ERR_FAIL_NULL_V(voxel_container, EMPTY_VOXEL);
-	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
-	if (position.x < 0 || position.x >= voxel_block_size.x ||
-		position.y < 0 || position.y >= voxel_block_size.y ||
-		position.z < 0 || position.z >= voxel_block_size.z)
+	ERR_FAIL_NULL(voxel_block_data);
+	Vector3i size = voxel_block_data->get_size();
+	if (position.x >= 0 && position.x < size.x &&
+		position.y >= 0 && position.y < size.y &&
+		position.z >= 0 && position.z < size.z)
 	{
-		if (voxel_container->is_isolated() == true) {
-			return EMPTY_VOXEL;
-		}
-		return voxel_container->get_voxel(position + key * voxel_block_size);
+		return voxel_block_data->get_voxel(position);
 	}
-	ERR_FAIL_NULL_V(voxel_block_data, EMPTY_VOXEL);
-	return voxel_block_data->get_voxel(position);
+	if (voxel_container->is_isolated() == false) {
+		ERR_FAIL_NULL(voxel_container);
+		return voxel_container->get_voxel(position + key * size);
+	}
+	return EMPTY_VOXEL;
 }
 
 Vector3 VoxelBlock::point_converted_to_block(const Vector3& point) const {
@@ -156,15 +145,14 @@ Vector3i VoxelBlock::get_voxel_local_position(const Vector3& point, const Vector
 
 ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 {
-
 	ERR_FAIL_NULL_V(voxel_container, nullptr);
 
 	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
 	ERR_FAIL_NULL_V(presets_data, nullptr);
 
 	Array materials = presets_data->get_materials();
-	Array basics_presets = presets_data->get_basics_presets();
-	Array model_presets = presets_data->get_model_presets();
+	TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
+	TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
 
 	mesh_arrays.resize(materials.size());
 	for (int i = 0; i < mesh_arrays.size(); i++)
@@ -186,80 +174,30 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-				int type = VoxelContainer::get_voxel_type(voxel);
-				int id = VoxelContainer::get_voxel_id(voxel);
-				int flag = VoxelContainer::get_voxel_flag(voxel);
+
+
+				int type = voxel_block_data->get_voxel_type(voxel);
+				int id = voxel_block_data->get_voxel_id(voxel);
+
+				Ref<Preset> preset;
 				switch (type)
 				{
-				case VoxelContainer::BASICS: {
+				case VoxelBlockData::BASICS:
 					ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
-					Ref<BasicsPreset> basics_preset = basics_presets[id];
-					ERR_FAIL_NULL_V_MSG(basics_preset, nullptr, "The basics_preset with id " + String::num_int64(id) + " is null");
-					if ((filter & basics_preset->get_filter()) == 0)
-					{
-						continue;
-					}
-					Vector3i rotation = VoxelContainer::get_voxel_rotation(voxel);
-					Array basics_presets = presets_data->get_basics_presets();
-					if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
-					{
-						for (int direction = 0; direction < 6; direction++)
-						{
-							int material_id = basics_preset->get_material_id(direction);
-							ERR_FAIL_INDEX_V(material_id, mesh_arrays.size(), nullptr);
-							Array arrays = mesh_arrays[material_id];
-							BasicsPreset::build_mesh(direction, arrays, position, rotation);
-						}
-					}
-					else {
-						for (int direction = 0; direction < 6; direction++) {
-							Voxel voxel = get_voxel(position + VoxelContainer::get_voxel_direction(direction, rotation));
-							int voxel_type = VoxelContainer::get_voxel_type(voxel);
-							int voxel_id = VoxelContainer::get_voxel_id(voxel);
-
-							if (voxel_type != VoxelContainer::BASICS) {
-								int material_id = basics_preset->get_material_id(direction);
-								ERR_FAIL_INDEX_V(material_id, mesh_arrays.size(), nullptr);
-								Array arrays = mesh_arrays[material_id];
-								BasicsPreset::build_mesh(direction, arrays, position, rotation);
-							}
-							else {
-								Vector3i voxel_rotation = VoxelContainer::get_voxel_rotation(voxel);
-								Ref<BasicsPreset> preset = basics_presets[voxel_id];
-								if (preset->get_transparent() != basics_preset->get_transparent() || voxel_rotation.x % 90 != 0 || voxel_rotation.y % 90 != 0 || voxel_rotation.z % 90 != 0) {
-
-									int material_id = basics_preset->get_material_id(direction);
-									ERR_FAIL_INDEX_V(material_id, mesh_arrays.size(), nullptr);
-									Array arrays = mesh_arrays[material_id];
-									BasicsPreset::build_mesh(direction, arrays, position, rotation);
-								}
-							}
-						}
-					}
+					preset = basics_presets[id];
 					break;
-				}
-				case VoxelContainer::MODEL: {
+				case VoxelBlockData::MODEL:
 					ERR_FAIL_INDEX_V(id, model_presets.size(), nullptr);
-					Ref<ModelPreset> model_preset = model_presets[id];
-					ERR_FAIL_NULL_V_MSG(model_preset, nullptr, "The model_preset with id " + String::num_int64(id) + " is null");
-					if ((filter & model_preset->get_filter()) == 0)
-					{
-						continue;
-					}
-					Vector3i rotation = VoxelContainer::get_voxel_rotation(voxel);
-					Ref<Mesh> mesh = model_preset->get_mesh();
-					ERR_FAIL_NULL_V(mesh, nullptr);
-					TypedArray<int> materials = model_preset->get_materials();
-					for (int i = 0; i < mesh->get_surface_count(); i++)
-					{
-						int material_id = materials[i];
-						ERR_FAIL_INDEX_V(material_id, mesh_arrays.size(), nullptr);
-						Array arrays = mesh_arrays[material_id];
-						model_preset->build_mesh(arrays, i, position, rotation);
-					}
+					preset = model_presets[id];
 					break;
+				default:
+					continue;
 				}
+				if ((filter & preset->get_filter()) == 0)
+				{
+					continue;
 				}
+				voxel_block_data->build_mesh(presets_data, mesh_arrays, position, voxel);
 			}
 		}
 	}
@@ -283,7 +221,6 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 
 ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 {
-
 	ERR_FAIL_NULL_V(voxel_container, nullptr);
 
 	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
@@ -407,26 +344,26 @@ ConcavePolygonShape3D* VoxelBlock::generate_collider(const int& filter)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-				int type = VoxelContainer::get_voxel_type(voxel);
-				int id = VoxelContainer::get_voxel_id(voxel);
+				int type = voxel_block_data->get_voxel_type(voxel);
+				int id = voxel_block_data->get_voxel_id(voxel);
 				Ref<Preset> preset;
 				switch (type)
 				{
-				case VoxelContainer::EMPTY:
+				case VoxelBlockData::EMPTY:
 					continue;
-				case VoxelContainer::BASICS:
+				case VoxelBlockData::BASICS:
 				{
 					ERR_FAIL_INDEX_V(id, basics_presets.size(), nullptr);
 					preset = basics_presets[id];
 					break;
 				}
-				case VoxelContainer::MODEL:
+				case VoxelBlockData::MODEL:
 				{
 					ERR_FAIL_INDEX_V(id, model_presets.size(), nullptr);
 					preset = model_presets[id];
 					break;
 				}
-				case VoxelContainer::DEVICE:
+				case VoxelBlockData::DEVICE:
 				{
 					ERR_FAIL_INDEX_V(id, device_presets.size(), nullptr);
 					preset = device_presets[id];
@@ -538,14 +475,14 @@ void VoxelBlock::generate_device(const int& filter)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-				int type = VoxelContainer::get_voxel_type(voxel);
-				int id = VoxelContainer::get_voxel_id(voxel);
-				Vector3i rotation = VoxelContainer::get_voxel_rotation(voxel);
-				Device* device = cast_to<Device>(devices[position]);
+				int type = voxel_block_data->get_voxel_type(voxel);
+				int id = voxel_block_data->get_voxel_id(voxel);
 
-				if (type == VoxelContainer::DEVICE)
+				Ref<DevicePreset> device_preset = device_presets[id];
+
+				Device* device = cast_to<Device>(devices[position]);
+				if (type == VoxelBlockData::DEVICE)
 				{
-					Ref<DevicePreset> device_preset = device_presets[id];
 					if (device != nullptr) {
 						if (device->get_device_preset() != device_preset) {
 							devices.erase(position);
@@ -553,20 +490,10 @@ void VoxelBlock::generate_device(const int& filter)
 							device = nullptr;
 						}
 					}
-					if (device == nullptr) {
-						Node* node = device_preset->get_packed_scene()->instantiate();
-						device = cast_to<Device>(node);
-						if (device == nullptr)
-						{
-							node->queue_free();
-							ERR_FAIL_MSG("The DevicePreset with id " + String::num_int64(id) + " cannot be instantiated");
-						}
-						device->set_device_preset(device_preset);
+					if (device == nullptr)
+					{
+						device = cast_to<Device>(voxel_block_data->build_device(device_preset, position, voxel));
 						devices[position] = device;
-
-						device->set_position(position);
-						device->set_rotation(rotation);
-						call_deferred("add_child", device);
 					}
 				}
 				else {

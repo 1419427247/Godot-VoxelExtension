@@ -46,8 +46,6 @@ public:
 	int get_material_id(const int& value);
 
 	static Ref<BasicsPreset> instantiate(const String& name, const Dictionary& materials);
-
-	static void build_mesh(const int& direction, const Array& arrays, const Vector3& position, const Vector3& rotation);
 };
 
 VARIANT_ENUM_CAST(BasicsPreset, Dirction);

@@ -1,9 +1,8 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
-#include "voxel_block_data.h"
+#include "device_preset.h"
 
-class VoxelBlock;
 class Device : public Node3D
 {
 	GDCLASS(Device, Node3D);

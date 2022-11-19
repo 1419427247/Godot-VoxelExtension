@@ -7,8 +7,8 @@ class VoxelBlock : public Node3D
 {
 	GDCLASS(VoxelBlock, Node3D);
 public:
-	Vector3i key;
 	VoxelContainer* voxel_container;
+	Vector3i key;
 	Ref<VoxelBlockData> voxel_block_data;
 	Dictionary devices;
 	Array mesh_arrays;
@@ -18,13 +18,15 @@ public:
 	VoxelBlock();
 	~VoxelBlock();
 
+	void set_voxel_container(Variant value);
+	Variant get_voxel_container() const;
+
 	void set_key(const Vector3i& value);
 	Vector3i get_key() const;
 
-	void set_voxel_container(Variant value);
-	Variant get_voxel_container() const;
 	void set_voxel_block_data(const Ref<VoxelBlockData>& value);
 	Ref<VoxelBlockData> get_voxel_block_data() const;
+	
 
 	Dictionary get_devices() const;
 

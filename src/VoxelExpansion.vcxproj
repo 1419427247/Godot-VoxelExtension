@@ -26,6 +26,8 @@
     <ClCompile Include="preset.cpp" />
     <ClCompile Include="presets_data.cpp" />
     <ClCompile Include="register_types.cpp" />
+    <ClCompile Include="simple_voxel_block_data.cpp" />
+    <ClCompile Include="standard_voxel_block_data.cpp" />
     <ClCompile Include="voxel_block.cpp" />
     <ClCompile Include="voxel_container.cpp" />
     <ClCompile Include="voxel_block_data.cpp" />
@@ -38,6 +40,8 @@
     <ClInclude Include="preset.h" />
     <ClInclude Include="presets_data.h" />
     <ClInclude Include="register_types.h" />
+    <ClInclude Include="simple_voxel_block_data.h" />
+    <ClInclude Include="standard_voxel_block_data.h" />
     <ClInclude Include="voxel_block.h" />
     <ClInclude Include="voxel_container.h" />
     <ClInclude Include="voxel_block_data.h" />

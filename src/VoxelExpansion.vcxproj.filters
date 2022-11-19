@@ -45,6 +45,12 @@
     <ClCompile Include="voxel_block_data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="standard_voxel_block_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="simple_voxel_block_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics_preset.h">
@@ -75,6 +81,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="voxel_block_data.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="standard_voxel_block_data.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="simple_voxel_block_data.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

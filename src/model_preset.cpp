@@ -1,4 +1,6 @@
 #include "model_preset.h"
+#include "voxel_block_data.h"
+
 
 void ModelPreset::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_mesh", "value"), &ModelPreset::set_mesh);
@@ -116,7 +118,7 @@ void ModelPreset::set_materials(const TypedArray<int>& value) {
 	materials.resize(((Array)memorandum[0]).size());
 }
 
-TypedArray<int> ModelPreset::get_materials() {
+TypedArray<int> ModelPreset::get_materials() const{
 	return materials;
 }
 
@@ -141,11 +143,11 @@ void ModelPreset::build_mesh(const Array& arrays, const int& surface_index, cons
 
 			for (int i = 0; i < surface_vertex_array.size(); i++)
 			{
-				array_vertex.push_back(rotate_vertex(surface_vertex_array[i], rotation));
+				array_vertex.push_back(VoxelBlockData::rotate_vertex(surface_vertex_array[i], rotation));
 			}
 			for (int i = 0; i < surface_normal_array.size(); i++)
 			{
-				array_normal.push_back(rotate_vertex(surface_normal_array[i], rotation));
+				array_normal.push_back(VoxelBlockData::rotate_vertex(surface_normal_array[i], rotation));
 			}
 			array_tex_uv.append_array(surface_tex_uv_array);
 
