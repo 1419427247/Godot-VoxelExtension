@@ -89,7 +89,7 @@ void VoxelBlock::set_voxel(const Vector3i& position, const Voxel& value)
 
 Voxel VoxelBlock::get_voxel(const Vector3i& position)
 {
-	ERR_FAIL_NULL(voxel_block_data);
+	ERR_FAIL_NULL_V(voxel_block_data,EMPTY_VOXEL);
 	Vector3i size = voxel_block_data->get_size();
 	if (position.x >= 0 && position.x < size.x &&
 		position.y >= 0 && position.y < size.y &&
@@ -98,7 +98,7 @@ Voxel VoxelBlock::get_voxel(const Vector3i& position)
 		return voxel_block_data->get_voxel(position);
 	}
 	if (voxel_container->is_isolated() == false) {
-		ERR_FAIL_NULL(voxel_container);
+		ERR_FAIL_NULL_V(voxel_container, EMPTY_VOXEL);
 		return voxel_container->get_voxel(position + key * size);
 	}
 	return EMPTY_VOXEL;
@@ -477,7 +477,6 @@ void VoxelBlock::generate_device(const int& filter)
 				Voxel voxel = get_voxel(position);
 				int type = voxel_block_data->get_voxel_type(voxel);
 				int id = voxel_block_data->get_voxel_id(voxel);
-
 				Ref<DevicePreset> device_preset = device_presets[id];
 
 				Device* device = cast_to<Device>(devices[position]);

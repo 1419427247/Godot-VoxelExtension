@@ -4,11 +4,12 @@
 
 #include "voxel_block_data.h"
 
-#define SIMPLE_VOXEL(type,id) ((type << 6) | (id))
+//00'000000'00000000
+#define SIMPLE_VOXEL(type,id,height) ((type << 14) | ((height - 1) << 8) | id)
 
-#define SIMPLE_BASICS_VOXEL(id) SIMPLE_VOXEL(VoxelBlockData::BASICS, id)
-#define SIMPLE_MODEL_VOXEL(id) SIMPLE_VOXEL(VoxelBlockData::MODEL, id)
-#define SIMPLE_DEVICE_VOXEL(id) SIMPLE_VOXEL(VoxelBlockData::DEVICE, id)
+#define SIMPLE_BASICS_VOXEL(id,height) SIMPLE_VOXEL(VoxelBlockData::BASICS, id, height)
+#define SIMPLE_MODEL_VOXEL(id,height) SIMPLE_VOXEL(VoxelBlockData::MODEL, id, height)
+#define SIMPLE_DEVICE_VOXEL(id,height) SIMPLE_VOXEL(VoxelBlockData::DEVICE, id, height)
 
 class SimpleVoxelBlockData : public VoxelBlockData
 {
@@ -31,7 +32,7 @@ public:
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;
 
-	_inline void build_basics_mesh(const int& direction, const Array& mesh_arrays, const Vector3& position);
+	_inline void build_basics_mesh(const int& direction, const int& height, const Array& mesh_arrays, const Vector3& position);
 	_inline void build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position);
 
 	virtual void build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel);
@@ -40,10 +41,12 @@ public:
 	virtual int get_voxel_type(const Voxel& value);
 	virtual int get_voxel_id(const Voxel& value);
 
+	int get_voxel_height(const Voxel& value);
+
 	Voxel empty_voxel();
-	Voxel basics_voxel(const int& id);
-	Voxel model_voxel(const int& id);
-	Voxel device_voxel(const int& id);
+	Voxel basics_voxel(const int& id, const int& height = 64);
+	Voxel model_voxel(const int& id, const int& height = 64);
+	Voxel device_voxel(const int& id, const int& height = 64);
 };
 
 #endif // !SIMPLE_VOXEL_BLOCK_H

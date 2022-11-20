@@ -281,7 +281,6 @@ void StandardVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, co
 	}
 	}
 }
-
 Variant StandardVoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel)
 {
 	Vector3i rotation = get_voxel_rotation(voxel);
