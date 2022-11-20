@@ -306,9 +306,19 @@ void SimpleVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, cons
 	}
 }
 
-Variant SimpleVoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel)
+Variant SimpleVoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, Vector3i& position)
 {
-	return Variant();
+	Node* node = device_preset->get_packed_scene()->instantiate();
+	Device* device = cast_to<Device>(node);
+	if (device == nullptr)
+	{
+		node->queue_free();
+	}
+	device->set_device_preset(device_preset);
+
+	device->set_position(position);
+	call_deferred("add_child", device);
+	return device;
 }
 
 int SimpleVoxelBlockData::get_voxel_type(const Voxel& value)

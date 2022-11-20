@@ -36,7 +36,7 @@ public:
 	_inline void build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position);
 
 	virtual void build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel);
-	virtual Variant build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel);
+	virtual Variant build_device(const Ref<DevicePreset>& device_preset, Vector3i& position);
 
 	virtual int get_voxel_type(const Voxel& value);
 	virtual int get_voxel_id(const Voxel& value);

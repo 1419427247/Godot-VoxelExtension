@@ -90,7 +90,7 @@ void VoxelContainer::set_voxel(const Vector3i& position, const Voxel& value)
 {
 	Vector3i key = get_voxel_block_key(position);
 	VoxelBlock* voxel_block = cast_to<VoxelBlock>((voxel_blocks.get(key, nullptr)));
-	if (voxel_block == nullptr)
+	if (voxel_block != nullptr)
 	{
 		voxel_block->set_voxel({
 			position.x < 0 ? voxel_block_size.x - ((-1 * position.x - 1) % voxel_block_size.x) - 1 : (position.x % voxel_block_size.x),
@@ -104,7 +104,7 @@ Voxel VoxelContainer::get_voxel(const Vector3i& position) const
 {
 	Vector3i key = get_voxel_block_key(position);
 	VoxelBlock* voxel_block = cast_to<VoxelBlock>((voxel_blocks.get(key, nullptr)));
-	if (voxel_block == nullptr)
+	if (voxel_block != nullptr)
 	{
 		return voxel_block->get_voxel({
 			position.x < 0 ? voxel_block_size.x - ((-1 * position.x - 1) % voxel_block_size.x) - 1 : (position.x % voxel_block_size.x),

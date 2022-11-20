@@ -2,7 +2,6 @@
 #include "voxel_container.h"
 void VoxelBlock::_bind_methods()
 {
-	ClassDB::bind_method(D_METHOD("set_key", "value"), &VoxelBlock::set_key);
 	ClassDB::bind_method(D_METHOD("get_key"), &VoxelBlock::get_key);
 
 	//ClassDB::bind_method(D_METHOD("set_voxel_container", "value"), &VoxelBlock::set_voxel_container);
@@ -24,7 +23,6 @@ void VoxelBlock::_bind_methods()
 	ClassDB::bind_method(D_METHOD("generate_collider", "filter"), &VoxelBlock::generate_collider, 0b1);
 	ClassDB::bind_method(D_METHOD("generate_device"), &VoxelBlock::generate_device, 0b1);
 
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "key"), "set_key", "get_key");
 	//ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "voxel_container", PROPERTY_HINT_NODE_TYPE, "VoxelContainer"), "set_voxel_container", "get_voxel_container");
 }
 
@@ -174,7 +172,6 @@ ArrayMesh* VoxelBlock::generate_mesh(const int& filter)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-
 
 				int type = voxel_block_data->get_voxel_type(voxel);
 				int id = voxel_block_data->get_voxel_id(voxel);
