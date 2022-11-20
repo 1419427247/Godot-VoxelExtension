@@ -14,14 +14,14 @@ windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.dev
 ```
 
 打开Godot，我们使用快捷键`ctrl+A`打开创建节点窗口搜索`Voxel`
-![](docs/屏幕截图%202022-11-16%20183112.png)
+![](docs/0.png)
 
 大功告成！我们可以看到自定义节点VoxelBlock和VoxelContainer
 
 # 开始你的第一个体素世界
 我们新建一个空场景，在里面添加一个`VoxelContainer`节点，我们在右侧的检查器里创建一个PresetsData
 
-![](docs/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-11-20%20173115.png)
+![](docs/1.png)
 
 | 属性名        | 说明             |
 | ------------- | ---------------- |
@@ -31,9 +31,9 @@ windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.dev
 | DevicePresets | 3D结点预设列表     |
 
 我们尝试添加2个材质预设、1个基本体素预设、一个网格预设用于我们的演示
-![](docs/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-11-20%20194712.png)
-![](docs/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-11-20%20194729.png)
-![](docs/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-11-20%20194741.png)
+![](docs/2.png)
+![](docs/3.png)
+![](docs/4.png)
 
 嗯，太好了，我们现在为`VoxelContainer`设置好了`PresetsData`属性，这样`VoxelBlock`就知道我们需要绘制的网格应该是什么样子的
 
@@ -73,5 +73,5 @@ func _ready():
 
 嗯嗯嗯，现在我们按`F5`运行场景，额，怎么怎么也看不见？啊哦！忘记加摄像机节点了，再加上环境！嗯嗯嗯！看起来还不错！ps:这草地贴图有点难看o(TヘTo)
 
-![](docs/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-11-20%20203820.png)
+![](docs/5.png)
 
