@@ -1,7 +1,7 @@
 #ifndef VOXEL_CONTAINER_DATA_H
 #define VOXEL_CONTAINER_DATA_H
 
-#include "presets_data.h"
+#include "voxel_container.h"
 
 #define EMPTY_VOXEL 0 
 
@@ -16,14 +16,24 @@ class VoxelBlockData : public Resource
 		DEVICE = 3,
 	};
 protected:
+	Vector3i key;
 	Vector3i size;
+	VoxelContainer* voxel_container;
+	Dictionary devices;
+
 	static void _bind_methods();
 public:
 	VoxelBlockData();
 	~VoxelBlockData();
 
+	void set_key(const Vector3i& value);
+	Vector3i get_key() const;
+
 	virtual void set_size(const Vector3i& value);
 	virtual Vector3i get_size() const;
+
+	void set_voxel_container(Variant value);
+	Variant get_voxel_container() const;
 
 	virtual void set_voxels(const PackedByteArray& value);
 	virtual PackedByteArray get_voxels() const;
@@ -34,11 +44,19 @@ public:
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;
 
-	virtual void build_mesh(const Ref<PresetsData>& presets_data,const Array& mesh_arrays,const Vector3i& position,const Voxel& voxel);
+	virtual void build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel);
 	virtual Variant build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel);
 
 	virtual int get_voxel_type(const Voxel& value);
 	virtual int get_voxel_id(const Voxel& value);
+
+	ArrayMesh* generate_mesh(const int& filter = 0b1);
+	ConcavePolygonShape3D* generate_collider(const int& filter = 0b1);
+	void generate_device(const int& filter = 0b1);
+
+	static Vector3 point_converted_to_block(const Transform3D& global_transform, const Vector3& point);
+	static Vector3 normal_converted_to_block(const Transform3D& global_transform, const Vector3& point);
+	static Vector3i get_voxel_local_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal);
 
 	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
 	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);

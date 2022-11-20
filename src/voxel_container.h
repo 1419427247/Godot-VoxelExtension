@@ -1,9 +1,9 @@
 #ifndef VOXEL_CONTAINER_H
 #define VOXEL_CONTAINER_H
 
-#include "standard_voxel_block_data.h"
-#include "simple_voxel_block_data.h"
+#include "presets_data.h"
 
+class VoxelBlockData;
 class VoxelContainer : public Node3D
 {
 	GDCLASS(VoxelContainer, Node3D);
@@ -12,7 +12,7 @@ private:
 	Vector3i voxel_block_size;
 	bool isolated;
 
-	Dictionary voxel_blocks;
+	Dictionary voxel_block_datas;
 protected:
 	static void _bind_methods();
 public:
@@ -28,8 +28,8 @@ public:
 	void set_isolated(const bool& value);
 	bool is_isolated() const;
 
-	void set_voxel_block(const Vector3i& key, const Variant& value);
-	Variant get_voxel_block(const Vector3i& key) const;
+	void set_voxel_block_data(const Vector3i& key, const Ref<VoxelBlockData>& value);
+	Ref<VoxelBlockData> get_voxel_block_data(const Vector3i& key) const;
 
 	void set_voxel(const Vector3i& position, const Voxel& value);
 	Voxel get_voxel(const Vector3i& position) const;
@@ -39,7 +39,6 @@ public:
 	VoxelBlockData* copy(const Vector3i& from, const Vector3i& to);
 	void paste(const Ref<VoxelBlockData>& voxel_block_data, const Vector3i& position, const Vector3i& direction);
 	void fill(const Voxel& voxel, const Vector3i& from, const Vector3i& to);
-
 };
 
 #endif // !VOXEL_CONTAINER_H

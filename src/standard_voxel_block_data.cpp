@@ -69,6 +69,12 @@ void StandardVoxelBlockData::set_voxel(const Vector3i& position, const Voxel& va
 		int index = ((position.x * size.y * size.z) + (position.y * size.z) + position.z);
 		voxels[index] = value;
 	}
+	else {
+		ERR_FAIL_NULL(voxel_container);
+		if (voxel_container->is_isolated() == false) {
+			voxel_container->set_voxel(position + key * size, value);
+		}
+	}
 }
 
 Voxel StandardVoxelBlockData::get_voxel(const Vector3i& position) const
@@ -79,6 +85,12 @@ Voxel StandardVoxelBlockData::get_voxel(const Vector3i& position) const
 	{
 		int index = ((position.x * size.y * size.z) + (position.y * size.z) + position.z);
 		return voxels[index];
+	}
+	else {
+		ERR_FAIL_NULL_V(voxel_container, EMPTY_VOXEL);
+		if (voxel_container->is_isolated() == false) {
+			return voxel_container->get_voxel(position + key * size);
+		}
 	}
 	return EMPTY_VOXEL;
 }

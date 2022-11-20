@@ -1,5 +1,5 @@
 #include "voxel_container.h"
-#include "voxel_block.h"
+#include "voxel_block_data.h"
 
 void VoxelContainer::_bind_methods()
 {
@@ -12,8 +12,8 @@ void VoxelContainer::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_isolated", "value"), &VoxelContainer::set_isolated);
 	ClassDB::bind_method(D_METHOD("is_isolated"), &VoxelContainer::is_isolated);
 
-	ClassDB::bind_method(D_METHOD("set_voxel_block", "key", "value"), &VoxelContainer::set_voxel_block);
-	ClassDB::bind_method(D_METHOD("get_voxel_block", "key"), &VoxelContainer::get_voxel_block);
+	ClassDB::bind_method(D_METHOD("set_voxel_block_data", "key", "value"), &VoxelContainer::set_voxel_block_data);
+	ClassDB::bind_method(D_METHOD("get_voxel_block_data", "key"), &VoxelContainer::get_voxel_block_data);
 	ClassDB::bind_method(D_METHOD("set_voxel", "position", "value"), &VoxelContainer::set_voxel);
 	ClassDB::bind_method(D_METHOD("get_voxel", "position"), &VoxelContainer::get_voxel);
 
@@ -70,34 +70,33 @@ bool VoxelContainer::is_isolated() const
 	return isolated;
 }
 
-void VoxelContainer::set_voxel_block(const Vector3i& key, const Variant& value) {
-	VoxelBlock* voxel_block = nullptr;
-	if (voxel_blocks.has(key) == true)
+void VoxelContainer::set_voxel_block_data(const Vector3i& key, const Ref<VoxelBlockData>& value) {
+	Ref<VoxelBlockData> voxel_block_data;
+	if (voxel_block_datas.has(key) == true)
 	{
-		voxel_block = cast_to<VoxelBlock>(voxel_blocks.get(key, nullptr));
-		voxel_block->set_voxel_container(nullptr);
+		voxel_block_data = voxel_block_datas.get(key, nullptr);
+		voxel_block_data->set_voxel_container(nullptr);
 	}
-	if (value.get_type() != Variant::NIL)
+	if (value != nullptr)
 	{
-		voxel_block = cast_to<VoxelBlock>(value);
-		voxel_block->set_voxel_container(this);
-		ERR_FAIL_NULL(voxel_block->get_voxel_block_data());
-		ERR_FAIL_COND_MSG(voxel_block->get_voxel_block_data()->get_size() != voxel_block_size, "The VoxelBlockData.size() is different from the VoxelContainer setting");
+		voxel_block_data = value;
+		voxel_block_data->set_voxel_container(this);
+		ERR_FAIL_COND_MSG(voxel_block_data->get_size() != voxel_block_size, "The VoxelBlockData.size() is different from the VoxelContainer setting");
 	}
-	voxel_blocks[key] = value;
+	voxel_block_datas[key] = value;
 }
 
-Variant VoxelContainer::get_voxel_block(const Vector3i& key) const {
-	return voxel_blocks.get(key, nullptr);
+Ref<VoxelBlockData> VoxelContainer::get_voxel_block_data(const Vector3i& key) const {
+	return voxel_block_datas.get(key, nullptr);
 }
 
 void VoxelContainer::set_voxel(const Vector3i& position, const Voxel& value)
 {
 	Vector3i key = get_voxel_block_key(position);
-	VoxelBlock* voxel_block = cast_to<VoxelBlock>((voxel_blocks.get(key, nullptr)));
-	if (voxel_block != nullptr)
+	Ref<VoxelBlockData> voxel_block_data = voxel_block_datas.get(key, nullptr);
+	if (voxel_block_data != nullptr)
 	{
-		voxel_block->set_voxel({
+		voxel_block_data->set_voxel({
 			position.x < 0 ? voxel_block_size.x - ((-1 * position.x - 1) % voxel_block_size.x) - 1 : (position.x % voxel_block_size.x),
 			position.y < 0 ? voxel_block_size.y - ((-1 * position.y - 1) % voxel_block_size.y) - 1 : (position.y % voxel_block_size.y),
 			position.z < 0 ? voxel_block_size.z - ((-1 * position.z - 1) % voxel_block_size.z) - 1 : (position.z % voxel_block_size.z)
@@ -108,10 +107,10 @@ void VoxelContainer::set_voxel(const Vector3i& position, const Voxel& value)
 Voxel VoxelContainer::get_voxel(const Vector3i& position) const
 {
 	Vector3i key = get_voxel_block_key(position);
-	VoxelBlock* voxel_block = cast_to<VoxelBlock>((voxel_blocks.get(key, nullptr)));
-	if (voxel_block != nullptr)
+	Ref<VoxelBlockData> voxel_block_data = voxel_block_datas.get(key, nullptr);
+	if (voxel_block_data != nullptr)
 	{
-		return voxel_block->get_voxel({
+		return voxel_block_data->get_voxel({
 			position.x < 0 ? voxel_block_size.x - ((-1 * position.x - 1) % voxel_block_size.x) - 1 : (position.x % voxel_block_size.x),
 			position.y < 0 ? voxel_block_size.y - ((-1 * position.y - 1) % voxel_block_size.y) - 1 : (position.y % voxel_block_size.y),
 			position.z < 0 ? voxel_block_size.z - ((-1 * position.z - 1) % voxel_block_size.z) - 1 : (position.z % voxel_block_size.z)

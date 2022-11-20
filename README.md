@@ -54,21 +54,18 @@ extends VoxelContainer
 
 func _ready():
 	var voxel_block_data : StandardVoxelBlockData = StandardVoxelBlockData.new()
-	var voxel_block : VoxelBlock = VoxelBlock.new()
 	voxel_block_data.size = voxel_block_size
 	
-	voxel_block.set_voxel_block_data(voxel_block_data)
-
 	for x in range(voxel_block_size.x):
 		for z in range(voxel_block_size.z):
 			var height = randi() % 2 + 2
 			for y in range(height):
-				voxel_block.set_voxel(Vector3i(x,y,z),voxel_block_data.basics_voxel(0))
+				voxel_block_data.set_voxel(Vector3i(x,y,z),voxel_block_data.basics_voxel(0))
 			if(randi() % 8 == 0):
-				voxel_block.set_voxel(Vector3i(x,height,z),voxel_block_data.model_voxel(0,Vector3i(0,randi(),0)))
-	set_voxel_block(Vector3i(0,0,0),voxel_block)
+				voxel_block_data.set_voxel(Vector3i(x,height,z),voxel_block_data.model_voxel(0,Vector3i(0,randi(),0)))
+	set_voxel_block_data(Vector3i(0,0,0),voxel_block_data)
 	
-	$MeshInstance3D.mesh = voxel_block.generate_mesh()
+	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
 
 嗯嗯嗯，现在我们按`F5`运行场景，额，怎么怎么也看不见？啊哦！忘记加摄像机节点了，再加上环境！嗯嗯嗯！看起来还不错！ps:这草地贴图有点难看o(TヘTo)

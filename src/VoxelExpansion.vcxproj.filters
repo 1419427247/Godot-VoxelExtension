@@ -36,9 +36,6 @@
     <ClCompile Include="register_types.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="voxel_block.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="voxel_container.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="register_types.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="voxel_block.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="voxel_container.h">
