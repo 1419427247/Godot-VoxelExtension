@@ -295,7 +295,7 @@ void SimpleVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, cons
 	}
 	case MODEL:
 	{
-		TypedArray<BasicsPreset> model_presets = presets_data->get_model_presets();
+		TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
 		int id = get_voxel_id(voxel);
 
 		Ref<ModelPreset> model_preset = model_presets[id];

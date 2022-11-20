@@ -3,7 +3,7 @@
 
 #include "voxel_block_data.h"
 
-#define STANDARD_VOXEL(type,id,rotation) ((type << 30) | (id << 15) | (abs(rotation.x % 360 / 15) << 10) | (abs(rotation.y % 360 / 15)) << 5 | (abs(rotation.z % 360 / 15)))
+#define STANDARD_VOXEL(type,id,rotation) (((type & 0b11) << 30) | ((id & 0b111111111111111) << 15) | (abs(rotation.x % 360 / 15) << 10) | (abs(rotation.y % 360 / 15)) << 5 | (abs(rotation.z % 360 / 15)))
 
 #define STANDARD_BASICS_VOXEL(id,rotation) STANDARD_VOXEL(VoxelBlockData::BASICS, id, rotation)
 #define STANDARD_MODEL_VOXEL(id,rotation) STANDARD_VOXEL(VoxelBlockData::MODEL, id, rotation)

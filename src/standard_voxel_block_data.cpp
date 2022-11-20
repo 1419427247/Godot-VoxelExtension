@@ -270,7 +270,7 @@ void StandardVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, co
 	}
 	case MODEL:
 	{
-		TypedArray<BasicsPreset> model_presets = presets_data->get_model_presets();
+		TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
 		int id = get_voxel_id(voxel);
 
 		Ref<ModelPreset> model_preset = model_presets[id];
@@ -300,7 +300,7 @@ Variant StandardVoxelBlockData::build_device(const Ref<DevicePreset>& device_pre
 
 int StandardVoxelBlockData::get_voxel_type(const Voxel& value)
 {
-	return value >> 30;
+	return (value & 0b11'000000000000000'000000000000000) >> 30;
 }
 
 int StandardVoxelBlockData::get_voxel_id(const Voxel& value)

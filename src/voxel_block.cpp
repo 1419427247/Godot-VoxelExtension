@@ -78,8 +78,8 @@ void VoxelBlock::set_voxel(const Vector3i& position, const Voxel& value)
 		voxel_block_data->set_voxel(position, value);
 	}
 	else {
+		ERR_FAIL_NULL(voxel_container);
 		if (voxel_container->is_isolated() == false) {
-			ERR_FAIL_NULL(voxel_container);
 			voxel_container->set_voxel(position + key * size, value);
 		}
 	}
@@ -95,8 +95,8 @@ Voxel VoxelBlock::get_voxel(const Vector3i& position)
 	{
 		return voxel_block_data->get_voxel(position);
 	}
+	ERR_FAIL_NULL_V(voxel_container, EMPTY_VOXEL);
 	if (voxel_container->is_isolated() == false) {
-		ERR_FAIL_NULL_V(voxel_container, EMPTY_VOXEL);
 		return voxel_container->get_voxel(position + key * size);
 	}
 	return EMPTY_VOXEL;
