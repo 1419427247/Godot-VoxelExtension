@@ -1,7 +1,7 @@
 # VoxelExpansion
 利用GDExpansion编写的高性能体素扩展，提供了相关的节点帮助用户生成自定义的体素世界而无需重新造轮子
 # 如何配置？
-在godot项目文件夹下新建一个文件夹并命名为`bin`，将编译好的二进制文件移动到`bin`文件夹内
+我们可以在godot项目文件夹下新建一个文件夹并命名为`bin`，将编译好的动态链接库(*.dll)移动到`bin`文件夹内
 
 然后在项目目录中新建一个文件并命名为`voxel.gdextension`
 ```
@@ -10,7 +10,7 @@ entry_symbol = "voxel_library_init"
 
 [libraries]
 windows.debug.x86_64 = "res://bin/voxel_expansion.windows.template_debug.dev.x86_64.dll"
-windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.x86_64.dll"
+windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.dev.x86_64.dll"
 ```
 
 打开Godot，我们使用快捷键`ctrl+A`打开创建节点窗口搜索`Voxel`
@@ -48,19 +48,17 @@ func _ready():
 	var voxel_block_data : StandardVoxelBlockData = StandardVoxelBlockData.new()
 	var voxel_block : VoxelBlock = VoxelBlock.new()
 	
+	voxel_block_data.size = voxel_block_size
+	
 	voxel_block.set_voxel_block_data(voxel_block_data)
 
 	voxel_block.set_voxel(Vector3i(0,0,0),voxel_block_data.basics_voxel(0))
 	voxel_block.set_voxel(Vector3i(0,1,0),voxel_block_data.basics_voxel(0))
 	voxel_block.set_voxel(Vector3i(1,0,0),voxel_block_data.basics_voxel(0))
-
+	
 	set_voxel_block(Vector3i(0,0,0),voxel_block)
-```
-
-
-
-```
 	$MeshInstance3D.mesh = voxel_block.generate_mesh()
+
 ```
 
 嗯嗯嗯，现在我们按`F5`运行场景，额，怎么怎么也看不见？哦~忘记加摄像机节点了，没关系，注意到之前脚本中的`@tool`了吗，我们可以直接在编辑器中生成网格，先在选项卡里关闭当前场景的选项卡，再重新打开场景~嗯嗯嗯，还不错

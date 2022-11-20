@@ -27,7 +27,6 @@ public:
 	void set_voxel_block_data(const Ref<VoxelBlockData>& value);
 	Ref<VoxelBlockData> get_voxel_block_data() const;
 	
-
 	Dictionary get_devices() const;
 
 	void set_voxel(const Vector3i& position, const Voxel& value);

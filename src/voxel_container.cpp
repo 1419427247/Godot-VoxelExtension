@@ -77,9 +77,14 @@ void VoxelContainer::set_voxel_block(const Vector3i& key, const Variant& value) 
 		voxel_block = cast_to<VoxelBlock>(voxel_blocks.get(key, nullptr));
 		voxel_block->set_voxel_container(nullptr);
 	}
+	if (value.get_type() != Variant::NIL)
+	{
+		voxel_block = cast_to<VoxelBlock>(value);
+		voxel_block->set_voxel_container(this);
+		ERR_FAIL_NULL(voxel_block->get_voxel_block_data());
+		ERR_FAIL_COND_MSG(voxel_block->get_voxel_block_data()->get_size() != voxel_block_size, "The VoxelBlockData.size() is different from the VoxelContainer setting");
+	}
 	voxel_blocks[key] = value;
-	voxel_block = cast_to<VoxelBlock>(value);
-	voxel_block->set_voxel_container(this);
 }
 
 Variant VoxelContainer::get_voxel_block(const Vector3i& key) const {
