@@ -6,8 +6,8 @@ void VoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_size", "value"), &VoxelBlockData::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &VoxelBlockData::get_size);
 
-	ClassDB::bind_method(D_METHOD("get_presets_data", "value"), &VoxelBlockData::get_presets_data);
-	ClassDB::bind_method(D_METHOD("set_presets_data"), &VoxelBlockData::set_presets_data);
+	ClassDB::bind_method(D_METHOD("set_presets_data", "value"), &VoxelBlockData::set_presets_data);
+	ClassDB::bind_method(D_METHOD("get_presets_data"), &VoxelBlockData::get_presets_data);
 
 	//ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxel);
 	//ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelBlockData::get_voxels);
@@ -42,6 +42,7 @@ void VoxelBlockData::_bind_methods()
 
 VoxelBlockData::VoxelBlockData()
 {
+	voxel_container = nullptr;
 	set_key(Vector3i(0, 0, 0));
 	set_size(Vector3i(8, 8, 8));
 }
@@ -146,8 +147,6 @@ int VoxelBlockData::get_voxel_id(const Voxel& value)
 ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 {
 	Array mesh_arrays;
-	ERR_FAIL_NULL_V(voxel_container, nullptr);
-
 	Ref<PresetsData> presets_data = get_presets_data();
 	ERR_FAIL_NULL_V(presets_data, nullptr);
 
@@ -166,12 +165,11 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 		mesh_arrays[i] = arrays;
 	}
 
-	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
-	for (int x = 0; x < voxel_block_size.x; x++)
+	for (int x = 0; x < size.x; x++)
 	{
-		for (int y = 0; y < voxel_block_size.y; y++)
+		for (int y = 0; y < size.y; y++)
 		{
-			for (int z = 0; z < voxel_block_size.z; z++)
+			for (int z = 0; z < size.z; z++)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
@@ -221,9 +219,7 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 
 ConcavePolygonShape3D* VoxelBlockData::generate_collider(const int& filter)
 {
-	ERR_FAIL_NULL_V(voxel_container, nullptr);
-
-	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
+	Ref<PresetsData> presets_data = get_presets_data();
 	ERR_FAIL_NULL_V(presets_data, nullptr);
 
 	Array basics_presets = presets_data->get_basics_presets();
@@ -231,7 +227,6 @@ ConcavePolygonShape3D* VoxelBlockData::generate_collider(const int& filter)
 	Array device_presets = presets_data->get_device_presets();
 
 	PackedVector3Array collider_faces;
-	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
 
 	class Area
 	{
@@ -333,14 +328,14 @@ ConcavePolygonShape3D* VoxelBlockData::generate_collider(const int& filter)
 		}
 	};
 
-	Area area = Area(voxel_block_size);
+	Area area = Area(size);
 	List<Box> boxs;
 
-	for (int x = 0; x < voxel_block_size.x; x++)
+	for (int x = 0; x < size.x; x++)
 	{
-		for (int y = 0; y < voxel_block_size.y; y++)
+		for (int y = 0; y < size.y; y++)
 		{
-			for (int z = 0; z < voxel_block_size.z; z++)
+			for (int z = 0; z < size.z; z++)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
@@ -378,11 +373,11 @@ ConcavePolygonShape3D* VoxelBlockData::generate_collider(const int& filter)
 			}
 		}
 	}
-	for (int x = 0; x < voxel_block_size.x; x++)
+	for (int x = 0; x < size.x; x++)
 	{
-		for (int y = 0; y < voxel_block_size.y; y++)
+		for (int y = 0; y < size.y; y++)
 		{
-			for (int z = 0; z < voxel_block_size.z; z++)
+			for (int z = 0; z < size.z; z++)
 			{
 				if (area.get_flag(x, y, z) == false)
 				{
@@ -461,17 +456,16 @@ ConcavePolygonShape3D* VoxelBlockData::generate_collider(const int& filter)
 
 void VoxelBlockData::generate_device(const int& filter)
 {
-	ERR_FAIL_NULL(voxel_container);
+	Ref<PresetsData> presets_data = get_presets_data();
+	ERR_FAIL_NULL(presets_data);
 
-	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
 	Array device_presets = presets_data->get_device_presets();
 
-	Vector3i voxel_block_size = voxel_container->get_voxel_block_size();
-	for (int x = 0; x < voxel_block_size.x; x++)
+	for (int x = 0; x < size.x; x++)
 	{
-		for (int y = 0; y < voxel_block_size.y; y++)
+		for (int y = 0; y < size.y; y++)
 		{
-			for (int z = 0; z < voxel_block_size.z; z++)
+			for (int z = 0; z < size.z; z++)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
