@@ -18,6 +18,7 @@ class VoxelBlockData : public Resource
 protected:
 	Vector3i key;
 	Vector3i size;
+	Ref<PresetsData> presets_data;
 	VoxelContainer* voxel_container;
 	Dictionary devices;
 
@@ -31,6 +32,9 @@ public:
 
 	virtual void set_size(const Vector3i& value);
 	virtual Vector3i get_size() const;
+
+	void set_presets_data(const Ref<PresetsData>& value);
+	Ref<PresetsData> get_presets_data() const;
 
 	void set_voxel_container(Variant value);
 	Variant get_voxel_container() const;

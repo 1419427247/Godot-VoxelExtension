@@ -6,6 +6,9 @@ void VoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_size", "value"), &VoxelBlockData::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &VoxelBlockData::get_size);
 
+	ClassDB::bind_method(D_METHOD("get_presets_data", "value"), &VoxelBlockData::get_presets_data);
+	ClassDB::bind_method(D_METHOD("set_presets_data"), &VoxelBlockData::set_presets_data);
+
 	//ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxel);
 	//ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelBlockData::get_voxels);
 
@@ -18,7 +21,6 @@ void VoxelBlockData::_bind_methods()
 	//ClassDB::bind_method(D_METHOD("get_voxel_type", "value"), &VoxelBlockData::get_voxel_type);
 	//ClassDB::bind_method(D_METHOD("get_voxel_id"), &VoxelBlockData::get_voxel_id);
 
-
 	ClassDB::bind_method(D_METHOD("is_filled", "voxel"), &VoxelBlockData::is_filled);
 
 	ClassDB::bind_method(D_METHOD("generate_mesh", "filter"), &VoxelBlockData::generate_mesh, 0b1);
@@ -30,6 +32,7 @@ void VoxelBlockData::_bind_methods()
 	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("get_voxel_local_position", "global_transform", "point", "normal"), &VoxelBlockData::get_voxel_local_position);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "size"), "set_size", "get_size");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
 
 	BIND_ENUM_CONSTANT(EMPTY);
 	BIND_ENUM_CONSTANT(BASICS);
@@ -39,6 +42,8 @@ void VoxelBlockData::_bind_methods()
 
 VoxelBlockData::VoxelBlockData()
 {
+	set_key(Vector3i(0, 0, 0));
+	set_size(Vector3i(8, 8, 8));
 }
 
 VoxelBlockData::~VoxelBlockData()
@@ -55,11 +60,29 @@ Vector3i VoxelBlockData::get_key() const {
 
 void VoxelBlockData::set_size(const Vector3i& value) {
 	ERR_FAIL_COND_MSG(value.x <= 0 || value.y <= 0 || value.z <= 0, "The container size is an invalid value");
+	if (voxel_container != nullptr)
+	{
+		return;
+	}
 	size = value;
 }
 
 Vector3i VoxelBlockData::get_size() const {
 	return size;
+}
+
+void VoxelBlockData::set_presets_data(const Ref<PresetsData>& value) {
+	presets_data = value;
+}
+
+Ref<PresetsData> VoxelBlockData::get_presets_data() const {
+	if (presets_data.is_null())
+	{
+		if (voxel_container != nullptr)
+		{
+			return voxel_container->get_presets_data();
+		}
+	}return presets_data;
 }
 
 void VoxelBlockData::set_voxel_container(Variant value)
@@ -125,7 +148,7 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 	Array mesh_arrays;
 	ERR_FAIL_NULL_V(voxel_container, nullptr);
 
-	Ref<PresetsData> presets_data = voxel_container->get_presets_data();
+	Ref<PresetsData> presets_data = get_presets_data();
 	ERR_FAIL_NULL_V(presets_data, nullptr);
 
 	Array materials = presets_data->get_materials();
