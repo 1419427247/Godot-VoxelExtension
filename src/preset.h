@@ -31,23 +31,31 @@
 
 using namespace godot;
 
-//#define VOXEL(type,id,rotation,flag) ((type << 30) | (id << 20) | (abs(rotation.x % 360 / 15) << 15) | (abs(rotation.y % 360 / 15)) << 10 | (abs(rotation.z % 360 / 15) << 5) | (flag & 0b11111))
-//
-//#define EMPTY_VOXEL 0 
-//#define BASICS_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::BASICS, id, rotation, flag)
-//#define MODEL_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::MODEL, id, rotation, flag)
-//#define DEVICE_VOXEL(id,rotation,flag) VOXEL(VoxelContainer::DEVICE, id, rotation, flag)
-
 typedef uint64_t Voxel;
 
+static const Vector3i DIRCTIONS[6] = {
+	Vector3i(0, 1, 0),
+	Vector3i(0, -1, 0),
+	Vector3i(0, 0, -1),
+	Vector3i(0, 0, 1),
+	Vector3i(-1, 0, 0),
+	Vector3i(1, 0, 0),
+};
 class Preset : public Resource
 {
 	GDCLASS(Preset, Resource);
+	enum Dirction {
+		UP = 0,
+		DOWN = 1,
+		FRONT = 2,
+		BACK = 3,
+		LEFT = 4,
+		RIGHT = 5,
+	};
 private:
-
 protected:
 	String name;
-	int transparent;
+	int layer;
 	int filter;
 	Ref<Script> script;
 	static void _bind_methods();
@@ -57,8 +65,8 @@ public:
 	void set_name(const String& value);
 	String get_name() const;
 
-	void set_transparent(const int& value);
-	int get_transparent() const;
+	void set_layer(const int& value);
+	int get_layer() const;
 
 	void set_filter(const int& value);
 	int get_filter() const;

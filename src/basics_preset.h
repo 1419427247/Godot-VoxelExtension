@@ -3,25 +3,9 @@
 
 #include "preset.h"
 
-static const Vector3i DIRCTIONS[6] = {
-	Vector3i(0, 1, 0),
-	Vector3i(0, -1, 0),
-	Vector3i(0, 0, -1),
-	Vector3i(0, 0, 1),
-	Vector3i(-1, 0, 0),
-	Vector3i(1, 0, 0),
-};
 class BasicsPreset : public Preset
 {
 	GDCLASS(BasicsPreset, Preset);
-	enum Dirction {
-		UP = 0,
-		DOWN = 1,
-		FRONT = 2,
-		BACK = 3,
-		LEFT = 4,
-		RIGHT = 5,
-	};
 private:
 	int materials[6];
 protected:
@@ -45,7 +29,6 @@ public:
 
 	int get_material_id(const int& value);
 
-	static Ref<BasicsPreset> instantiate(const String& name, const Dictionary& materials);
 };
 
 VARIANT_ENUM_CAST(BasicsPreset, Dirction);

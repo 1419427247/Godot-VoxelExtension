@@ -6,6 +6,7 @@
 #include "device_preset.h"
 
 #include "device.h"
+#include "model_mesh.h"
 
 class PresetsData : public Resource
 {

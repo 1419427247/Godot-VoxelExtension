@@ -217,16 +217,16 @@ void SimpleVoxelBlockData::build_basics_mesh(const int& direction, const int& he
 
 void SimpleVoxelBlockData::build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position)
 {
-	Ref<Mesh> mesh = model_preset->get_mesh();
-	ERR_FAIL_NULL(mesh);
-	TypedArray<int> materials = model_preset->get_materials();
-	for (int i = 0; i < mesh->get_surface_count(); i++)
-	{
-		int material_id = materials[i];
-		ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-		Array arrays = mesh_arrays[material_id];
-		model_preset->build_mesh(arrays, i, position, Vector3i());
-	}
+	//Ref<Mesh> mesh = model_preset->get_mesh();
+	//ERR_FAIL_NULL(mesh);
+	//TypedArray<int> materials = model_preset->get_materials();
+	//for (int i = 0; i < mesh->get_surface_count(); i++)
+	//{
+	//	int material_id = materials[i];
+	//	ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+	//	Array arrays = mesh_arrays[material_id];
+	//	model_preset->build_mesh(arrays, i, position, Vector3i());
+	//}
 }
 
 void SimpleVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel)
@@ -256,7 +256,7 @@ void SimpleVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, cons
 				int relative_voxel_id = get_voxel_type(relative_voxel);
 				Ref<BasicsPreset> relative_basics_preset = basics_presets[relative_voxel_id];
 				int relative_voxel_height = get_voxel_height(relative_voxel);
-				if (relative_basics_preset->get_transparent() != basics_preset->get_transparent() || height != relative_voxel_height) {
+				if (relative_basics_preset->get_layer() != basics_preset->get_layer() || height != relative_voxel_height) {
 					int material_id = basics_preset->get_material_id(direction);
 					ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 					Array arrays = mesh_arrays[material_id];
@@ -278,7 +278,7 @@ void SimpleVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, cons
 		{
 			int up_voxel_id = get_voxel_type(up_voxel);
 			Ref<BasicsPreset> up_basics_preset = basics_presets[up_voxel_id];
-			if (up_basics_preset->get_transparent() != basics_preset->get_transparent() || height != 64) {
+			if (up_basics_preset->get_layer() != basics_preset->get_layer() || height != 64) {
 				int material_id = basics_preset->get_material_id(BasicsPreset::UP);
 				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 				Array arrays = mesh_arrays[material_id];
@@ -300,7 +300,7 @@ void SimpleVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, cons
 			int down_voxel_id = get_voxel_type(down_voxel);
 			int down_voxel_height = get_voxel_height(down_voxel);
 			Ref<BasicsPreset> down_basics_preset = basics_presets[down_voxel_id];
-			if (down_basics_preset->get_transparent() != basics_preset->get_transparent() || down_voxel_height != 64) {
+			if (down_basics_preset->get_layer() != basics_preset->get_layer() || down_voxel_height != 64) {
 				int material_id = basics_preset->get_material_id(BasicsPreset::DOWN);
 				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 				Array arrays = mesh_arrays[material_id];

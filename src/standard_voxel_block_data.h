@@ -31,7 +31,7 @@ public:
 	virtual bool is_filled(const Voxel& voxel) const;
 
 	_inline void build_basics_mesh(const int& direction, const Array& arrays, const Vector3& position, const Vector3& rotation);
-	_inline void build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position, const Vector3& rotation);
+	_inline void build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation);
 
 	virtual void build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel);
 	virtual Variant build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel);

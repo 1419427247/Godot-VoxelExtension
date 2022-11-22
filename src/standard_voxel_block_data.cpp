@@ -197,7 +197,6 @@ void StandardVoxelBlockData::build_basics_mesh(const int& direction, const Array
 				data->vertexs[i][j] = (vertexs[j] = rotate_vertex(brick_vertexs[i][j], rotation));
 			}
 			data->normals[i] = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
-			//data->normals[i][1] = Plane(vertexs[3], vertexs[4], vertexs[5]).get_normal();
 		}
 		memorandum[index] = data;
 	}
@@ -208,31 +207,33 @@ void StandardVoxelBlockData::build_basics_mesh(const int& direction, const Array
 	for (int i = 0; i < 6; i++)
 	{
 		array_vertex.push_back(data->vertexs[direction][i] + position);
-	}
-	for (int i = 0; i < 6; i++)
-	{
 		array_normal.push_back(data->normals[direction]);
-	}
-	for (int i = 0; i < 6; i++)
-	{
 		array_tex_uv.push_back(uvs[i]);
 	}
 }
 
-void StandardVoxelBlockData::build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position, const Vector3& rotation)
+void StandardVoxelBlockData::build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation)
 {
-	Ref<Mesh> mesh = model_preset->get_mesh();
-	ERR_FAIL_NULL(mesh);
-	TypedArray<int> materials = model_preset->get_materials();
+	TypedArray<ModelMesh> model_meshs = model_preset->get_model_meshs();
+	Ref<ModelMesh> model_mesh = model_meshs[mask];
+	if (model_mesh == nullptr)
+	{
+		model_mesh = model_meshs[0];
+	}
+	Ref<Mesh> mesh = model_mesh->get_mesh();
+	if (mesh == nullptr)
+	{
+		return;
+	}
+	TypedArray<int> materials = model_mesh->get_materials();
 	for (int i = 0; i < mesh->get_surface_count(); i++)
 	{
 		int material_id = materials[i];
 		ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 		Array arrays = mesh_arrays[material_id];
-		model_preset->build_mesh(arrays, i, position, rotation);
+		model_mesh->build_mesh(arrays, i, position, rotation);
 	}
 }
-
 
 
 void StandardVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel)
@@ -273,7 +274,7 @@ void StandardVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, co
 				else {
 					Vector3i voxel_rotation = get_voxel_rotation(voxel);
 					Ref<BasicsPreset> preset = basics_presets[id];
-					if (preset->get_transparent() != basics_preset->get_transparent() || voxel_rotation.x % 90 != 0 || voxel_rotation.y % 90 != 0 || voxel_rotation.z % 90 != 0) {
+					if (preset->get_layer() != basics_preset->get_layer() || voxel_rotation.x % 90 != 0 || voxel_rotation.y % 90 != 0 || voxel_rotation.z % 90 != 0) {
 						int material_id = basics_preset->get_material_id(direction);
 						ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 						Array arrays = mesh_arrays[material_id];
@@ -292,7 +293,26 @@ void StandardVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, co
 		Ref<ModelPreset> model_preset = model_presets[id];
 		ERR_FAIL_NULL_MSG(model_preset, "The model_preset with id " + String::num_int64(id) + " is null");
 		Vector3i rotation = get_voxel_rotation(voxel);
-		build_model_mesh(model_preset, mesh_arrays, position, rotation);
+		int mask = 0;
+		if (model_preset->is_use_mask())
+		{
+			Voxel voxels[6] = {
+				get_voxel(position + DIRCTIONS[Preset::UP]),
+				get_voxel(position + DIRCTIONS[Preset::DOWN]),
+				get_voxel(position + DIRCTIONS[Preset::FRONT]),
+				get_voxel(position + DIRCTIONS[Preset::BACK]),
+				get_voxel(position + DIRCTIONS[Preset::LEFT]),
+				get_voxel(position + DIRCTIONS[Preset::RIGHT]),
+			};
+			mask =
+				((voxels[0] >> 15) == (voxel >> 15)) << 5 |
+				((voxels[1] >> 15) == (voxel >> 15)) << 4 |
+				((voxels[2] >> 15) == (voxel >> 15)) << 3 |
+				((voxels[3] >> 15) == (voxel >> 15)) << 2 |
+				((voxels[4] >> 15) == (voxel >> 15)) << 1 |
+				((voxels[5] >> 15) == (voxel >> 15)) << 0;
+		}
+		build_model_mesh(model_preset, mesh_arrays, mask, position, rotation);
 		break;
 	}
 	}

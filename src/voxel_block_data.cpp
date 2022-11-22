@@ -9,19 +9,17 @@ void VoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_presets_data", "value"), &VoxelBlockData::set_presets_data);
 	ClassDB::bind_method(D_METHOD("get_presets_data"), &VoxelBlockData::get_presets_data);
 
-	//ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxel);
-	//ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelBlockData::get_voxels);
+	ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxel);
+	ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelBlockData::get_voxels);
 
-	//ClassDB::bind_method(D_METHOD("fill", "voxel"), &VoxelBlockData::fill);
-	//ClassDB::bind_method(D_METHOD("is_filled"), &VoxelBlockData::is_filled);
+	ClassDB::bind_method(D_METHOD("fill", "voxel"), &VoxelBlockData::fill);
+	ClassDB::bind_method(D_METHOD("is_filled"), &VoxelBlockData::is_filled);
 
 	//ClassDB::bind_method(D_METHOD("build_mesh", "presets_data", "mesh_arrays", "position", "voxel"), &VoxelBlockData::build_mesh);
 	//ClassDB::bind_method(D_METHOD("build_device", "device_preset", "position", "voxel"), &VoxelBlockData::build_device);
 
-	//ClassDB::bind_method(D_METHOD("get_voxel_type", "value"), &VoxelBlockData::get_voxel_type);
-	//ClassDB::bind_method(D_METHOD("get_voxel_id"), &VoxelBlockData::get_voxel_id);
-
-	ClassDB::bind_method(D_METHOD("is_filled", "voxel"), &VoxelBlockData::is_filled);
+	ClassDB::bind_method(D_METHOD("get_voxel_type", "value"), &VoxelBlockData::get_voxel_type);
+	ClassDB::bind_method(D_METHOD("get_voxel_id"), &VoxelBlockData::get_voxel_id);
 
 	ClassDB::bind_method(D_METHOD("generate_mesh", "filter"), &VoxelBlockData::generate_mesh, 0b1);
 	ClassDB::bind_method(D_METHOD("generate_collider", "filter"), &VoxelBlockData::generate_collider, 0b1);

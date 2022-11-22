@@ -15,7 +15,6 @@ void BasicsPreset::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_right_material_id", "value"), &BasicsPreset::set_right_material_id);
 	ClassDB::bind_method(D_METHOD("get_right_material_id"), &BasicsPreset::get_right_material_id);
 
-	ClassDB::bind_static_method("BasicsPreset", D_METHOD("instantiate", "name", "materials"), &BasicsPreset::instantiate);
 
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "up_material_id"), "set_up_material_id", "get_up_material_id");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "down_material_id"), "set_down_material_id", "get_down_material_id");
@@ -35,7 +34,6 @@ void BasicsPreset::_bind_methods()
 BasicsPreset::BasicsPreset()
 {
 	materials[0] = materials[1] = materials[2] = materials[3] = materials[4] = materials[5] = 0;
-	filter = 0b1;
 }
 
 BasicsPreset::~BasicsPreset()
@@ -105,20 +103,4 @@ int BasicsPreset::get_right_material_id() const
 int BasicsPreset::get_material_id(const int &value)
 {
 	return materials[value];
-}
-
-Ref<BasicsPreset> BasicsPreset::instantiate(const String &name, const Dictionary &materials)
-{
-	Ref<BasicsPreset> basics_preset;
-	basics_preset.instantiate();
-	basics_preset->name = name;
-
-	basics_preset->set_up_material_id((int)materials.get(UP, 0));
-	basics_preset->set_down_material_id((int)materials.get(DOWN, 0));
-	basics_preset->set_front_material_id((int)materials.get(FRONT, 0));
-	basics_preset->set_back_material_id((int)materials.get(BACK, 0));
-	basics_preset->set_left_material_id((int)materials.get(LEFT, 0));
-	basics_preset->set_right_material_id((int)materials.get(RIGHT, 0));
-
-	return basics_preset;
 }

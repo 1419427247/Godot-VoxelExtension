@@ -48,6 +48,9 @@
     <ClCompile Include="simple_voxel_block_data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="model_mesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics_preset.h">
@@ -81,6 +84,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="simple_voxel_block_data.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="model_mesh.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
