@@ -119,14 +119,14 @@ bool StandardVoxelBlockData::is_filled(const Voxel& voxel) const
 	return true;
 }
 
-void StandardVoxelBlockData::build_basics_mesh(const int& direction, const Array& mesh_arrays, const Vector3& position, const Vector3& rotation)
+void StandardVoxelBlockData::_build_basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation)
 {
 	struct MemorandumData
 	{
 		Vector3 vertexs[6][6];
 		Vector3 normals[6];
 	};
-	static Vector2 uvs[] = {
+	static Vector2 basics_uvs[] = {
 		Vector2(0, 0),
 		Vector2(1, 0),
 		Vector2(1, 1),
@@ -134,7 +134,7 @@ void StandardVoxelBlockData::build_basics_mesh(const int& direction, const Array
 		Vector2(1, 1),
 		Vector2(0, 1),
 	};
-	static Vector3 brick_vertexs[][6] = {
+	static Vector3 basics_vertexs[][6] = {
 		{
 			Vector3(-0.5, 0.5, -0.5),
 			Vector3(0.5, 0.5, -0.5),
@@ -184,35 +184,40 @@ void StandardVoxelBlockData::build_basics_mesh(const int& direction, const Array
 			Vector3(0.5, -0.5, 0.5),
 		} };
 	static MemorandumData* memorandum[24 * 24 * 24] = { nullptr };
-	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
-	MemorandumData* data = memorandum[index];
-	if (data == nullptr)
-	{
-		data = (MemorandumData*)memalloc(sizeof(MemorandumData));
+
+	if (basics_mesh.is_null()) {
+		int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
+		MemorandumData* data = memorandum[index];
+		if (data == nullptr)
+		{
+			data = (MemorandumData*)memalloc(sizeof(MemorandumData));
+			for (int i = 0; i < 6; i++)
+			{
+				Vector3 vertexs[6];
+				for (int j = 0; j < 6; j++)
+				{
+					data->vertexs[i][j] = (vertexs[j] = Preset::rotate_vertex(basics_vertexs[i][j], rotation));
+				}
+				data->normals[i] = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
+			}
+			memorandum[index] = data;
+		}
+		Array array_vertex = mesh_arrays[Mesh::ARRAY_VERTEX];
+		Array array_normal = mesh_arrays[Mesh::ARRAY_NORMAL];
+		Array array_tex_uv = mesh_arrays[Mesh::ARRAY_TEX_UV];
 		for (int i = 0; i < 6; i++)
 		{
-			Vector3 vertexs[6];
-			for (int j = 0; j < 6; j++)
-			{
-				data->vertexs[i][j] = (vertexs[j] = rotate_vertex(brick_vertexs[i][j], rotation));
-			}
-			data->normals[i] = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
+			array_vertex.push_back(data->vertexs[direction][i] + position);
+			array_normal.push_back(data->normals[direction]);
+			array_tex_uv.push_back(basics_uvs[i]);
 		}
-		memorandum[index] = data;
 	}
-
-	Array array_vertex = mesh_arrays[Mesh::ARRAY_VERTEX];
-	Array array_normal = mesh_arrays[Mesh::ARRAY_NORMAL];
-	Array array_tex_uv = mesh_arrays[Mesh::ARRAY_TEX_UV];
-	for (int i = 0; i < 6; i++)
-	{
-		array_vertex.push_back(data->vertexs[direction][i] + position);
-		array_normal.push_back(data->normals[direction]);
-		array_tex_uv.push_back(uvs[i]);
+	else {
+		basics_mesh->build_mesh(mesh_arrays, direction, position, rotation);
 	}
 }
 
-void StandardVoxelBlockData::build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation)
+void StandardVoxelBlockData::_build_model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation)
 {
 	TypedArray<ModelMesh> model_meshs = model_preset->get_model_meshs();
 	Ref<ModelMesh> model_mesh = model_meshs[mask];
@@ -220,6 +225,7 @@ void StandardVoxelBlockData::build_model_mesh(Ref<ModelPreset>& model_preset, co
 	{
 		model_mesh = model_meshs[0];
 	}
+	ERR_FAIL_NULL(model_mesh);
 	Ref<Mesh> mesh = model_mesh->get_mesh();
 	if (mesh == nullptr)
 	{
@@ -235,89 +241,72 @@ void StandardVoxelBlockData::build_model_mesh(Ref<ModelPreset>& model_preset, co
 	}
 }
 
-
-void StandardVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel)
-{
-	int type = get_voxel_type(voxel);
-	switch (type)
+void StandardVoxelBlockData::build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+	TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
+	Ref<BasicsMesh> basics_mesh = basics_preset->get_basics_mesh();
+	Vector3i rotation = get_voxel_rotation(voxel);
+	if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
 	{
-	case BASICS:
-	{
-		TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
-		int id = get_voxel_id(voxel);
-
-		Ref<BasicsPreset> basics_preset = basics_presets[id];
-		ERR_FAIL_NULL_MSG(basics_preset, "The basics_preset with id " + String::num_int64(id) + " is null");
-		Vector3i rotation = get_voxel_rotation(voxel);
-		if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
+		for (int direction = 0; direction < 6; direction++)
 		{
-			for (int direction = 0; direction < 6; direction++)
-			{
+			int material_id = basics_preset->get_material_id(direction);
+			ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+			Array arrays = mesh_arrays[material_id];
+			_build_basics_mesh(basics_mesh, arrays, direction, position, rotation);
+		}
+	}
+	else {
+		for (int direction = 0; direction < 6; direction++) {
+			Voxel relative_voxel = get_voxel(position + get_voxel_direction(direction, rotation));
+			int relative_voxel_type = get_voxel_type(relative_voxel);
+			int relative_voxel_id = get_voxel_id(relative_voxel);
+
+			if (relative_voxel_type != BASICS) {
 				int material_id = basics_preset->get_material_id(direction);
 				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 				Array arrays = mesh_arrays[material_id];
-				build_basics_mesh(direction, arrays, position, rotation);
+				_build_basics_mesh(basics_mesh, arrays, direction, position, rotation);
 			}
-		}
-		else {
-			for (int direction = 0; direction < 6; direction++) {
-				Voxel voxel = get_voxel(position + get_voxel_direction(direction, rotation));
-				int type = get_voxel_type(voxel);
-				int id = get_voxel_id(voxel);
-
-				if (type != BASICS) {
+			else { 
+				Vector3i relative_voxel_rotation = get_voxel_rotation(voxel);
+				Ref<BasicsPreset> preset = basics_presets[relative_voxel_id];
+				if (((basics_preset->get_transparent() == false) && (preset->get_transparent() == true)) || relative_voxel_rotation.x % 90 != 0 || relative_voxel_rotation.y % 90 != 0 || relative_voxel_rotation.z % 90 != 0) {
 					int material_id = basics_preset->get_material_id(direction);
 					ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 					Array arrays = mesh_arrays[material_id];
-					build_basics_mesh(direction, arrays, position, rotation);
-				}
-				else {
-					Vector3i voxel_rotation = get_voxel_rotation(voxel);
-					Ref<BasicsPreset> preset = basics_presets[id];
-					if (preset->get_layer() != basics_preset->get_layer() || voxel_rotation.x % 90 != 0 || voxel_rotation.y % 90 != 0 || voxel_rotation.z % 90 != 0) {
-						int material_id = basics_preset->get_material_id(direction);
-						ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-						Array arrays = mesh_arrays[material_id];
-						build_basics_mesh(direction, arrays, position, rotation);
-					}
+					_build_basics_mesh(basics_mesh, arrays, direction, position, rotation);
 				}
 			}
 		}
-		break;
-	}
-	case MODEL:
-	{
-		TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
-		int id = get_voxel_id(voxel);
-
-		Ref<ModelPreset> model_preset = model_presets[id];
-		ERR_FAIL_NULL_MSG(model_preset, "The model_preset with id " + String::num_int64(id) + " is null");
-		Vector3i rotation = get_voxel_rotation(voxel);
-		int mask = 0;
-		if (model_preset->is_use_mask())
-		{
-			Voxel voxels[6] = {
-				get_voxel(position + DIRCTIONS[Preset::UP]),
-				get_voxel(position + DIRCTIONS[Preset::DOWN]),
-				get_voxel(position + DIRCTIONS[Preset::FRONT]),
-				get_voxel(position + DIRCTIONS[Preset::BACK]),
-				get_voxel(position + DIRCTIONS[Preset::LEFT]),
-				get_voxel(position + DIRCTIONS[Preset::RIGHT]),
-			};
-			mask =
-				((voxels[0] >> 15) == (voxel >> 15)) << 5 |
-				((voxels[1] >> 15) == (voxel >> 15)) << 4 |
-				((voxels[2] >> 15) == (voxel >> 15)) << 3 |
-				((voxels[3] >> 15) == (voxel >> 15)) << 2 |
-				((voxels[4] >> 15) == (voxel >> 15)) << 1 |
-				((voxels[5] >> 15) == (voxel >> 15)) << 0;
-		}
-		build_model_mesh(model_preset, mesh_arrays, mask, position, rotation);
-		break;
-	}
 	}
 }
-Variant StandardVoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel)
+
+void StandardVoxelBlockData::build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+	TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
+	Vector3i rotation = get_voxel_rotation(voxel);
+	int mask = 0;
+	if (model_preset->is_use_mask())
+	{
+		Voxel voxels[6] = {
+			get_voxel(position + get_voxel_direction(Preset::UP,rotation)),
+			get_voxel(position + get_voxel_direction(Preset::DOWN,rotation)),
+			get_voxel(position + get_voxel_direction(Preset::FRONT,rotation)),
+			get_voxel(position + get_voxel_direction(Preset::BACK,rotation)),
+			get_voxel(position + get_voxel_direction(Preset::LEFT,rotation)),
+			get_voxel(position + get_voxel_direction(Preset::RIGHT,rotation)),
+		};
+		mask =
+			((voxels[0] >> 15) == (voxel >> 15)) << 5 |
+			((voxels[1] >> 15) == (voxel >> 15)) << 4 |
+			((voxels[2] >> 15) == (voxel >> 15)) << 3 |
+			((voxels[3] >> 15) == (voxel >> 15)) << 2 |
+			((voxels[4] >> 15) == (voxel >> 15)) << 1 |
+			((voxels[5] >> 15) == (voxel >> 15)) << 0;
+	}
+	_build_model_mesh(model_preset, mesh_arrays, mask, position, rotation);
+}
+
+Variant StandardVoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel)
 {
 	Vector3i rotation = get_voxel_rotation(voxel);
 	Node* node = device_preset->get_packed_scene()->instantiate();
@@ -330,7 +319,7 @@ Variant StandardVoxelBlockData::build_device(const Ref<DevicePreset>& device_pre
 
 	device->set_position(position);
 	device->set_rotation(rotation);
-	call_deferred("add_child", device);
+
 	return device;
 }
 

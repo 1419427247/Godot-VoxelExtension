@@ -23,7 +23,11 @@ void PresetsData::_bind_methods()
 
 void PresetsData::set_materials(const TypedArray <Material>& value)
 {
-	materials = value;
+	materials.resize(value.size());
+	for (int i = 0; i < value.size(); i++)
+	{
+		materials[i] = value[i];
+	}
 }
 
 TypedArray <Material> PresetsData::get_materials()const

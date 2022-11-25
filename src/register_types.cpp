@@ -17,7 +17,7 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 		return;
 	}
 	ClassDB::register_class<VoxelBlockData>();
-	ClassDB::register_class<SimpleVoxelBlockData>();
+	//ClassDB::register_class<SimpleVoxelBlockData>();
 	ClassDB::register_class<StandardVoxelBlockData>();
 	ClassDB::register_class<VoxelContainer>();
 
@@ -27,6 +27,7 @@ void initialize_voxel_module(ModuleInitializationLevel p_level)
 	ClassDB::register_class<ModelPreset>();
 	ClassDB::register_class<DevicePreset>();
 	ClassDB::register_class<Device>();
+	ClassDB::register_class<BasicsMesh>();
 	ClassDB::register_class<ModelMesh>();
 }
 

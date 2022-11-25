@@ -48,22 +48,20 @@ public:
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;
 
-	virtual void build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel);
-	virtual Variant build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel);
+	virtual void build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual void build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual Variant build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel);
 
 	virtual int get_voxel_type(const Voxel& value);
 	virtual int get_voxel_id(const Voxel& value);
 
 	ArrayMesh* generate_mesh(const int& filter = 0b1);
 	ConcavePolygonShape3D* generate_collider(const int& filter = 0b1);
-	void generate_device(const int& filter = 0b1);
+	TypedArray<Device> generate_device(const int& filter = 0b1);
 
 	static Vector3 point_converted_to_block(const Transform3D& global_transform, const Vector3& point);
 	static Vector3 normal_converted_to_block(const Transform3D& global_transform, const Vector3& point);
 	static Vector3i get_voxel_local_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal);
-
-	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
-	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
 };
 VARIANT_ENUM_CAST(VoxelBlockData, Type);
 

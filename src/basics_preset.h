@@ -1,18 +1,22 @@
 #ifndef BASIC_PRESET_H
 #define BASIC_PRESET_H
 
-#include "preset.h"
+#include "basics_mesh.h"
 
 class BasicsPreset : public Preset
 {
 	GDCLASS(BasicsPreset, Preset);
 private:
-	int materials[6];
+	Ref<BasicsMesh> basics_mesh;
+	TypedArray<int> materials;
 protected:
 	static void _bind_methods();
 public:
 	BasicsPreset();
 	~BasicsPreset();
+
+	void set_basics_mesh(const Ref<BasicsMesh>& basics_mesh);
+	Ref<BasicsMesh> get_basics_mesh() const;
 
 	void set_up_material_id(const int& value);
 	int get_up_material_id() const;
@@ -27,10 +31,8 @@ public:
 	void set_right_material_id(const int& value);
 	int get_right_material_id() const;
 
-	int get_material_id(const int& value);
-
+	int get_material_id(const int& value) const;
 };
 
-VARIANT_ENUM_CAST(BasicsPreset, Dirction);
 
 #endif // !BASIC_PRESET_H

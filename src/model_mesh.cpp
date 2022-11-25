@@ -36,6 +36,10 @@ void ModelMesh::set_mesh(const Ref<Mesh>& value) {
 	{
 		Array mesh_surface_arrays = mesh->surface_get_arrays(i);
 
+		ERR_FAIL_COND(mesh_surface_arrays[Mesh::ARRAY_VERTEX].get_type() == Variant::NIL);
+		ERR_FAIL_COND(mesh_surface_arrays[Mesh::ARRAY_TEX_UV].get_type() == Variant::NIL);
+		ERR_FAIL_COND(mesh_surface_arrays[Mesh::ARRAY_INDEX].get_type() == Variant::NIL);
+
 		PackedVector3Array packed_array_vertex = mesh_surface_arrays[Mesh::ARRAY_VERTEX];
 		PackedVector2Array packed_array_tex_uv = mesh_surface_arrays[Mesh::ARRAY_TEX_UV];
 		PackedInt32Array packed_array_index = mesh_surface_arrays[Mesh::ARRAY_INDEX];
@@ -121,7 +125,7 @@ TypedArray<int> ModelMesh::get_materials() const {
 }
 
 
-void ModelMesh::build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation)
+void ModelMesh::build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation) const
 {
 	int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
 
@@ -142,11 +146,11 @@ void ModelMesh::build_mesh(const Array& arrays, const int& surface_index, const 
 
 			for (int i = 0; i < surface_vertex_array.size(); i++)
 			{
-				array_vertex.push_back(VoxelBlockData::rotate_vertex(surface_vertex_array[i], rotation));
+				array_vertex.push_back(Preset::rotate_vertex(surface_vertex_array[i], rotation));
 			}
 			for (int i = 0; i < surface_normal_array.size(); i++)
 			{
-				array_normal.push_back(VoxelBlockData::rotate_vertex(surface_normal_array[i], rotation));
+				array_normal.push_back(Preset::rotate_vertex(surface_normal_array[i], rotation));
 			}
 			array_tex_uv.append_array(surface_tex_uv_array);
 

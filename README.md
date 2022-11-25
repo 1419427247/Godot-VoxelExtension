@@ -1,9 +1,7 @@
 # VoxelExpansion
 利用GDExpansion编写的高性能体素扩展，提供了相关的节点帮助用户生成自定义的体素世界而无需重新造轮子
 # 如何配置？
-我们可以在godot项目文件夹下新建一个文件夹并命名为`bin`，将编译好的动态链接库(*.dll)移动到`bin`文件夹内
-
-然后在项目目录中新建一个文件并命名为`voxel.gdextension`
+我们可以在godot项目文件夹下新建一个文件夹并命名为`bin`，将编译好的动态链接库(*.dll)移动到`bin`文件夹内，然后在项目目录中新建一个文件并命名为`voxel.gdextension`
 ```
 [configuration]
 entry_symbol = "voxel_library_init"
@@ -12,13 +10,10 @@ entry_symbol = "voxel_library_init"
 windows.debug.x86_64 = "res://bin/voxel_expansion.windows.template_debug.dev.x86_64.dll"
 windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.dev.x86_64.dll"
 ```
-
-打开Godot，我们使用快捷键`ctrl+A`打开创建节点窗口搜索`Voxel`
-![](docs/0.png)
-
-大功告成！我们可以看到自定义节点VoxelBlock和VoxelContainer
+打开编辑器，如果没有输出错误信息就说明大功告成！
 
 # 开始你的第一个体素世界
+
 我们新建一个空场景，在里面添加一个`VoxelContainer`节点，我们在右侧的检查器里创建一个PresetsData
 
 ![](docs/1.png)

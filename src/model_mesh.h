@@ -9,7 +9,7 @@ class ModelMesh : public Resource
 private:
 	Ref<Mesh> mesh;
 	TypedArray<int> materials;
-	TypedArray<Array> memorandum;
+	mutable TypedArray<Array> memorandum;
 protected:
 	static void _bind_methods();
 public:
@@ -21,7 +21,7 @@ public:
 	void set_materials(const TypedArray<int>& value);
 	TypedArray<int> get_materials() const;
 
-	void build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation);
+	void build_mesh(const Array& arrays, const int& surface_index, const Vector3& position, const Vector3& rotation) const;
 };
 
 #endif // !MESH_PRESET_H

@@ -28,6 +28,7 @@
 #include <godot_cpp/godot.hpp>
 #include <godot/gdnative_interface.h>
 #include <godot_cpp/templates/hash_map.hpp>
+#include <godot_cpp/templates/self_list.hpp>
 
 using namespace godot;
 
@@ -55,7 +56,7 @@ class Preset : public Resource
 private:
 protected:
 	String name;
-	int layer;
+	bool transparent;
 	int filter;
 	Ref<Script> script;
 	static void _bind_methods();
@@ -65,15 +66,19 @@ public:
 	void set_name(const String& value);
 	String get_name() const;
 
-	void set_layer(const int& value);
-	int get_layer() const;
+	void set_transparent(const bool& value);
+	bool get_transparent() const;
 
 	void set_filter(const int& value);
 	int get_filter() const;
 
 	void set_script(const Ref<Script>& value);
 	Ref<Script> get_script() const;
+
+	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
+	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
 };
 
+VARIANT_ENUM_CAST(Preset, Dirction);
 
 #endif // !PRESET_H

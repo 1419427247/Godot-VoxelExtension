@@ -2,6 +2,7 @@
 #define VOXEL_CONTAINER_H
 
 #include "presets_data.h"
+#include "device.h"
 
 class VoxelBlockData;
 class VoxelContainer : public Node3D

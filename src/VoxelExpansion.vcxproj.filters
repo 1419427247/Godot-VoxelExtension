@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="工具">
+      <UniqueIdentifier>{e5028f59-9a22-4a77-a038-f4142cdbb575}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="basics_preset.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="model_mesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="basics_mesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics_preset.h">
@@ -87,6 +93,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="model_mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="basics_mesh.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -30,14 +30,17 @@ public:
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;
 
-	_inline void build_basics_mesh(const int& direction, const Array& arrays, const Vector3& position, const Vector3& rotation);
-	_inline void build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation);
+	_inline void _build_basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation);
+	_inline void _build_model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation);
 
-	virtual void build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel);
-	virtual Variant build_device(const Ref<DevicePreset>& device_preset, Vector3i& position, const Voxel& voxel);
+	virtual void build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual void build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
 
-	int get_voxel_type(const Voxel& value) override;
-	int get_voxel_id(const Voxel& value) override;
+	virtual Variant build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel);
+
+	virtual int get_voxel_type(const Voxel& value) override;
+	virtual int get_voxel_id(const Voxel& value) override;
+
 	Vector3i get_voxel_rotation(const Voxel& value);
 	Vector3i get_voxel_direction(const int& direction, const Vector3i& rotation);
 	Voxel empty_voxel();

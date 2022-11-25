@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="basics_mesh.cpp" />
     <ClCompile Include="basics_preset.cpp" />
     <ClCompile Include="device.cpp" />
     <ClCompile Include="device_preset.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="voxel_block_data.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="basics_mesh.h" />
     <ClInclude Include="basics_preset.h" />
     <ClInclude Include="device.h" />
     <ClInclude Include="device_preset.h" />
