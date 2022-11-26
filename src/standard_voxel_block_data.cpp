@@ -344,7 +344,7 @@ int StandardVoxelBlockData::get_voxel_id(const Voxel& value)
 
 Vector3i StandardVoxelBlockData::get_voxel_rotation(const Voxel& value)
 {
-	return Vector3i((value & 0b00'000000000000000'11111'00000'00000) >> 10, (value & 0b00'000000000000000'00000'11111'00000) >> 5, (value & 0b00'000000000000000'00000'00000'11111) << 27) * 15;
+	return Vector3i((value & 0b00'000000000000000'11111'00000'00000) >> 10, (value & 0b00'000000000000000'00000'11111'00000) >> 5, (value & 0b00'000000000000000'00000'00000'11111)) * 15;
 }
 
 Vector3i StandardVoxelBlockData::get_voxel_direction(const int& direction, const Vector3i& rotation)

@@ -1,12 +1,21 @@
-# VoxelExpansion
-利用GDExpansion编写的高性能体素扩展，提供了相关的节点帮助用户生成自定义的体素世界而无需重新造轮子
+# Godot-VoxelExpansion
+
+<p align="center">
+	<img src="docs/logo.png">
+</p>
+
+[English](./README.md)
+[中文](./README_CN.md)
+
+# About
+I came up with a cool game a couple of months ago, but unfortunately the project fell apart halfway through. This expansion was made while designing the map generation, which was initially written in GDScript, but for performance reasons I decided to rewrite it in C++ using Godot 4.0 GDExpansion. Registered some relevant nodes for generating custom voxel meshes, hope it can help o(\*￣▽￣\*)o
 
 <figure class="half">
     <img src="docs/preview_2.png">
 </figure>
 
-# 如何配置？
-我们可以在godot项目文件夹下新建一个文件夹并命名为`bin`，将编译好的动态链接库(*.dll)移动到`bin`文件夹内，然后在项目目录中新建一个文件并命名为`voxel.gdextension`
+# How to configure?
+Create a new folder under godot project folder and name it `bin`, move the compiled dynamic link library (*.dll) to `bin` folder, then create a new file in the project directory and name it `voxel.gdextension`
 ```
 [configuration]
 entry_symbol = "voxel_library_init"
@@ -15,37 +24,36 @@ entry_symbol = "voxel_library_init"
 windows.debug.x86_64 = "res://bin/voxel_expansion.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.x86_64.dll"
 ```
-打开编辑器，如果没有输出错误信息就说明大功告成！
+Open the editor, if no error message is output then you're done!
 
-# 开始你的第一个体素区块
+# Start your first voxel block
 
-我们新建一个空场景，在里面添加一个Node3D节点
-为节点附加一个脚本，在起始写入
+Let's create a new empty scene, add a Node3D node to it, attach a script to the node and write at the beginning
 
 `
 @export
 var voxel_block_data : StandardVoxelBlockData
 `
 
-现在我们可以直接在检查器中编辑体素预设了
+Now we can edit the voxel preset directly in the inspector
 
-![](docs/1.png)
+! [](docs/1.png)
 
-| 属性名        | 说明             |
+| Attribute Name | Description |
 | ------------- | ---------------- |
-| Materials     | 材质数组         |
-| BasicsPresets | 基础体素预设数组 |
-| ModelPresets  | 静态网格预设数组 |
-| DevicePresets | 3D结点预设数组   |
+| Materials | Material array |
+| BasicsPresets | Array of Basics Presets |
+| ModelPresets | Static mesh presets |
+| DevicePresets | 3D Node Presets |
 
-现在我想要一个草地方块，我们可以在`materials`属性中添加两个材质，在`basics_presets`属性中添加一个预设
-![](docs/2.png)
+Now that I want a grass cube, we can add two materials to the `materials` property and one preset to the `basics_presets` property
+! [](docs/2.png)
 
-嗯，太好了，我们设置好了`PresetsData`属性，这样`VoxelBlockData`就知道我们需要生成的体素网格是什么样子的(^v^)/
+Well, great, we set the `PresetsData` property so that `VoxelBlockData` knows what we need the generated voxel mesh to look like (^v^)/
 
-现在在编辑器内在场景中添加一个子节点`MeshInstance3D`用于显示网格
+Now add a child node `MeshInstance3D` to the scene in the editor to display the mesh
 
-全部代码如下
+The full code is as follows
 ```godot
 @export
 var voxel_block_data : StandardVoxelBlockData
@@ -54,39 +62,39 @@ func _ready():
 	voxel_block_data.set_voxel(Vector3i(0,0,0),voxel_block_data.basics_voxel(0))
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
-嗯嗯嗯，现在我们按`F6`运行当前正在编辑的场景，额，怎么怎么也看不见？啊哦！忘记加摄像机节点了，再加上环境！嗯嗯嗯！看起来还不错o(*￣▽￣*)ブ
-![](docs/3.png)
-ps:这草地贴图有点难看o(TヘTo)
+Hmmmmmmmm, now we press `F6` to run the current scene being edited, uh, how come we can't see it? Uh-oh! I forgot to add the camera node, then add the environment! Well, well, well! Looks pretty good o(*￣▽￣*)ブ
+! [](docs/3.png)
+ps:This grass mapping is a bit hard to see o(TヘTo)
 
-好的，现在这个区块里只有一个孤零零的体素，连个站的位置恐怕都不够
+Okay, now there is only one lone voxel in this block, not even a place to stand I'm afraid
 ```godot
 for x in voxel_block_data.size.x:
 	for z in voxel_block_data.size.z:
 		voxel_block_data.set_voxel(Vector3i(x,0,z),voxel_block_data.basics_voxel(0))
 $MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
-![](docs/4.png)
+! [](docs/4.png)
 
-真好o(^▽^)o
+That's nice o(^▽^)o
 
-现在我突然想加一个圆柱体，额，没原因突然就想怎么做了！！！
+Now I suddenly want to add a cylinder, er, no reason suddenly want how to do it!!!
 
-在`voxel_block_data`的`model_presets`属性加入
-![](docs/5.png)
+In the `model_presets` property of `voxel_block_data` add
+Add a new line to the `model_presets` property of `voxel_block_data`! [](docs/5.png)
 
-在生成网格之前加上
+Before generating the grid add
 ```godot
 	for x in voxel_block_data.size.x:
 		for z in voxel_block_data.size.z:
-			if(randi() % 6 == 0):
+			if(randy() % 6 == 0):
 				voxel_block_data.set_voxel(Vector3i(x,0,z),StandardVoxelBlockData.model_voxel(0))
 ```
-好难看啊(ㄒoㄒ)
+It's so hard to see(ㄒoㄒ)
 
-![](docs/6.png)
+! [](docs/6.png)
 
-tip:我偷偷的把`voxel_block_data`的`size`搞大了一点，还有一件事，这个模型顶点数太多了，会拖慢区块加载速度的qwq
+tip:I secretly made the `size` of `voxel_block_data` a little bit bigger, and one more thing, this model has too many vertices, it will slow down the block loading speed qwq
 
-# 开始你的第一个体素世界
+# Start your first voxel world
 
-开摆ing
+Still doing it

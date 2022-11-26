@@ -80,9 +80,9 @@ Ref<Script> Preset::get_script() const
 Vector3 Preset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
 {
 	Vector3 result = vertex;
-	result = result.rotated(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-	result = result.rotated(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-	result = result.rotated(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
+	result.rotate(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
+	result.rotate(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
+	result.rotate(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
 	return result;
 }
 
