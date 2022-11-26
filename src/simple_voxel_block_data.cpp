@@ -14,14 +14,13 @@ void SimpleVoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("fill", "voxel"), &SimpleVoxelBlockData::fill);
 	ClassDB::bind_method(D_METHOD("is_filled", "voxel"), &SimpleVoxelBlockData::is_filled);
 
-	ClassDB::bind_method(D_METHOD("get_voxel_type", "value"), &SimpleVoxelBlockData::get_voxel_type);
-	ClassDB::bind_method(D_METHOD("get_voxel_id", "value"), &SimpleVoxelBlockData::get_voxel_id);
-	ClassDB::bind_method(D_METHOD("get_voxel_height", "value"), &SimpleVoxelBlockData::get_voxel_height);
-
-	ClassDB::bind_method(D_METHOD("empty_voxel"), &SimpleVoxelBlockData::empty_voxel);
-	ClassDB::bind_method(D_METHOD("basics_voxel", "id", "height"), &SimpleVoxelBlockData::basics_voxel, 64);
-	ClassDB::bind_method(D_METHOD("model_voxel", "id", "height"), &SimpleVoxelBlockData::model_voxel, 64);
-	ClassDB::bind_method(D_METHOD("device_voxel", "id", "height"), &SimpleVoxelBlockData::device_voxel, 64);
+	ClassDB::bind_static_method("SimpleVoxelBlockData", D_METHOD("get_voxel_type", "value"), &SimpleVoxelBlockData::get_voxel_type);
+	ClassDB::bind_static_method("SimpleVoxelBlockData", D_METHOD("get_voxel_id", "value"), &SimpleVoxelBlockData::get_voxel_id);
+	ClassDB::bind_static_method("SimpleVoxelBlockData", D_METHOD("get_voxel_height", "value"), &SimpleVoxelBlockData::get_voxel_height);
+	ClassDB::bind_static_method("SimpleVoxelBlockData", D_METHOD("empty_voxel"), &SimpleVoxelBlockData::empty_voxel);
+	ClassDB::bind_static_method("SimpleVoxelBlockData", D_METHOD("basics_voxel", "id", "height"), &SimpleVoxelBlockData::basics_voxel, 64);
+	ClassDB::bind_static_method("SimpleVoxelBlockData", D_METHOD("model_voxel", "id", "height"), &SimpleVoxelBlockData::model_voxel, 64);
+	ClassDB::bind_static_method("SimpleVoxelBlockData", D_METHOD("device_voxel", "id", "height"), &SimpleVoxelBlockData::device_voxel, 64);
 
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT32_ARRAY, "voxels"), "set_voxels", "get_voxels");
 }
@@ -121,7 +120,8 @@ bool SimpleVoxelBlockData::is_filled(const Voxel& voxel) const
 	return true;
 }
 
-void SimpleVoxelBlockData::build_basics_mesh(const int& direction, const int& height, const Array& mesh_arrays, const Vector3& position)
+
+void SimpleVoxelBlockData::_basics_mesh(const int& direction, const int& height, const Array& mesh_arrays, const Vector3& position)
 {
 	static Vector2 uvs[] = {
 		Vector2(0, 0),
@@ -215,127 +215,144 @@ void SimpleVoxelBlockData::build_basics_mesh(const int& direction, const int& he
 	}
 }
 
-void SimpleVoxelBlockData::build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position)
-{
-	//Ref<Mesh> mesh = model_preset->get_mesh();
-	//ERR_FAIL_NULL(mesh);
-	//TypedArray<int> materials = model_preset->get_materials();
-	//for (int i = 0; i < mesh->get_surface_count(); i++)
-	//{
-	//	int material_id = materials[i];
-	//	ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-	//	Array arrays = mesh_arrays[material_id];
-	//	model_preset->build_mesh(arrays, i, position, Vector3i());
-	//}
+void SimpleVoxelBlockData::_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position) {
+	TypedArray<ModelMesh> model_meshs = model_preset->get_model_meshs();
+	Ref<ModelMesh> model_mesh = model_meshs[0];
+	ERR_FAIL_NULL(model_mesh);
+	Ref<Mesh> mesh = model_mesh->get_mesh();
+	if (mesh == nullptr)
+	{
+		return;
+	}
+	TypedArray<int> materials = model_mesh->get_materials();
+	for (int i = 0; i < mesh->get_surface_count(); i++)
+	{
+		int material_id = materials[i];
+		ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+		Array arrays = mesh_arrays[material_id];
+		model_mesh->build_mesh(arrays, i, position, Vector3i(0,0,0));
+	}
 }
 
-//void SimpleVoxelBlockData::build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel)
-//{
-//	int type = get_voxel_type(voxel);
-//	switch (type)
-//	{
-//	case BASICS:
-//	{
-//		TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
-//		int id = get_voxel_id(voxel);
-//		int height = get_voxel_height(voxel);
-//
-//		Ref<BasicsPreset> basics_preset = basics_presets[id];
-//		ERR_FAIL_NULL_MSG(basics_preset, "The basics_preset with id " + String::num_int64(id) + " is null");
-//
-//		for (int direction = 2; direction < 6; direction++) {
-//			Voxel relative_voxel = get_voxel(position + DIRCTIONS[direction]);
-//			int relative_voxel_type = get_voxel_type(relative_voxel);
-//			if (relative_voxel_type != BASICS) {
-//				int material_id = basics_preset->get_material_id(direction);
-//				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-//				Array arrays = mesh_arrays[material_id];
-//				build_basics_mesh(direction, height, arrays, position);
-//			}
-//			else {
-//				int relative_voxel_id = get_voxel_type(relative_voxel);
-//				Ref<BasicsPreset> relative_basics_preset = basics_presets[relative_voxel_id];
-//				int relative_voxel_height = get_voxel_height(relative_voxel);
-//				if (relative_basics_preset->get_transparent() != basics_preset->get_transparent() || height != relative_voxel_height) {
-//					int material_id = basics_preset->get_material_id(direction);
-//					ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-//					Array arrays = mesh_arrays[material_id];
-//					build_basics_mesh(direction, height, arrays, position);
-//				}
-//			}
-//		}
-//
-//		Voxel up_voxel = get_voxel(position + DIRCTIONS[BasicsPreset::UP]);
-//		int up_voxel_type = get_voxel_type(up_voxel);
-//		if (up_voxel_type != BASICS)
-//		{
-//			int material_id = basics_preset->get_material_id(BasicsPreset::UP);
-//			ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-//			Array arrays = mesh_arrays[material_id];
-//			build_basics_mesh(BasicsPreset::UP, height, arrays, position);
-//		}
-//		else
-//		{
-//			int up_voxel_id = get_voxel_type(up_voxel);
-//			Ref<BasicsPreset> up_basics_preset = basics_presets[up_voxel_id];
-//			if (up_basics_preset->get_transparent() != basics_preset->get_transparent() || height != 64) {
-//				int material_id = basics_preset->get_material_id(BasicsPreset::UP);
-//				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-//				Array arrays = mesh_arrays[material_id];
-//				build_basics_mesh(BasicsPreset::UP, height, arrays, position);
-//			}
-//		}
-//
-//		Voxel down_voxel = get_voxel(position + DIRCTIONS[BasicsPreset::DOWN]);
-//		int down_voxel_type = get_voxel_type(down_voxel);
-//		if (down_voxel_type != BASICS)
-//		{
-//			int material_id = basics_preset->get_material_id(BasicsPreset::DOWN);
-//			ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-//			Array arrays = mesh_arrays[material_id];
-//			build_basics_mesh(BasicsPreset::DOWN, height, arrays, position);
-//		}
-//		else
-//		{
-//			int down_voxel_id = get_voxel_type(down_voxel);
-//			int down_voxel_height = get_voxel_height(down_voxel);
-//			Ref<BasicsPreset> down_basics_preset = basics_presets[down_voxel_id];
-//			if (down_basics_preset->get_transparent() != basics_preset->get_transparent() || down_voxel_height != 64) {
-//				int material_id = basics_preset->get_material_id(BasicsPreset::DOWN);
-//				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
-//				Array arrays = mesh_arrays[material_id];
-//				build_basics_mesh(BasicsPreset::DOWN, height, arrays, position);
-//			}
-//		}
-//		break;
-//	}
-//	case MODEL:
-//	{
-//		TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
-//		int id = get_voxel_id(voxel);
-//
-//		Ref<ModelPreset> model_preset = model_presets[id];
-//		ERR_FAIL_NULL_MSG(model_preset, "The model_preset with id " + String::num_int64(id) + " is null");
-//		build_model_mesh(model_preset, mesh_arrays, position);
-//		break;
-//	}
-//	}
-//}
-//
-//Variant SimpleVoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, Vector3i& position)
-//{
-//	Node* node = device_preset->get_packed_scene()->instantiate();
-//	Device* device = cast_to<Device>(node);
-//	if (device == nullptr)
-//	{
-//		node->queue_free();
-//	}
-//	device->set_device_preset(device_preset);
-//
-//	device->set_position(position);
-//	call_deferred("add_child", device);
-//	return device;
-//}
+void SimpleVoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+	int type = get_voxel_type(voxel);
+	switch (type)
+	{
+	case BASICS:
+	{
+		TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
+		int id = get_voxel_id(voxel);
+		int height = get_voxel_height(voxel);
+
+		Ref<BasicsPreset> basics_preset = basics_presets[id];
+		ERR_FAIL_NULL_MSG(basics_preset, "The basics_preset with id " + String::num_int64(id) + " is null");
+
+		for (int direction = 2; direction < 6; direction++) {
+			Voxel relative_voxel = get_voxel(position + DIRCTIONS[direction]);
+			int relative_voxel_type = get_voxel_type(relative_voxel);
+			if (relative_voxel_type != BASICS) {
+				int material_id = basics_preset->get_material_id(direction);
+				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+				Array arrays = mesh_arrays[material_id];
+				_basics_mesh(direction, height, arrays, position);
+			}
+			else {
+				int relative_voxel_id = get_voxel_type(relative_voxel);
+				Ref<BasicsPreset> relative_basics_preset = basics_presets[relative_voxel_id];
+				int relative_voxel_height = get_voxel_height(relative_voxel);
+				if (relative_basics_preset->get_transparent() != basics_preset->get_transparent() || height != relative_voxel_height) {
+					int material_id = basics_preset->get_material_id(direction);
+					ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+					Array arrays = mesh_arrays[material_id];
+					_basics_mesh(direction, height, arrays, position);
+				}
+			}
+		}
+
+		Voxel up_voxel = get_voxel(position + DIRCTIONS[BasicsPreset::UP]);
+		int up_voxel_type = get_voxel_type(up_voxel);
+		if (up_voxel_type != BASICS)
+		{
+			int material_id = basics_preset->get_material_id(BasicsPreset::UP);
+			ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+			Array arrays = mesh_arrays[material_id];
+			_basics_mesh(BasicsPreset::UP, height, arrays, position);
+		}
+		else
+		{
+			int up_voxel_id = get_voxel_type(up_voxel);
+			Ref<BasicsPreset> up_basics_preset = basics_presets[up_voxel_id];
+			if (up_basics_preset->get_transparent() != basics_preset->get_transparent() || height != 64) {
+				int material_id = basics_preset->get_material_id(BasicsPreset::UP);
+				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+				Array arrays = mesh_arrays[material_id];
+				_basics_mesh(BasicsPreset::UP, height, arrays, position);
+			}
+		}
+
+		Voxel down_voxel = get_voxel(position + DIRCTIONS[BasicsPreset::DOWN]);
+		int down_voxel_type = get_voxel_type(down_voxel);
+		if (down_voxel_type != BASICS)
+		{
+			int material_id = basics_preset->get_material_id(BasicsPreset::DOWN);
+			ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+			Array arrays = mesh_arrays[material_id];
+			_basics_mesh(BasicsPreset::DOWN, height, arrays, position);
+		}
+		else
+		{
+			int down_voxel_id = get_voxel_type(down_voxel);
+			int down_voxel_height = get_voxel_height(down_voxel);
+			Ref<BasicsPreset> down_basics_preset = basics_presets[down_voxel_id];
+			if (down_basics_preset->get_transparent() != basics_preset->get_transparent() || down_voxel_height != 64) {
+				int material_id = basics_preset->get_material_id(BasicsPreset::DOWN);
+				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
+				Array arrays = mesh_arrays[material_id];
+				_basics_mesh(BasicsPreset::DOWN, height, arrays, position);
+			}
+		}
+		break;
+	}
+	case MODEL:
+	{
+		TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
+		int id = get_voxel_id(voxel);
+
+		Ref<ModelPreset> model_preset = model_presets[id];
+		ERR_FAIL_NULL_MSG(model_preset, "The model_preset with id " + String::num_int64(id) + " is null");
+		_model_mesh(model_preset, mesh_arrays, position);
+		break;
+	}
+	}
+}
+
+void SimpleVoxelBlockData::_build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+
+}
+
+Variant SimpleVoxelBlockData::_build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel) {
+	Node* node = device_preset->get_packed_scene()->instantiate();
+	Device* device = cast_to<Device>(node);
+	if (device == nullptr)
+	{
+		node->queue_free();
+	}
+	device->set_device_preset(device_preset);
+
+	device->set_position(position);
+	call_deferred("add_child", device);
+	return device;
+}
+
+int SimpleVoxelBlockData::_get_voxel_type(const Voxel& value)
+{
+	return get_voxel_type(value);
+}
+
+int SimpleVoxelBlockData::_get_voxel_id(const Voxel& value)
+{
+	return get_voxel_id(value);
+}
 
 int SimpleVoxelBlockData::get_voxel_type(const Voxel& value)
 {

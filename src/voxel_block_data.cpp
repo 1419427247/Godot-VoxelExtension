@@ -2,24 +2,22 @@
 
 void VoxelBlockData::_bind_methods()
 {
+	//ClassDB::bind_method(D_METHOD("set_size", "value"), &VoxelBlockData::set_key);
+	ClassDB::bind_method(D_METHOD("get_key"), &VoxelBlockData::get_key);
+
 	ClassDB::bind_method(D_METHOD("set_size", "value"), &VoxelBlockData::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &VoxelBlockData::get_size);
 
 	ClassDB::bind_method(D_METHOD("set_presets_data", "value"), &VoxelBlockData::set_presets_data);
 	ClassDB::bind_method(D_METHOD("get_presets_data"), &VoxelBlockData::get_presets_data);
 
+	ClassDB::bind_method(D_METHOD("get_voxel_container"), &VoxelBlockData::get_voxel_container);
+
 	ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxel);
 	ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelBlockData::get_voxels);
 
 	ClassDB::bind_method(D_METHOD("fill", "voxel"), &VoxelBlockData::fill);
 	ClassDB::bind_method(D_METHOD("is_filled"), &VoxelBlockData::is_filled);
-
-	//ClassDB::bind_method(D_METHOD("build_basics_mesh", "presets_data", "basics_preset", "voxel", "mesh_arrays", "position"), &VoxelBlockData::build_basics_mesh);
-	//ClassDB::bind_method(D_METHOD("build_model_mesh", "presets_data", "model_preset", "voxel", "mesh_arrays", "position"), &VoxelBlockData::build_model_mesh);
-	//ClassDB::bind_method(D_METHOD("build_device", "device_preset", "position", "voxel"), &VoxelBlockData::build_device);
-
-	ClassDB::bind_method(D_METHOD("get_voxel_type", "value"), &VoxelBlockData::get_voxel_type);
-	ClassDB::bind_method(D_METHOD("get_voxel_id"), &VoxelBlockData::get_voxel_id);
 
 	ClassDB::bind_method(D_METHOD("generate_mesh", "filter"), &VoxelBlockData::generate_mesh, 0b1);
 	ClassDB::bind_method(D_METHOD("generate_collider", "filter"), &VoxelBlockData::generate_collider, 0b1);
@@ -81,7 +79,8 @@ Ref<PresetsData> VoxelBlockData::get_presets_data() const {
 		{
 			return voxel_container->get_presets_data();
 		}
-	}return presets_data;
+	}
+	return presets_data;
 }
 
 void VoxelBlockData::set_voxel_container(Variant value)
@@ -123,25 +122,25 @@ bool VoxelBlockData::is_filled(const Voxel& voxel) const {
 	return false;
 }
 
-void VoxelBlockData::build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+void VoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
 
 }
 
-void VoxelBlockData::build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+void VoxelBlockData::_build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
 
 }
 
-Variant VoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel)
+Variant VoxelBlockData::_build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel)
 {
 	return nullptr;
 }
 
-int VoxelBlockData::get_voxel_type(const Voxel& value)
+int VoxelBlockData::_get_voxel_type(const Voxel& value)
 {
 	return 0;
 }
 
-int VoxelBlockData::get_voxel_id(const Voxel& value)
+int VoxelBlockData::_get_voxel_id(const Voxel& value)
 {
 	return 0;
 }
@@ -152,7 +151,7 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 	Ref<PresetsData> presets_data = get_presets_data();
 	ERR_FAIL_NULL_V(presets_data, nullptr);
 
-	Array materials = presets_data->get_materials();
+	TypedArray<Material> materials = presets_data->get_materials();
 	TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
 	TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
 
@@ -176,8 +175,8 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
 
-				int type = get_voxel_type(voxel);
-				int id = get_voxel_id(voxel);
+				int type = _get_voxel_type(voxel);
+				int id = _get_voxel_id(voxel);
 
 				switch (type)
 				{
@@ -188,7 +187,7 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 					{
 						continue;
 					}
-					build_basics_mesh(presets_data, basics_preset, voxel, mesh_arrays, position);
+					_build_basics_mesh(presets_data, basics_preset, voxel, mesh_arrays, position);
 					break;
 				}
 				case VoxelBlockData::MODEL:
@@ -199,7 +198,7 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 					{
 						continue;
 					}
-					build_model_mesh(presets_data, model_preset, voxel, mesh_arrays, position);
+					_build_model_mesh(presets_data, model_preset, voxel, mesh_arrays, position);
 					break;
 				}
 				}
@@ -345,8 +344,8 @@ ConcavePolygonShape3D* VoxelBlockData::generate_collider(const int& filter)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-				int type = get_voxel_type(voxel);
-				int id = get_voxel_id(voxel);
+				int type = _get_voxel_type(voxel);
+				int id = _get_voxel_id(voxel);
 				Ref<Preset> preset;
 				switch (type)
 				{
@@ -477,8 +476,8 @@ TypedArray<Device> VoxelBlockData::generate_device(const int& filter)
 			{
 				Vector3i position = Vector3i(x, y, z);
 				Voxel voxel = get_voxel(position);
-				int type = get_voxel_type(voxel);
-				int id = get_voxel_id(voxel);
+				int type = _get_voxel_type(voxel);
+				int id = _get_voxel_id(voxel);
 
 				ERR_FAIL_INDEX_V(id, device_presets.size(), result);
 				Ref<DevicePreset> device_preset = device_presets[id];
@@ -494,7 +493,7 @@ TypedArray<Device> VoxelBlockData::generate_device(const int& filter)
 					}
 					if (device == nullptr)
 					{
-						device = cast_to<Device>(build_device(device_preset, position, voxel));
+						device = cast_to<Device>(_build_device(device_preset, position, voxel));
 						devices[position] = device;
 						device->set_key(position);
 						result.push_back(device);

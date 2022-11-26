@@ -26,7 +26,6 @@ void VoxelContainer::_bind_methods()
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "voxel_block_size"), "set_voxel_block_size", "get_voxel_block_size");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "isolated"), "set_isolated", "is_isolated");
-
 }
 
 VoxelContainer::VoxelContainer()
@@ -77,12 +76,13 @@ void VoxelContainer::set_voxel_block_data(const Vector3i& key, const Ref<VoxelBl
 		voxel_block_data = voxel_block_datas.get(key, nullptr);
 		voxel_block_data->set_voxel_container(nullptr);
 	}
-	if (value != nullptr)
+	if (value.is_null() == false)
 	{
 		voxel_block_data = value;
 		voxel_block_data->set_voxel_container(this);
 		ERR_FAIL_COND_MSG(voxel_block_data->get_size() != voxel_block_size, "The VoxelBlockData.size() is different from the VoxelContainer setting");
 	}
+	voxel_block_data->set_key(key);
 	voxel_block_datas[key] = value;
 }
 

@@ -48,22 +48,23 @@ public:
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;
 
-	virtual void build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
-	virtual void build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
-	virtual Variant build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel);
+	virtual void _build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual void _build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual Variant _build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel);
 
-	virtual int get_voxel_type(const Voxel& value);
-	virtual int get_voxel_id(const Voxel& value);
+	virtual int _get_voxel_type(const Voxel& value);
+	virtual int _get_voxel_id(const Voxel& value);
 
 	ArrayMesh* generate_mesh(const int& filter = 0b1);
 	ConcavePolygonShape3D* generate_collider(const int& filter = 0b1);
 	TypedArray<Device> generate_device(const int& filter = 0b1);
 
-	static Vector3 point_converted_to_block(const Transform3D& global_transform, const Vector3& point);
-	static Vector3 normal_converted_to_block(const Transform3D& global_transform, const Vector3& point);
-	static Vector3i get_voxel_local_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal);
+	_inline static Vector3 point_converted_to_block(const Transform3D& global_transform, const Vector3& point);
+	_inline static Vector3 normal_converted_to_block(const Transform3D& global_transform, const Vector3& point);
+	_inline static Vector3i get_voxel_local_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal);
 };
 VARIANT_ENUM_CAST(VoxelBlockData, Type);
 
 #endif // !VOXEL_WORLD_DATA_H
 
+	

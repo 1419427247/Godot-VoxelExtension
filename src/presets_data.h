@@ -8,14 +8,14 @@
 class PresetsData : public Resource
 {
 	GDCLASS(PresetsData, Resource);
+private:
+	TypedArray<Material> materials;
+	TypedArray<BasicsPreset> basics_presets;
+	TypedArray<ModelPreset> model_presets;
+	TypedArray<DevicePreset> device_presets;
 protected:
 	static void _bind_methods();
 public:
-	List<Material> materials;
-	List<BasicsPreset> basics_presets;
-	List<ModelPreset> model_presets;
-	List<DevicePreset> device_presets;
-	
 	void set_materials(const TypedArray <Material>& value);
 	TypedArray <Material> get_materials() const;
 

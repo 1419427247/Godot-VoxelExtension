@@ -32,21 +32,23 @@ public:
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;
 
-	_inline void build_basics_mesh(const int& direction, const int& height, const Array& mesh_arrays, const Vector3& position);
-	_inline void build_model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position);
+	_inline void _basics_mesh(const int& direction, const int& height, const Array& mesh_arrays, const Vector3& position);
+	_inline void _model_mesh(Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const Vector3& position);
 
-	//virtual void build_mesh(const Ref<PresetsData>& presets_data, const Array& mesh_arrays, const Vector3i& position, const Voxel& voxel);
-	//virtual Variant build_device(const Ref<DevicePreset>& device_preset, Vector3i& position);
+	virtual void _build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual void _build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual Variant _build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel);
 
-	virtual int get_voxel_type(const Voxel& value);
-	virtual int get_voxel_id(const Voxel& value);
-
-	int get_voxel_height(const Voxel& value);
-
-	Voxel empty_voxel();
-	Voxel basics_voxel(const int& id, const int& height = 64);
-	Voxel model_voxel(const int& id, const int& height = 64);
-	Voxel device_voxel(const int& id, const int& height = 64);
+	virtual int _get_voxel_type(const Voxel& value);
+	virtual int _get_voxel_id(const Voxel& value);
+	
+	_inline static int get_voxel_type(const Voxel& value);
+	_inline static int get_voxel_id(const Voxel& value);
+	_inline static int get_voxel_height(const Voxel& value);
+	_inline static Voxel empty_voxel();
+	_inline static Voxel basics_voxel(const int& id, const int& height = 64);
+	_inline static Voxel model_voxel(const int& id, const int& height = 64);
+	_inline static Voxel device_voxel(const int& id, const int& height = 64);
 };
 
 #endif // !SIMPLE_VOXEL_BLOCK_H

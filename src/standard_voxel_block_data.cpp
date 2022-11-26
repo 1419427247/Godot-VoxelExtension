@@ -14,15 +14,15 @@ void StandardVoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("fill", "voxel"), &StandardVoxelBlockData::fill);
 	ClassDB::bind_method(D_METHOD("is_filled", "voxel"), &StandardVoxelBlockData::is_filled);
 
-	ClassDB::bind_method(D_METHOD("get_voxel_type", "value"), &StandardVoxelBlockData::get_voxel_type);
-	ClassDB::bind_method(D_METHOD("get_voxel_id", "value"), &StandardVoxelBlockData::get_voxel_id);
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("get_voxel_type", "value"), &StandardVoxelBlockData::get_voxel_type);
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("get_voxel_id", "value"), &StandardVoxelBlockData::get_voxel_id);
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("get_voxel_direction", "direction", "rotation"), &StandardVoxelBlockData::get_voxel_direction);
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("get_voxel_rotation", "value"), &StandardVoxelBlockData::get_voxel_rotation);
 
-	ClassDB::bind_method(D_METHOD("get_voxel_direction", "direction", "rotation"), &StandardVoxelBlockData::get_voxel_direction);
-	ClassDB::bind_method(D_METHOD("get_voxel_rotation", "value"), &StandardVoxelBlockData::get_voxel_rotation);
-	ClassDB::bind_method(D_METHOD("empty_voxel"), &StandardVoxelBlockData::empty_voxel);
-	ClassDB::bind_method(D_METHOD("basics_voxel", "id", "rotation"), &StandardVoxelBlockData::basics_voxel, Vector3i());
-	ClassDB::bind_method(D_METHOD("model_voxel", "id", "rotation"), &StandardVoxelBlockData::model_voxel, Vector3i());
-	ClassDB::bind_method(D_METHOD("device_voxel", "id", "rotation"), &StandardVoxelBlockData::device_voxel, Vector3i());
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("empty_voxel"), &StandardVoxelBlockData::empty_voxel);
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("basics_voxel", "id", "rotation"), &StandardVoxelBlockData::basics_voxel, Vector3i());
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("model_voxel", "id", "rotation"), &StandardVoxelBlockData::model_voxel, Vector3i());
+	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("device_voxel", "id", "rotation"), &StandardVoxelBlockData::device_voxel, Vector3i());
 
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT32_ARRAY, "voxels"), "set_voxels", "get_voxels");
 }
@@ -119,7 +119,7 @@ bool StandardVoxelBlockData::is_filled(const Voxel& voxel) const
 	return true;
 }
 
-void StandardVoxelBlockData::_build_basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation)
+void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation)
 {
 	struct MemorandumData
 	{
@@ -217,7 +217,7 @@ void StandardVoxelBlockData::_build_basics_mesh(const Ref<BasicsMesh>& basics_me
 	}
 }
 
-void StandardVoxelBlockData::_build_model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation)
+void StandardVoxelBlockData::_model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation)
 {
 	TypedArray<ModelMesh> model_meshs = model_preset->get_model_meshs();
 	Ref<ModelMesh> model_mesh = model_meshs[mask];
@@ -241,7 +241,7 @@ void StandardVoxelBlockData::_build_model_mesh(const Ref<ModelPreset>& model_pre
 	}
 }
 
-void StandardVoxelBlockData::build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+void StandardVoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
 	TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
 	Ref<BasicsMesh> basics_mesh = basics_preset->get_basics_mesh();
 	Vector3i rotation = get_voxel_rotation(voxel);
@@ -252,7 +252,7 @@ void StandardVoxelBlockData::build_basics_mesh(const Ref<PresetsData>& presets_d
 			int material_id = basics_preset->get_material_id(direction);
 			ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 			Array arrays = mesh_arrays[material_id];
-			_build_basics_mesh(basics_mesh, arrays, direction, position, rotation);
+			_basics_mesh(basics_mesh, arrays, direction, position, rotation);
 		}
 	}
 	else {
@@ -265,23 +265,22 @@ void StandardVoxelBlockData::build_basics_mesh(const Ref<PresetsData>& presets_d
 				int material_id = basics_preset->get_material_id(direction);
 				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 				Array arrays = mesh_arrays[material_id];
-				_build_basics_mesh(basics_mesh, arrays, direction, position, rotation);
+				_basics_mesh(basics_mesh, arrays, direction, position, rotation);
 			}
-			else { 
+			else {
 				Vector3i relative_voxel_rotation = get_voxel_rotation(voxel);
-				Ref<BasicsPreset> preset = basics_presets[relative_voxel_id];
-				if (((basics_preset->get_transparent() == false) && (preset->get_transparent() == true)) || relative_voxel_rotation.x % 90 != 0 || relative_voxel_rotation.y % 90 != 0 || relative_voxel_rotation.z % 90 != 0) {
+				if (((basics_preset->get_transparent() == false) && ((cast_to<BasicsPreset>(basics_presets[relative_voxel_id])->get_transparent()) == true)) || relative_voxel_rotation.x % 90 != 0 || relative_voxel_rotation.y % 90 != 0 || relative_voxel_rotation.z % 90 != 0) {
 					int material_id = basics_preset->get_material_id(direction);
 					ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 					Array arrays = mesh_arrays[material_id];
-					_build_basics_mesh(basics_mesh, arrays, direction, position, rotation);
+					_basics_mesh(basics_mesh, arrays, direction, position, rotation);
 				}
 			}
 		}
 	}
 }
 
-void StandardVoxelBlockData::build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+void StandardVoxelBlockData::_build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
 	TypedArray<ModelPreset> model_presets = presets_data->get_model_presets();
 	Vector3i rotation = get_voxel_rotation(voxel);
 	int mask = 0;
@@ -303,10 +302,10 @@ void StandardVoxelBlockData::build_model_mesh(const Ref<PresetsData>& presets_da
 			((voxels[4] >> 15) == (voxel >> 15)) << 1 |
 			((voxels[5] >> 15) == (voxel >> 15)) << 0;
 	}
-	_build_model_mesh(model_preset, mesh_arrays, mask, position, rotation);
+	_model_mesh(model_preset, mesh_arrays, mask, position, rotation);
 }
 
-Variant StandardVoxelBlockData::build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel)
+Variant StandardVoxelBlockData::_build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel)
 {
 	Vector3i rotation = get_voxel_rotation(voxel);
 	Node* node = device_preset->get_packed_scene()->instantiate();
@@ -321,6 +320,16 @@ Variant StandardVoxelBlockData::build_device(const Ref<DevicePreset>& device_pre
 	device->set_rotation(rotation);
 
 	return device;
+}
+
+int StandardVoxelBlockData::_get_voxel_type(const Voxel& value)
+{
+	return get_voxel_type(value);
+}
+
+int StandardVoxelBlockData::_get_voxel_id(const Voxel& value)
+{
+	return get_voxel_id(value);
 }
 
 int StandardVoxelBlockData::get_voxel_type(const Voxel& value)
