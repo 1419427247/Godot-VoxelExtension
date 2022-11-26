@@ -7,7 +7,6 @@
 [English](./README.md)
 [中文](./README_CN.md)
 
-# About
 I came up with a cool game a couple of months ago, but unfortunately the project fell apart halfway through. This expansion was made while designing the map generation, which was initially written in GDScript, but for performance reasons I decided to rewrite it in C++ using Godot 4.0 GDExpansion. Registered some relevant nodes for generating custom voxel meshes, hope it can help o(\*￣▽￣\*)o
 
 <figure class="half">
