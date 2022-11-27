@@ -1,4 +1,4 @@
-# Godot-VoxelExpansion
+# Godot-VoxelExpansion ![](https://badgen.net/github/license/Ark2000/PankuConsole)
 
 <p align="center">
 	<img src="docs/logo.png">
@@ -19,7 +19,7 @@ QQ Groups:773700466
     <img src="docs/preview_2.png">
 </figure>
 
-# How to configure?
+# 🤔 How to configure?
 Create a new folder under godot project folder and name it `bin`, move the compiled dynamic link library (*.dll) to `bin` folder, then create a new file in the project directory and name it `voxel.gdextension`
 ```
 [configuration]
@@ -31,7 +31,7 @@ windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.x86
 ```
 Open the editor, if no error message is output then you're done!
 
-# Start your first voxel block
+# 🍻Start your first voxel block
 
 Let's create a new empty scene, add a Node3D node to it, attach a script to the node and write at the beginning
 
