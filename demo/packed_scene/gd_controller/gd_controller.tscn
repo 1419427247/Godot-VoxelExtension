@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://2w3r3o4pddd5"]
+
+[ext_resource type="Script" path="res://packed_scene/gd_controller/gd_controller.gd" id="1_fd4fb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kwnfm"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_krvv6"]
+
+[node name="GDController" type="CharacterBody3D"]
+script = ExtResource("1_fd4fb")
+flying = true
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_kwnfm")
+
+[node name="SpringArm3d" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("SphereShape3D_krvv6")
+spring_length = 0.0
+
+[node name="Camera" type="Camera3D" parent="SpringArm3d"]
+
+[node name="RayCast" type="RayCast3D" parent="SpringArm3d/Camera"]
+target_position = Vector3(0, 0, -100)
+collide_with_areas = true
+
+[node name="InputPanel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="gui_input" from="InputPanel" to="." method="_on_input_panel_gui_input"]

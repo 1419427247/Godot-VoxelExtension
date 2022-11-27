@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf3uholdxplvn"]
+
+[ext_resource type="Script" path="res://packed_scene/gd_standard_voxel_block/gd_standard_voxel_block.gd" id="1_w7cyg"]
+
+[node name="GDVoxelStandardBlock" type="Node3D"]
+script = ExtResource("1_w7cyg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+gi_mode = 2
+visibility_range_end = 256.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["VoxelBlock"]]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+visible = false

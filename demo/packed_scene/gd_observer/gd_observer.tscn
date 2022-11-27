@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://worjrujaue0k"]
+
+[ext_resource type="Script" path="res://packed_scene/gd_observer/gd_observer.gd" id="1_gi6gx"]
+
+[node name="GDObserver" type="Node3D"]
+script = ExtResource("1_gi6gx")

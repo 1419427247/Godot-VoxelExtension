@@ -23,6 +23,13 @@ protected:
 	Dictionary devices;
 
 	static void _bind_methods();
+
+	virtual void _build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual void _build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
+	virtual Variant _build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel);
+
+	virtual int _get_voxel_type(const Voxel& value);
+	virtual int _get_voxel_id(const Voxel& value);
 public:
 	VoxelBlockData();
 	~VoxelBlockData();
@@ -47,13 +54,6 @@ public:
 
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;
-
-	virtual void _build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
-	virtual void _build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position);
-	virtual Variant _build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel);
-
-	virtual int _get_voxel_type(const Voxel& value);
-	virtual int _get_voxel_id(const Voxel& value);
 
 	ArrayMesh* generate_mesh(const int& filter = 0b1);
 	ConcavePolygonShape3D* generate_collider(const int& filter = 0b1);

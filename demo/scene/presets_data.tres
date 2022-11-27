@@ -1,0 +1,84 @@
+[gd_resource type="PresetsData" load_steps=22 format=3 uid="uid://chayxk85agbwg"]
+
+[ext_resource type="PackedScene" uid="uid://g3uk5scij37h" path="res://scene/demo_0/device.tscn" id="1_o54l1"]
+[ext_resource type="Texture2D" uid="uid://c544neghlnu1i" path="res://art/grass.jpg" id="1_uhpaf"]
+[ext_resource type="Texture2D" uid="uid://b6dkvp385si3v" path="res://art/ground.jpg" id="2_jx4vk"]
+[ext_resource type="Texture2D" uid="uid://buroik0w6s3d2" path="res://art/bark.jpg" id="3_josmp"]
+[ext_resource type="Texture2D" uid="uid://dqpudmh1acksd" path="res://art/marble.jpg" id="3_lu3sc"]
+[ext_resource type="Texture2D" uid="uid://uyhm4sfatolv" path="res://icon.svg" id="5_vc8c7"]
+
+[sub_resource type="BasicsPreset" id="BasicsPreset_bxh20"]
+down_material_id = 1
+front_material_id = 1
+back_material_id = 1
+left_material_id = 1
+right_material_id = 1
+
+[sub_resource type="BasicsPreset" id="BasicsPreset_o8qw2"]
+up_material_id = 4
+down_material_id = 4
+front_material_id = 4
+back_material_id = 4
+left_material_id = 4
+right_material_id = 4
+transparent = true
+
+[sub_resource type="BasicsPreset" id="BasicsPreset_37abt"]
+
+[sub_resource type="DevicePreset" id="DevicePreset_d5xmq"]
+packed_scene = ExtResource("1_o54l1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3k4xc"]
+albedo_texture = ExtResource("1_uhpaf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tr7xn"]
+albedo_texture = ExtResource("2_jx4vk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m48ah"]
+albedo_texture = ExtResource("3_josmp")
+uv1_scale = Vector3(4, 1, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qr57f"]
+albedo_texture = ExtResource("3_lu3sc")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpa6x"]
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("5_vc8c7")
+refraction_scale = -0.11
+refraction_texture = ExtResource("5_vc8c7")
+refraction_texture_channel = 4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m4cvj"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 1.0
+radial_segments = 16
+rings = 1
+cap_bottom = false
+
+[sub_resource type="ModelMesh" id="ModelMesh_uia0t"]
+mesh = SubResource("CylinderMesh_m4cvj")
+material = [3]
+
+[sub_resource type="ModelPreset" id="ModelPreset_0b7je"]
+model_meshs = [SubResource("ModelMesh_uia0t")]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l2dvo"]
+height = 1.0
+radial_segments = 16
+cap_bottom = false
+
+[sub_resource type="ModelMesh" id="ModelMesh_v258o"]
+mesh = SubResource("CylinderMesh_l2dvo")
+material = [2]
+
+[sub_resource type="ModelPreset" id="ModelPreset_hmiap"]
+model_meshs = [SubResource("ModelMesh_v258o")]
+
+[resource]
+materials = [SubResource("StandardMaterial3D_3k4xc"), SubResource("StandardMaterial3D_tr7xn"), SubResource("StandardMaterial3D_m48ah"), SubResource("StandardMaterial3D_qr57f"), SubResource("StandardMaterial3D_tpa6x")]
+basics_presets = [SubResource("BasicsPreset_bxh20"), SubResource("BasicsPreset_o8qw2"), SubResource("BasicsPreset_37abt")]
+model_presets = [SubResource("ModelPreset_0b7je"), SubResource("ModelPreset_hmiap")]
+device_presets = [SubResource("DevicePreset_d5xmq")]

@@ -14,8 +14,14 @@ func _ready():
 			if(randi() % 6 == 0):
 				for i in range(1,randi() % 8):
 					voxel_block_data.set_voxel(Vector3i(x,i,z),StandardVoxelBlockData.model_voxel(0))
+			elif randi() % 12 == 0 :
+				voxel_block_data.set_voxel(Vector3i(x,1,z),StandardVoxelBlockData.device_voxel(0))
+		
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
-
+	var devices : Array[Device] = voxel_block_data.generate_device()
+	for device in devices:
+		add_child(device)
+	
 func _process(delta):
 	pass
 

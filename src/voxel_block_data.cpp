@@ -36,6 +36,29 @@ void VoxelBlockData::_bind_methods()
 	BIND_ENUM_CONSTANT(DEVICE);
 }
 
+void VoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+
+}
+
+void VoxelBlockData::_build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
+
+}
+
+Variant VoxelBlockData::_build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel)
+{
+	return nullptr;
+}
+
+int VoxelBlockData::_get_voxel_type(const Voxel& value)
+{
+	return 0;
+}
+
+int VoxelBlockData::_get_voxel_id(const Voxel& value)
+{
+	return 0;
+}
+
 VoxelBlockData::VoxelBlockData()
 {
 	voxel_container = nullptr;
@@ -120,29 +143,6 @@ void VoxelBlockData::fill(const Voxel& voxel) {
 
 bool VoxelBlockData::is_filled(const Voxel& voxel) const {
 	return false;
-}
-
-void VoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
-
-}
-
-void VoxelBlockData::_build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
-
-}
-
-Variant VoxelBlockData::_build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel)
-{
-	return nullptr;
-}
-
-int VoxelBlockData::_get_voxel_type(const Voxel& value)
-{
-	return 0;
-}
-
-int VoxelBlockData::_get_voxel_id(const Voxel& value)
-{
-	return 0;
 }
 
 ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)

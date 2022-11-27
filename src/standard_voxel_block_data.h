@@ -12,9 +12,21 @@
 class StandardVoxelBlockData : public VoxelBlockData
 {
 	GDCLASS(StandardVoxelBlockData, VoxelBlockData);
-protected:
+private:
 	PackedInt32Array voxels;
+protected:
 	static void _bind_methods();
+
+	_inline void _basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation);
+	_inline void _model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation);
+
+	virtual void _build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) override;
+	virtual void _build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) override;
+	virtual Variant _build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel) override;
+
+	virtual int _get_voxel_type(const Voxel& value) override;
+	virtual int _get_voxel_id(const Voxel& value) override;
+
 public:
 	StandardVoxelBlockData();
 	~StandardVoxelBlockData();
@@ -29,16 +41,6 @@ public:
 
 	virtual void fill(const Voxel& voxel) override;
 	virtual bool is_filled(const Voxel& voxel) const override;
-
-	_inline void _basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation);
-	_inline void _model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation);
-
-	virtual void _build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) override;
-	virtual void _build_model_mesh(const Ref<PresetsData>& presets_data, const Ref<ModelPreset>& model_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) override;
-	virtual Variant _build_device(const Ref<DevicePreset>& device_preset, const Vector3i& position, const Voxel& voxel) override;
-
-	virtual int _get_voxel_type(const Voxel& value) override;
-	virtual int _get_voxel_id(const Voxel& value) override;
 
 	_inline static int get_voxel_type(const Voxel& value);
 	_inline static int get_voxel_id(const Voxel& value);

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://g3uk5scij37h"]
+
+[ext_resource type="PackedScene" uid="uid://bmi8tx7vct73x" path="res://scene/demo_0/wine_barrel.gltf" id="1_md4jv"]
+
+[sub_resource type="GDScript" id="GDScript_bj6p5"]
+script/source = "@tool
+extends Device
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	rotate_y(0.01)
+"
+
+[node name="Device" type="Device"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0213365, 0)
+script = SubResource("GDScript_bj6p5")
+
+[node name="wine_barrel" parent="." instance=ExtResource("1_md4jv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.436249, 0)

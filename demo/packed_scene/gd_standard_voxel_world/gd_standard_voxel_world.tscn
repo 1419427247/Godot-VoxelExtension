@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnaavwqvj3i6"]
+
+[ext_resource type="Script" path="res://packed_scene/gd_standard_voxel_world/gd_standard_voxel_world.gd" id="1_go1d8"]
+
+[node name="GDVoxelWorld" type="VoxelContainer"]
+script = ExtResource("1_go1d8")
