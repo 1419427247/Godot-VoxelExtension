@@ -23,9 +23,9 @@ void VoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("generate_collider", "filter"), &VoxelBlockData::generate_collider, 0b1);
 	ClassDB::bind_method(D_METHOD("generate_device"), &VoxelBlockData::generate_device, 0b1);
 
-	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("point_converted_to_voxel_block", "global_transform", "point"), &VoxelBlockData::point_converted_to_block);
-	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("normal_converted_to_voxel_block", "global_transform", "normal"), &VoxelBlockData::normal_converted_to_block);
-	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("get_voxel_local_position", "global_transform", "point", "normal"), &VoxelBlockData::get_voxel_local_position);
+	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("translate_point_to_voxel_block_coordinatet", "global_transform", "point"), &VoxelBlockData::translate_point_to_voxel_block_coordinatet);
+	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("translate_normal_to_voxel_block_coordinatet", "global_transform", "normal"), &VoxelBlockData::translate_normal_to_voxel_block_coordinatet);
+	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("get_voxel_position", "global_transform", "point", "normal"), &VoxelBlockData::get_voxel_position);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "size"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
@@ -512,24 +512,24 @@ TypedArray<Device> VoxelBlockData::generate_device(const int& filter)
 }
 
 
-Vector3 VoxelBlockData::point_converted_to_block(const Transform3D& global_transform, const Vector3& point) {
+Vector3 VoxelBlockData::translate_point_to_voxel_block_coordinatet(const Transform3D& global_transform, const Vector3& point) {
 	return (
 		global_transform.affine_inverse() *
 		Transform3D(global_transform.basis, point)
 		).origin;
 }
 
-Vector3 VoxelBlockData::normal_converted_to_block(const Transform3D& global_transform, const Vector3& normal) {
+Vector3 VoxelBlockData::translate_normal_to_voxel_block_coordinatet(const Transform3D& global_transform, const Vector3& normal) {
 	return (
 		Transform3D(global_transform.basis, Vector3()).affine_inverse() *
 		Transform3D(global_transform.basis, normal)
 		).origin.normalized();
 }
 
-Vector3i VoxelBlockData::get_voxel_local_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal)
+Vector3i VoxelBlockData::get_voxel_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal)
 {
-	Vector3 _point = point_converted_to_block(global_transform, point);
-	Vector3 _normal = normal_converted_to_block(global_transform, normal);
+	Vector3 _point = translate_point_to_voxel_block_coordinatet(global_transform, point);
+	Vector3 _normal = translate_normal_to_voxel_block_coordinatet(global_transform, normal);
 	if (_normal.y == 1) {
 		_point.y -= 0.05;
 	}

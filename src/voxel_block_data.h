@@ -59,9 +59,9 @@ public:
 	ConcavePolygonShape3D* generate_collider(const int& filter = 0b1);
 	TypedArray<Device> generate_device(const int& filter = 0b1);
 
-	_inline static Vector3 point_converted_to_block(const Transform3D& global_transform, const Vector3& point);
-	_inline static Vector3 normal_converted_to_block(const Transform3D& global_transform, const Vector3& point);
-	_inline static Vector3i get_voxel_local_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal);
+	_inline static Vector3 translate_point_to_voxel_block_coordinatet(const Transform3D& global_transform, const Vector3& point);
+	_inline static Vector3 translate_normal_to_voxel_block_coordinatet(const Transform3D& global_transform, const Vector3& point);
+	_inline static Vector3i get_voxel_position(const Transform3D& global_transform, const Vector3& point, const Vector3& normal);
 };
 VARIANT_ENUM_CAST(VoxelBlockData, Type);
 
