@@ -1,4 +1,3 @@
-@tool
 extends Node3D
 
 @export
@@ -18,11 +17,9 @@ func _ready():
 				voxel_block_data.set_voxel(Vector3i(x,1,z),StandardVoxelBlockData.device_voxel(0))
 		
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
+	
+	
 	var devices : Array[Device] = voxel_block_data.generate_device()
 	for device in devices:
 		add_child(device)
-	
-func _process(delta):
-	pass
-
 

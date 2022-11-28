@@ -41,7 +41,7 @@ func _physics_process(delta):
 		preview.get_parent().remove_child(preview)
 	if(gd_controller.ray_cast.is_colliding() == false):
 		return
-	preview.position = VoxelBlockData.get_voxel_local_position(collider.global_transform,point,normal) + Vector3i(VoxelBlockData.normal_converted_to_voxel_block(collider.global_transform,normal))
+	preview.position = VoxelBlockData.get_voxel_position(collider.global_transform,point,normal) + Vector3i(VoxelBlockData.translate_normal_to_voxel_block_coordinatet(collider.global_transform,normal))
 
 	collider.add_child(preview)
 
@@ -50,8 +50,8 @@ func _physics_process(delta):
 		_refresh()
 		
 	if Input.is_action_just_pressed("cursor_b"):
-		print(VoxelBlockData.point_converted_to_voxel_block(collider.global_transform,point))
-		voxel_block_data.set_voxel(VoxelBlockData.get_voxel_local_position(collider.global_transform,point,normal),voxel_block_data.empty_voxel())
+		print(VoxelBlockData.translate_point_to_voxel_block_coordinatet(collider.global_transform,point))
+		voxel_block_data.set_voxel(VoxelBlockData.get_voxel_position(collider.global_transform,point,normal),voxel_block_data.empty_voxel())
 	_refresh()
 
 func _refresh():

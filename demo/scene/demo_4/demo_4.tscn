@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://djaq7x3g07cca"]
+
+[ext_resource type="Script" path="res://scene/demo_4/demo_4.gd" id="1_p1xqu"]
+[ext_resource type="PackedScene" uid="uid://dnaavwqvj3i6" path="res://packed_scene/gd_standard_voxel_world/gd_standard_voxel_world.tscn" id="2_iidcd"]
+[ext_resource type="PresetsData" uid="uid://chayxk85agbwg" path="res://scene/presets_data.tres" id="3_gxiqe"]
+[ext_resource type="PackedScene" uid="uid://2w3r3o4pddd5" path="res://packed_scene/gd_controller/gd_controller.tscn" id="4_rj7mn"]
+[ext_resource type="PackedScene" uid="uid://worjrujaue0k" path="res://packed_scene/gd_observer/gd_observer.tscn" id="5_lmd5v"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xnsj0"]
+
+[sub_resource type="GDScript" id="GDScript_75ifo"]
+script/source = "extends Node
+
+@onready
+var gd_controller : GDController = $GDController
+
+var preview : CSGBox3D = CSGBox3D.new()
+func _ready():
+	preview.gi_mode = GeometryInstance3D.GI_MODE_DYNAMIC
+	preview.transparency = 0.8
+
+func _process(delta):
+	var collider := gd_controller.ray_cast.get_collider()
+	var point := gd_controller.ray_cast.get_collision_point()
+	var normal := gd_controller.ray_cast.get_collision_normal()
+	if collider == null:
+		return
+	if collider.is_in_group(\"VoxelBlock\"):
+		var gd_voxel_block : GDStandardVoxelBlock = collider.get_parent()
+		preview.position = VoxelBlockData.get_voxel_position(
+			gd_voxel_block.global_transform,
+			point,
+			normal
+		) + Vector3i(VoxelBlockData.translate_normal_to_voxel_block_coordinatet(gd_voxel_block.global_transform,normal))
+		if(preview.get_parent() != null):
+			preview.get_parent().remove_child(preview)
+		gd_voxel_block.add_child(preview)
+		
+		var gd_voxel_world : GDVoxelWorld = gd_voxel_block.get_voxel_container()
+		
+		if Input.is_action_just_pressed(\"cursor_a\"):
+			gd_voxel_block.set_voxel(preview.position,gd_voxel_block.basics_voxel(0))
+			gd_voxel_world.gd_voxel_blocks[gd_voxel_world.get_voxel_block_key(Vector3i(preview.global_position))].refresh()
+		if Input.is_action_just_pressed(\"cursor_b\"):
+			gd_voxel_block.set_voxel(VoxelBlockData.get_voxel_position(
+				gd_voxel_block.global_transform,
+				point,
+				normal),gd_voxel_block.empty_voxel())
+			gd_voxel_block.refresh()
+		
+"
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7aog"]
+
+[sub_resource type="Sky" id="Sky_gsgwp"]
+sky_material = SubResource("ProceduralSkyMaterial_w7aog")
+
+[sub_resource type="Environment" id="Environment_6oe6j"]
+background_mode = 2
+sky = SubResource("Sky_gsgwp")
+ambient_light_source = 3
+reflected_light_source = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+
+[node name="Demo4" type="Node3D"]
+script = ExtResource("1_p1xqu")
+noise = SubResource("FastNoiseLite_xnsj0")
+
+[node name="GDVoxelWorld" parent="." instance=ExtResource("2_iidcd")]
+presets_data = ExtResource("3_gxiqe")
+voxel_block_size = Vector3i(16, 32, 16)
+
+[node name="Player" type="Node" parent="GDVoxelWorld"]
+script = SubResource("GDScript_75ifo")
+
+[node name="GDController" parent="GDVoxelWorld/Player" instance=ExtResource("4_rj7mn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 0)
+move_speed = 300.0
+
+[node name="GDObserver" parent="GDVoxelWorld/Player/GDController" instance=ExtResource("5_lmd5v")]
+
+[node name="Label3D" type="Label3D" parent="."]
+billboard = 1
+no_depth_test = true
+text = "Center"
+uppercase = true
+autowrap_mode = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6oe6j")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.983595, -0.0561924, -0.171418, -0.180389, 0.312443, 0.932652, 0.00115025, 0.948273, -0.317454, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[connection signal="on_load_voxel_block" from="GDVoxelWorld" to="." method="_on_gd_voxel_world_on_load_voxel_block"]
