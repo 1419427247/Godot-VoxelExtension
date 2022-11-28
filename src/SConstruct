@@ -18,14 +18,14 @@ sources = Glob("*.cpp")
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "../bin/voxel_expansion.{}.{}.framework/voxel_expansion.{}.{}".format(
+        "../bin/voxel_extension.{}.{}.framework/voxel_extension.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "../bin/voxel_expansion{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "../bin/voxel_extension{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 
