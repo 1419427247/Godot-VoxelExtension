@@ -52,7 +52,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{b7f0d6b2-04e3-47ab-abbc-97fa2730fd65}</ProjectGuid>
-    <RootNamespace>VoxelExpansion</RootNamespace>
+    <RootNamespace>VoxelExtension</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
