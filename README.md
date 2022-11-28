@@ -1,4 +1,4 @@
-# Godot-VoxelExpansion ![](https://badgen.net/github/license/Ark2000/PankuConsole)
+# Godot-VoxelExtension ![](https://badgen.net/github/license/Ark2000/PankuConsole)
 
 <p align="center">
 	<img src="docs/logo.png">
