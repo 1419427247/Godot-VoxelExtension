@@ -14,8 +14,12 @@ void VoxelContainer::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("set_voxel_block_data", "key", "value"), &VoxelContainer::set_voxel_block_data);
 	ClassDB::bind_method(D_METHOD("get_voxel_block_data", "key"), &VoxelContainer::get_voxel_block_data);
+
 	ClassDB::bind_method(D_METHOD("set_voxel", "position", "value"), &VoxelContainer::set_voxel);
 	ClassDB::bind_method(D_METHOD("get_voxel", "position"), &VoxelContainer::get_voxel);
+
+	ClassDB::bind_method(D_METHOD("set_custom_data", "position", "value"), &VoxelContainer::set_custom_data);
+	ClassDB::bind_method(D_METHOD("get_custom_data", "position"), &VoxelContainer::get_custom_data);
 
 	ClassDB::bind_method(D_METHOD("get_voxel_block_key", "position"), &VoxelContainer::get_voxel_block_key);
 
@@ -117,6 +121,35 @@ Voxel VoxelContainer::get_voxel(const Vector3i& position) const
 			});
 	}
 	return EMPTY_VOXEL;
+}
+
+void VoxelContainer::set_custom_data(const Vector3i& position, const Variant& value)
+{
+	Vector3i key = get_voxel_block_key(position);
+	Ref<VoxelBlockData> voxel_block_data = voxel_block_datas.get(key, nullptr);
+	if (voxel_block_data != nullptr)
+	{
+		voxel_block_data->set_custom_data({
+			position.x < 0 ? voxel_block_size.x - ((-1 * position.x - 1) % voxel_block_size.x) - 1 : (position.x % voxel_block_size.x),
+			position.y < 0 ? voxel_block_size.y - ((-1 * position.y - 1) % voxel_block_size.y) - 1 : (position.y % voxel_block_size.y),
+			position.z < 0 ? voxel_block_size.z - ((-1 * position.z - 1) % voxel_block_size.z) - 1 : (position.z % voxel_block_size.z)
+			}, value);
+	}
+}
+
+Variant VoxelContainer::get_custom_data(const Vector3i& position)
+{
+	Vector3i key = get_voxel_block_key(position);
+	Ref<VoxelBlockData> voxel_block_data = voxel_block_datas.get(key, nullptr);
+	if (voxel_block_data != nullptr)
+	{
+		return voxel_block_data->get_custom_data({
+			position.x < 0 ? voxel_block_size.x - ((-1 * position.x - 1) % voxel_block_size.x) - 1 : (position.x % voxel_block_size.x),
+			position.y < 0 ? voxel_block_size.y - ((-1 * position.y - 1) % voxel_block_size.y) - 1 : (position.y % voxel_block_size.y),
+			position.z < 0 ? voxel_block_size.z - ((-1 * position.z - 1) % voxel_block_size.z) - 1 : (position.z % voxel_block_size.z)
+			});
+	}
+	return nullptr;
 }
 
 Vector3i VoxelContainer::get_voxel_block_key(const Vector3i& position) const

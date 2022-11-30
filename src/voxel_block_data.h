@@ -20,6 +20,9 @@ protected:
 	Vector3i size;
 	Ref<PresetsData> presets_data;
 	VoxelContainer* voxel_container;
+	bool use_custom_datas;
+	Array custom_datas;
+	
 	Dictionary devices;
 
 	static void _bind_methods();
@@ -46,11 +49,22 @@ public:
 	void set_voxel_container(Variant value);
 	Variant get_voxel_container() const;
 
+	void set_use_custom_datas(const bool& value);
+	bool is_use_custom_datas();
+
+	void set_custom_datas(const Array& value);
+	Array get_custom_datas() const;
+
+	TypedArray<Device> get_devices() const;
+
 	virtual void set_voxels(const PackedByteArray& value);
 	virtual PackedByteArray get_voxels() const;
 
 	virtual void set_voxel(const Vector3i& position, const Voxel& value);
 	virtual Voxel get_voxel(const Vector3i& position) const;
+	
+	void set_custom_data(const Vector3i& position, const Variant& value);
+	Variant get_custom_data(const Vector3i& position);
 
 	virtual void fill(const Voxel& voxel);
 	virtual bool is_filled(const Voxel& voxel) const;

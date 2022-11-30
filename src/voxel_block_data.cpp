@@ -13,8 +13,19 @@ void VoxelBlockData::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("get_voxel_container"), &VoxelBlockData::get_voxel_container);
 
-	ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxel);
+	ClassDB::bind_method(D_METHOD("set_use_custom_datas"), &VoxelBlockData::set_use_custom_datas);
+	ClassDB::bind_method(D_METHOD("is_use_custom_datas"), &VoxelBlockData::is_use_custom_datas);
+
+	ClassDB::bind_method(D_METHOD("set_custom_datas"), &VoxelBlockData::set_custom_datas);
+	ClassDB::bind_method(D_METHOD("get_custom_datas"), &VoxelBlockData::get_custom_datas);
+
+	ClassDB::bind_method(D_METHOD("get_devices"), &VoxelBlockData::get_devices);
+
+	ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxels);
 	ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelBlockData::get_voxels);
+
+	ClassDB::bind_method(D_METHOD("set_voxel", "position", "value"), &VoxelBlockData::set_voxel);
+	ClassDB::bind_method(D_METHOD("get_voxel", "position"), &VoxelBlockData::get_voxel);
 
 	ClassDB::bind_method(D_METHOD("fill", "voxel"), &VoxelBlockData::fill);
 	ClassDB::bind_method(D_METHOD("is_filled"), &VoxelBlockData::is_filled);
@@ -29,6 +40,9 @@ void VoxelBlockData::_bind_methods()
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "size"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_custom_datas"), "set_use_custom_datas", "is_use_custom_datas");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "custom_datas"), "set_custom_datas", "get_custom_datas");
+	//ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "custom_datas", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::OBJECT) + "/" + String::num_int64(PROPERTY_HINT_RESOURCE_TYPE) + ":Resource"), "set_custom_datas", "get_custom_datas");
 
 	BIND_ENUM_CONSTANT(EMPTY);
 	BIND_ENUM_CONSTANT(BASICS);
@@ -64,10 +78,16 @@ VoxelBlockData::VoxelBlockData()
 	voxel_container = nullptr;
 	set_key(Vector3i(0, 0, 0));
 	set_size(Vector3i(8, 8, 8));
+	set_use_custom_datas(false);
 }
 
 VoxelBlockData::~VoxelBlockData()
 {
+	TypedArray<Device> device_array = get_devices();
+	for (int i = 0; i < device_array.size(); i++)
+	{
+		cast_to<Device>(device_array[i])->queue_free();
+	}
 }
 
 void VoxelBlockData::set_key(const Vector3i& value) {
@@ -116,6 +136,37 @@ Variant VoxelBlockData::get_voxel_container() const
 	return voxel_container;
 }
 
+void VoxelBlockData::set_use_custom_datas(const bool& value) {
+	use_custom_datas = value;
+	if (use_custom_datas == true)
+	{
+		custom_datas.resize(size.x * size.y * size.z);
+	}
+	else {
+		custom_datas.clear();
+	}
+	notify_property_list_changed();
+}
+bool VoxelBlockData::is_use_custom_datas() {
+	return use_custom_datas;
+}
+
+void VoxelBlockData::set_custom_datas(const Array& value) {
+	if (use_custom_datas == true)
+	{
+		custom_datas = value;
+		custom_datas.resize(size.x * size.y * size.z);
+	}
+}
+
+Array VoxelBlockData::get_custom_datas() const {
+	return custom_datas;
+}
+
+TypedArray<Device> VoxelBlockData::get_devices() const {
+	return devices.values();
+}
+
 void VoxelBlockData::set_voxels(const PackedByteArray& value)
 {
 
@@ -134,6 +185,49 @@ void VoxelBlockData::set_voxel(const Vector3i& position, const Voxel& value)
 Voxel VoxelBlockData::get_voxel(const Vector3i& position) const
 {
 	return EMPTY_VOXEL;
+}
+
+void VoxelBlockData::set_custom_data(const Vector3i& position, const Variant& value) {
+	if (use_custom_datas == false) {
+		return;
+	}
+	if (position.x >= 0 && position.x < size.x &&
+		position.y >= 0 && position.y < size.y &&
+		position.z >= 0 && position.z < size.z)
+	{
+		int index = ((position.x * size.y * size.z) + (position.y * size.z) + position.z);
+		custom_datas[index] = value;
+	}
+	else {
+		if (voxel_container != nullptr)
+		{
+			if (voxel_container->is_isolated() == false) {
+				voxel_container->set_custom_data(position + key * size, value);
+			}
+		}
+	}
+}
+
+
+Variant VoxelBlockData::get_custom_data(const Vector3i& position)
+{
+	if (use_custom_datas == false) {
+		return nullptr;
+	}
+	if (position.x >= 0 && position.x < size.x &&
+		position.y >= 0 && position.y < size.y &&
+		position.z >= 0 && position.z < size.z)
+	{
+		int index = ((position.x * size.y * size.z) + (position.y * size.z) + position.z);
+		return custom_datas[index];
+	}
+	if (voxel_container != nullptr)
+	{
+		if (voxel_container->is_isolated() == false) {
+			return voxel_container->get_custom_data(position + key * size);
+		}
+	}
+	return nullptr;
 }
 
 void VoxelBlockData::fill(const Voxel& voxel) {

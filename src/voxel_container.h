@@ -35,6 +35,9 @@ public:
 	void set_voxel(const Vector3i& position, const Voxel& value);
 	Voxel get_voxel(const Vector3i& position) const;
 
+	void set_custom_data(const Vector3i& position, const Variant& value);
+	Variant get_custom_data(const Vector3i& position);
+
 	Vector3i get_voxel_block_key(const Vector3i& position) const;
 
 	VoxelBlockData* copy(const Vector3i& from, const Vector3i& to);
