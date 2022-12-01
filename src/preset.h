@@ -37,8 +37,8 @@ typedef uint64_t Voxel;
 static const Vector3i DIRCTIONS[6] = {
 	Vector3i(0, 1, 0),
 	Vector3i(0, -1, 0),
-	Vector3i(0, 0, -1),
 	Vector3i(0, 0, 1),
+	Vector3i(0, 0, -1),
 	Vector3i(-1, 0, 0),
 	Vector3i(1, 0, 0),
 };
