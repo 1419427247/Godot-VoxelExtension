@@ -88,7 +88,8 @@ void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, co
 			Vector3(-0.5, 0.5, -0.5),
 			Vector3(-0.5, -0.5, 0.5),
 			Vector3(-0.5, -0.5, -0.5),
-		} };
+		}
+	};
 
 	Ref<SurfaceTool> surface_tool;
 	surface_tool.instantiate();

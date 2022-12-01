@@ -53,11 +53,8 @@ albedo_texture = ExtResource("1_uhpaf")
 normal_texture = ExtResource("4_skofi")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4doid"]
-cull_mode = 2
 albedo_texture = ExtResource("2_jx4vk")
-normal_enabled = true
 normal_scale = 2.0
-normal_texture = ExtResource("4_skofi")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onsnf"]
 albedo_texture = ExtResource("3_josmp")
