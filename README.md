@@ -114,5 +114,3 @@ tip:I secretly made the `size` of `voxel_block_data` a little bit bigger, one mo
 # Start your first voxel world
 
 start swinging
-
-Translated with www.DeepL.com/Translator (free version)
