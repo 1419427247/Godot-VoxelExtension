@@ -22,6 +22,7 @@
 #include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/classes/script.hpp>
 #include <godot_cpp/classes/stream_peer_buffer.hpp>
+#include <godot_cpp/classes/surface_tool.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/typed_array.hpp>
 #include <godot_cpp/variant/plane.hpp>
@@ -39,8 +40,8 @@ static const Vector3i DIRCTIONS[6] = {
 	Vector3i(0, -1, 0),
 	Vector3i(0, 0, 1),
 	Vector3i(0, 0, -1),
-	Vector3i(-1, 0, 0),
 	Vector3i(1, 0, 0),
+	Vector3i(-1, 0, 0),
 };
 class Preset : public Resource
 {

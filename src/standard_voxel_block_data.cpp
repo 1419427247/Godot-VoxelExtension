@@ -66,20 +66,12 @@ void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, co
 			Vector3(-0.5, -0.5, 0.5),
 		},
 		{
-			Vector3(-0.5, 0.5, -0.5),
 			Vector3(0.5, 0.5, -0.5),
-			Vector3(0.5, -0.5, -0.5),
 			Vector3(-0.5, 0.5, -0.5),
-			Vector3(0.5, -0.5, -0.5),
 			Vector3(-0.5, -0.5, -0.5),
-		},
-		{
-			Vector3(-0.5, 0.5, -0.5),
-			Vector3(-0.5, 0.5, 0.5),
-			Vector3(-0.5, -0.5, 0.5),
-			Vector3(-0.5, 0.5, -0.5),
-			Vector3(-0.5, -0.5, 0.5),
+			Vector3(0.5, 0.5, -0.5),
 			Vector3(-0.5, -0.5, -0.5),
+			Vector3(0.5, -0.5, -0.5),
 		},
 		{
 			Vector3(0.5, 0.5, 0.5),
@@ -88,7 +80,19 @@ void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, co
 			Vector3(0.5, 0.5, 0.5),
 			Vector3(0.5, -0.5, -0.5),
 			Vector3(0.5, -0.5, 0.5),
+		},
+		{
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(-0.5, 0.5, 0.5),
+			Vector3(-0.5, -0.5, 0.5),
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(-0.5, -0.5, 0.5),
+			Vector3(-0.5, -0.5, -0.5),
 		} };
+
+	Ref<SurfaceTool> surface_tool;
+	surface_tool.instantiate();
+
 	static MemorandumData* memorandum[24 * 24 * 24] = { nullptr };
 
 	if (basics_mesh.is_null()) {
@@ -104,7 +108,7 @@ void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, co
 				{
 					data->vertexs[i][j] = (vertexs[j] = Preset::rotate_vertex(basics_vertexs[i][j], rotation));
 				}
-				data->normals[i] = Plane(vertexs[0], vertexs[1], vertexs[2]).get_normal();
+				data->normals[i] = Preset::get_triangle_normal(vertexs[0], vertexs[1], vertexs[2]);
 			}
 			memorandum[index] = data;
 		}
@@ -251,6 +255,10 @@ StandardVoxelBlockData::~StandardVoxelBlockData()
 void StandardVoxelBlockData::set_size(const Vector3i& value) {
 	VoxelBlockData::set_size(value);
 	voxels.resize(size.x * size.y * size.z);
+	if (use_custom_datas == true)
+	{
+		custom_datas.resize(size.x * size.y * size.z);
+	}
 	notify_property_list_changed();
 }
 

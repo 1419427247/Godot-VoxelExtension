@@ -53,3 +53,4 @@ directional_shadow_mode = 0
 
 [node name="GDController" parent="." instance=ExtResource("1_hvt0d")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1, 4.64316, -1)
+ghost = true

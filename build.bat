@@ -4,6 +4,6 @@ scons target=template_release dev_build=yes
 scons target=template_debug
 scons target=template_release
 cd ..
-copy .\bin\*.dll .\demo\bin\
+copy .\bin\* .\demo\bin\
 
 pause
