@@ -8,6 +8,9 @@ void VoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_size", "value"), &VoxelBlockData::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &VoxelBlockData::get_size);
 
+	ClassDB::bind_method(D_METHOD("set_voxels_data", "value"), &VoxelBlockData::set_voxels_data);
+	ClassDB::bind_method(D_METHOD("get_voxels_data"), &VoxelBlockData::get_voxels_data);
+
 	ClassDB::bind_method(D_METHOD("set_presets_data", "value"), &VoxelBlockData::set_presets_data);
 	ClassDB::bind_method(D_METHOD("get_presets_data"), &VoxelBlockData::get_presets_data);
 
@@ -21,11 +24,10 @@ void VoxelBlockData::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("get_devices"), &VoxelBlockData::get_devices);
 
-	ClassDB::bind_method(D_METHOD("set_voxels", "value"), &VoxelBlockData::set_voxels);
-	ClassDB::bind_method(D_METHOD("get_voxels"), &VoxelBlockData::get_voxels);
-
 	ClassDB::bind_method(D_METHOD("set_voxel", "position", "value"), &VoxelBlockData::set_voxel);
 	ClassDB::bind_method(D_METHOD("get_voxel", "position"), &VoxelBlockData::get_voxel);
+
+	ClassDB::bind_method(D_METHOD("set_custom_data"), &VoxelBlockData::set_custom_data);
 
 	ClassDB::bind_method(D_METHOD("fill", "voxel"), &VoxelBlockData::fill);
 	ClassDB::bind_method(D_METHOD("is_filled"), &VoxelBlockData::is_filled);
@@ -39,10 +41,10 @@ void VoxelBlockData::_bind_methods()
 	ClassDB::bind_static_method("VoxelBlockData", D_METHOD("get_voxel_position", "global_transform", "point", "normal"), &VoxelBlockData::get_voxel_position);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3I, "size"), "set_size", "get_size");
+	ADD_PROPERTY(PropertyInfo(Variant::PACKED_BYTE_ARRAY, "voxels_data"), "set_voxels_data", "get_voxels_data");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_custom_datas"), "set_use_custom_datas", "is_use_custom_datas");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "custom_datas"), "set_custom_datas", "get_custom_datas");
-	//ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "custom_datas", PROPERTY_HINT_ARRAY_TYPE, String::num_int64(Variant::OBJECT) + "/" + String::num_int64(PROPERTY_HINT_RESOURCE_TYPE) + ":Resource"), "set_custom_datas", "get_custom_datas");
 
 	BIND_ENUM_CONSTANT(EMPTY);
 	BIND_ENUM_CONSTANT(BASICS);
@@ -111,6 +113,14 @@ Vector3i VoxelBlockData::get_size() const {
 	return size;
 }
 
+void VoxelBlockData::set_voxels_data(const PackedByteArray& value) {
+
+}
+
+PackedByteArray VoxelBlockData::get_voxels_data() const {
+	return PackedByteArray();
+}
+
 void VoxelBlockData::set_presets_data(const Ref<PresetsData>& value) {
 	presets_data = value;
 }
@@ -167,17 +177,7 @@ TypedArray<Device> VoxelBlockData::get_devices() const {
 	return devices.values();
 }
 
-void VoxelBlockData::set_voxels(const PackedByteArray& value)
-{
-
-}
-
-PackedByteArray VoxelBlockData::get_voxels() const
-{
-	return PackedByteArray();
-}
-
-void VoxelBlockData::set_voxel(const Vector3i& position, const Voxel& value)
+void VoxelBlockData::set_voxel(const Vector3i& position,const Voxel& value)
 {
 
 }

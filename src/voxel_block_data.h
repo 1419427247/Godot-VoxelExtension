@@ -43,6 +43,9 @@ public:
 	virtual void set_size(const Vector3i& value);
 	virtual Vector3i get_size() const;
 
+	virtual void set_voxels_data(const PackedByteArray& value);
+	virtual PackedByteArray get_voxels_data() const;
+
 	void set_presets_data(const Ref<PresetsData>& value);
 	Ref<PresetsData> get_presets_data() const;
 
@@ -56,9 +59,6 @@ public:
 	Array get_custom_datas() const;
 
 	TypedArray<Device> get_devices() const;
-
-	virtual void set_voxels(const PackedByteArray& value);
-	virtual PackedByteArray get_voxels() const;
 
 	virtual void set_voxel(const Vector3i& position, const Voxel& value);
 	virtual Voxel get_voxel(const Vector3i& position) const;

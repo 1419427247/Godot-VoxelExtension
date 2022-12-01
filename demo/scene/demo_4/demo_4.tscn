@@ -57,12 +57,14 @@ sky_material = SubResource("ProceduralSkyMaterial_w7aog")
 
 [sub_resource type="Environment" id="Environment_6oe6j"]
 background_mode = 2
+background_energy_multiplier = 3.0
 sky = SubResource("Sky_gsgwp")
 ambient_light_source = 3
 reflected_light_source = 2
 ssr_enabled = true
 ssao_enabled = true
 ssil_enabled = true
+glow_enabled = true
 
 [node name="Demo4" type="Node3D"]
 script = ExtResource("1_p1xqu")

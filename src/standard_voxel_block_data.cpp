@@ -5,8 +5,8 @@ void StandardVoxelBlockData::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_size", "value"), &StandardVoxelBlockData::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &StandardVoxelBlockData::get_size);
 
-	ClassDB::bind_method(D_METHOD("set_voxels", "value"), &StandardVoxelBlockData::set_voxels);
-	ClassDB::bind_method(D_METHOD("get_voxels"), &StandardVoxelBlockData::get_voxels);
+	ClassDB::bind_method(D_METHOD("set_voxels_data", "value"), &StandardVoxelBlockData::set_voxels_data);
+	ClassDB::bind_method(D_METHOD("get_voxels_data"), &StandardVoxelBlockData::get_voxels_data);
 
 	ClassDB::bind_method(D_METHOD("set_voxel", "position", "value"), &StandardVoxelBlockData::set_voxel);
 	ClassDB::bind_method(D_METHOD("get_voxel", "position"), &StandardVoxelBlockData::get_voxel);
@@ -23,8 +23,6 @@ void StandardVoxelBlockData::_bind_methods()
 	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("basics_voxel", "id", "rotation"), &StandardVoxelBlockData::basics_voxel, Vector3i());
 	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("model_voxel", "id", "rotation"), &StandardVoxelBlockData::model_voxel, Vector3i());
 	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("device_voxel", "id", "rotation"), &StandardVoxelBlockData::device_voxel, Vector3i());
-
-	ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT32_ARRAY, "voxels"), "set_voxels", "get_voxels");
 }
 
 void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation)
@@ -242,7 +240,6 @@ int StandardVoxelBlockData::_get_voxel_id(const Voxel& value)
 
 StandardVoxelBlockData::StandardVoxelBlockData()
 {
-	set_size(Vector3i(8, 8, 8));
 }
 
 StandardVoxelBlockData::~StandardVoxelBlockData()
@@ -253,24 +250,25 @@ StandardVoxelBlockData::~StandardVoxelBlockData()
 void StandardVoxelBlockData::set_size(const Vector3i& value) {
 	VoxelBlockData::set_size(value);
 	voxels.resize(size.x * size.y * size.z);
+	notify_property_list_changed();
 }
 
 Vector3i StandardVoxelBlockData::get_size() const {
 	return VoxelBlockData::get_size();
 }
 
-void StandardVoxelBlockData::set_voxels(const PackedByteArray& value)
+void StandardVoxelBlockData::set_voxels_data(const PackedByteArray& value)
 {
-	voxels = value.decompress(4096).to_int32_array();
+	voxels = value.to_int32_array();
 	if (voxels.size() != size.x * size.y * size.z)
 	{
 		voxels.resize(size.x * size.y * size.z);
 	}
 }
 
-PackedByteArray StandardVoxelBlockData::get_voxels() const
+PackedByteArray StandardVoxelBlockData::get_voxels_data() const
 {
-	return voxels.to_byte_array().compress();
+	return voxels.to_byte_array();
 }
 
 void StandardVoxelBlockData::set_voxel(const Vector3i& position, const Voxel& value)

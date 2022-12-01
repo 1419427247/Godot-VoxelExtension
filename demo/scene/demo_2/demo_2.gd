@@ -14,15 +14,17 @@ var noise_1 : Noise
 var gd_controller : GDController = $GDController
 
 func _ready():
-	for x in voxel_block_data.size.x:
-		for z in voxel_block_data.size.z:
-			var height = (noise_0.get_noise_2d(x,z) + 0.5) * 3 + (noise_1.get_noise_2d(x,z) + 0.5) * 4
-			for y in range(height):
-				voxel_block_data.set_voxel(Vector3i(x,y,z),StandardVoxelBlockData.basics_voxel(0))
-			if(randi() % 6 == 0):
-				for i in range(1,randi() % 8):
-					voxel_block_data.set_voxel(Vector3i(x,i,z),StandardVoxelBlockData.model_voxel(0))
-	
+	if load("res://scene/demo_2/save.tres") == null:
+		for x in voxel_block_data.size.x:
+			for z in voxel_block_data.size.z:
+				var height = (noise_0.get_noise_2d(x,z) + 0.5) * 3 + (noise_1.get_noise_2d(x,z) + 0.5) * 4
+				for y in range(height):
+					voxel_block_data.set_voxel(Vector3i(x,y,z),StandardVoxelBlockData.basics_voxel(0))
+				if(randi() % 6 == 0):
+					for i in range(1,randi() % 8):
+						voxel_block_data.set_voxel(Vector3i(x,i,z),StandardVoxelBlockData.model_voxel(0))
+	else:
+		voxel_block_data = load("res://scene/demo_2/save.tres")
 	_refresh()
 	
 var preview : CSGBox3D = CSGBox3D.new()
@@ -52,9 +54,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("cursor_b"):
 		print(VoxelBlockData.translate_point_to_voxel_block_coordinatet(collider.global_transform,point))
 		voxel_block_data.set_voxel(VoxelBlockData.get_voxel_position(collider.global_transform,point,normal),voxel_block_data.empty_voxel())
-	_refresh()
+		_refresh()
 
 func _refresh():
+	ResourceSaver.save(voxel_block_data,"res://scene/demo_2/save.tres")
 	$VoxelBlock_0.mesh = voxel_block_data.generate_mesh()
 	$VoxelBlock_0/StaticBody3D/CollisionShape3D.shape = voxel_block_data.generate_collider()
 

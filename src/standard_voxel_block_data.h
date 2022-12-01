@@ -33,8 +33,8 @@ public:
 	virtual void set_size(const Vector3i& value) override;
 	virtual Vector3i get_size() const override;
 
-	virtual void set_voxels(const PackedByteArray& value) override;
-	virtual PackedByteArray get_voxels() const override;
+	virtual void set_voxels_data(const PackedByteArray& value) override;
+	virtual PackedByteArray get_voxels_data() const override;
 
 	virtual void set_voxel(const Vector3i& position, const Voxel& value) override;
 	virtual Voxel get_voxel(const Vector3i& position) const override;

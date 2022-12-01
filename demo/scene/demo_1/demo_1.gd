@@ -12,12 +12,13 @@ func _ready():
 			var height = (noise.get_noise_2d(x,z) + 0.5) * 8
 			for y in range(height):
 				voxel_block_data.set_voxel(Vector3i(x,y,z),StandardVoxelBlockData.basics_voxel(0))
-			
+
 			if(randi() % 64 == 0):
 				_build_tree(voxel_block_data,Vector3i(x,height,z))
+	
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 	$StaticBody3D/CollisionShape3D.shape = voxel_block_data.generate_collider()
-
+	
 func _build_tree(voxel_block_data : StandardVoxelBlockData,bottom : Vector3i):
 	var top = bottom.y + randi() % 2 + 4
 	for y in range(bottom.y,top):
@@ -28,7 +29,3 @@ func _build_tree(voxel_block_data : StandardVoxelBlockData,bottom : Vector3i):
 			for z in range(-1 * width,2 * width):
 				voxel_block_data.set_voxel(Vector3i(bottom.x + x,y,bottom.z + z),StandardVoxelBlockData.basics_voxel(1))
 				
-func _process(delta):
-	pass
-
-

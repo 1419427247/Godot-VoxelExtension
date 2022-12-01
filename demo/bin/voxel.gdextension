@@ -4,3 +4,6 @@ entry_symbol = "voxel_library_init"
 [libraries]
 windows.debug.x86_64 = "res://bin/voxel_extension.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "res://bin/voxel_extension.windows.template_release.x86_64.dll"
+
+windows.debug.x86_64 = "res://bin/voxel_extension.windows.template_debug.dev.x86_64.dll"
+windows.release.x86_64 = "res://bin/voxel_extension.windows.template_release.dev.x86_64.dll"
