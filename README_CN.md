@@ -41,9 +41,9 @@ var voxel_block_data : StandardVoxelBlockData
 `
 
 现在我们可以直接在检查器中编辑体素预设了
-
-![](docs/1.png)
-
+<figure class="half">
+	<img src="docs/1.png">
+</figure>
 | 属性名        | 说明             |
 | ------------- | ---------------- |
 | Materials     | 材质数组         |
@@ -53,7 +53,9 @@ var voxel_block_data : StandardVoxelBlockData
 
 现在我想要一个草地方块，我们可以在`materials`属性中添加两个材质，在`basics_presets`属性中添加一个预设
 
-<img src="docs/2.png">
+<figure class="half">
+	<img src="docs/2.png">
+</figure>
 
 嗯，太好了，我们设置好了`PresetsData`属性，这样`VoxelBlockData`就知道我们需要生成的体素网格是什么样子的(^v^)/
 
@@ -69,7 +71,9 @@ func _ready():
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
 嗯嗯嗯，现在我们按`F6`运行当前正在编辑的场景，额，怎么怎么也看不见？啊哦！忘记加摄像机节点了，再加上环境！嗯嗯嗯！看起来还不错o(*￣▽￣*)ブ
-<img src="docs/3.png">
+<figure class="half">
+	<img src="docs/3.png">
+</figure>
 ps:这草地贴图有点难看o(TヘTo)
 
 好的，现在这个区块里只有一个孤零零的体素，连个站的位置恐怕都不够
@@ -79,14 +83,18 @@ for x in voxel_block_data.size.x:
 		voxel_block_data.set_voxel(Vector3i(x,0,z),voxel_block_data.basics_voxel(0))
 $MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
-<img src="docs/4.png">
+<figure class="half">
+	<img src="docs/4.png">
+</figure>
 
 真好o(^▽^)o
 
 现在我突然想加一个圆柱体，额，没原因突然就想怎么做了！！！
 
 在`voxel_block_data`的`model_presets`属性加入
-<img src="docs/5.png">
+<figure class="half">
+	<img src="docs/5.png">
+</figure>
 
 在生成网格之前加上
 ```godot
@@ -97,7 +105,9 @@ $MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
 好难看啊(ㄒoㄒ)
 
-<img src="docs/6.png">
+<figure class="half">
+	<img src="docs/6.png">
+</figure>
 
 tip:我偷偷的把`voxel_block_data`的`size`搞大了一点，还有一件事，这个模型顶点数太多了，会拖慢区块加载速度的qwq
 
