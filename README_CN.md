@@ -1,6 +1,8 @@
 # Godot-VoxelExtension
 
-![](docs/logo.png)
+<p align="center">
+	<img src="docs/logo.png">
+</p>
 
 [English](./README.md)
 [中文](./README_CN.md)
@@ -13,8 +15,9 @@
 QQ群：773700466
 ***
 
-
-![](docs/preview_2.png)
+<figure class="half">
+    <img src="docs/preview_2.png">
+</figure>
 
 # 如何配置？
 在godot项目文件夹下新建一个文件夹并命名为`bin`，将编译好的动态链接库(*.dll)移动到`bin`文件夹内，然后在项目目录中新建一个文件并命名为`voxel.gdextension`
@@ -49,7 +52,8 @@ var voxel_block_data : StandardVoxelBlockData
 | DevicePresets | 3D结点预设数组   |
 
 现在我想要一个草地方块，我们可以在`materials`属性中添加两个材质，在`basics_presets`属性中添加一个预设
-![](docs/2.png)
+
+<img src="docs/2.png">
 
 嗯，太好了，我们设置好了`PresetsData`属性，这样`VoxelBlockData`就知道我们需要生成的体素网格是什么样子的(^v^)/
 
@@ -65,7 +69,7 @@ func _ready():
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
 嗯嗯嗯，现在我们按`F6`运行当前正在编辑的场景，额，怎么怎么也看不见？啊哦！忘记加摄像机节点了，再加上环境！嗯嗯嗯！看起来还不错o(*￣▽￣*)ブ
-![](docs/3.png)
+<img src="docs/3.png">
 ps:这草地贴图有点难看o(TヘTo)
 
 好的，现在这个区块里只有一个孤零零的体素，连个站的位置恐怕都不够
@@ -75,14 +79,14 @@ for x in voxel_block_data.size.x:
 		voxel_block_data.set_voxel(Vector3i(x,0,z),voxel_block_data.basics_voxel(0))
 $MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
-![](docs/4.png)
+<img src="docs/4.png">
 
 真好o(^▽^)o
 
 现在我突然想加一个圆柱体，额，没原因突然就想怎么做了！！！
 
 在`voxel_block_data`的`model_presets`属性加入
-![](docs/5.png)
+<img src="docs/5.png">
 
 在生成网格之前加上
 ```godot
@@ -93,7 +97,7 @@ $MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
 好难看啊(ㄒoㄒ)
 
-![](docs/6.png)
+<img src="docs/6.png">
 
 tip:我偷偷的把`voxel_block_data`的`size`搞大了一点，还有一件事，这个模型顶点数太多了，会拖慢区块加载速度的qwq
 

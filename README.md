@@ -1,26 +1,26 @@
-# Godot-VoxelExtension ![](https://badgen.net/github/license/Ark2000/PankuConsole)
+# Godot-VoxelExtension
 
 <p align="center">
 	<img src="docs/logo.png">
-</p>
+</p
 
-[English](./README.md)
-[中文](./README_CN.md)
+[English](. /README.md)
+[Chinese](. /README_CN.md)
 
-I came up with a cool game a couple of months ago, but unfortunately the project fell apart halfway through. This extension was made while designing the map generation, which was initially written in GDScript, but for performance reasons I decided to rewrite it in C++ using Godot 4.0 GDExpansion. Registered some relevant nodes for generating custom voxel meshes, hope it can help o(\*￣▽￣\*)o
+I came up with a cool game a couple of months ago, but unfortunately the project fell through halfway. This extension was made when designing the map generation, which was initially written using GDScript, but for performance reasons I decided to rewrite it in C++ using Godot 4.0 GDExtension. Registered some relevant nodes for generating custom voxel meshes, hope it can help o(\*￣▽￣\*)o
 
 ***
-Support author: Click a star if you like ⭐ Right （＾∀＾●）ﾉｼ
+Support the author: if you like it, point a star ⭐ it (＾∀＾＾)ノシ
 
-QQ Groups:773700466
+QQ group：773700466
 ***
 
 <figure class="half">
     <img src="docs/preview_2.png">
 </figure>
 
-# 🤔 How to configure?
-Create a new folder under godot project folder and name it `bin`, move the compiled dynamic link library (*.dll) to `bin` folder, then create a new file in the project directory and name it `voxel.gdextension`
+# How to configure?
+Create a new folder under godot project folder and name it `bin`, move the compiled dynamic link library (*.dll) to the `bin` folder, then create a new file in the project directory and name it `voxel.gdextension`
 ```
 [configuration]
 entry_symbol = "voxel_library_init"
@@ -31,7 +31,7 @@ windows.release.x86_64 = "res://bin/voxel_expansion.windows.template_release.x86
 ```
 Open the editor, if no error message is output then you're done!
 
-# 🍻Start your first voxel block
+# Start your first voxel block
 
 Let's create a new empty scene, add a Node3D node to it, attach a script to the node and write at the beginning
 
@@ -51,8 +51,9 @@ Now we can edit the voxel preset directly in the inspector
 | ModelPresets | Static mesh presets |
 | DevicePresets | 3D Node Presets |
 
-Now that I want a grass cube, we can add two materials to the `materials` property and one preset to the `basics_presets` property
-! [](docs/2.png)
+Now I want a grass cube, we can add two materials to the `materials` property and one preset to the `basics_presets` property
+
+<img src="docs/2.png">
 
 Well, great, we set the `PresetsData` property so that `VoxelBlockData` knows what we need the generated voxel mesh to look like (^v^)/
 
@@ -68,24 +69,24 @@ func _ready():
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 ```
 Hmmmmmmmm, now we press `F6` to run the current scene being edited, uh, how come we can't see it? Uh-oh! I forgot to add the camera node, then add the environment! Well, well, well! Looks pretty good o(*￣▽￣*)ブ
-! [](docs/3.png)
+<img src="docs/3.png">
 ps:This grass mapping is a bit hard to see o(TヘTo)
 
-Okay, now there is only one lone voxel in this block, not even a place to stand I'm afraid
+Ok, now there is only one lone voxel in this block, not even enough for a standing position I'm afraid
 ```godot
 for x in voxel_block_data.size.x:
 	for z in voxel_block_data.size.z:
 		voxel_block_data.set_voxel(Vector3i(x,0,z),voxel_block_data.basics_voxel(0))
 $MeshInstance3D.mesh = voxel_block_data.generate_mesh()
-```
-! [](docs/4.png)
+````
+<img src="docs/4.png">
 
 That's nice o(^▽^)o
 
 Now I suddenly want to add a cylinder, er, no reason suddenly want how to do it!!!
 
-In the `model_presets` property of `voxel_block_data` add
-Add a new line to the `model_presets` property of `voxel_block_data`! [](docs/5.png)
+In the `model_presets` attribute of `voxel_block_data` add
+<img src="docs/5.png">
 
 Before generating the grid add
 ```godot
@@ -94,12 +95,14 @@ Before generating the grid add
 			if(randy() % 6 == 0):
 				voxel_block_data.set_voxel(Vector3i(x,0,z),StandardVoxelBlockData.model_voxel(0))
 ```
-It's so hard to see(ㄒoㄒ)
+So hard to see(ðŸ™')
 
-! [](docs/6.png)
+<img src="docs/6.png">
 
-tip:I secretly made the `size` of `voxel_block_data` a little bit bigger, and one more thing, this model has too many vertices, it will slow down the block loading speed qwq
+tip:I secretly made `voxel_block_data` `size` a little bigger, one more thing, this model has too many vertices, it will slow down block loading qwq
 
 # Start your first voxel world
 
-Still doing it
+start swinging
+
+Translated with www.DeepL.com/Translator (free version)
