@@ -269,16 +269,12 @@ Vector3i StandardVoxelBlockData::get_size() const {
 
 void StandardVoxelBlockData::set_voxels_data(const PackedByteArray& value)
 {
-	voxels = value.to_int32_array();
-	if (voxels.size() != size.x * size.y * size.z)
-	{
-		voxels.resize(size.x * size.y * size.z);
-	}
+	voxels = value.decompress(4 * size.x * size.y * size.z).to_int32_array();
 }
 
 PackedByteArray StandardVoxelBlockData::get_voxels_data() const
 {
-	return voxels.to_byte_array();
+	return voxels.to_byte_array().compress();
 }
 
 void StandardVoxelBlockData::set_voxel(const Vector3i& position, const Voxel& value)
