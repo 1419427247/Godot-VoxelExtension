@@ -240,6 +240,7 @@ int StandardVoxelBlockData::_get_voxel_id(const Voxel& value)
 
 StandardVoxelBlockData::StandardVoxelBlockData()
 {
+	set_size(Vector3i(8, 8, 8));
 }
 
 StandardVoxelBlockData::~StandardVoxelBlockData()

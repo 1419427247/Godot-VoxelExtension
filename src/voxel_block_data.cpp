@@ -79,7 +79,6 @@ VoxelBlockData::VoxelBlockData()
 {
 	voxel_container = nullptr;
 	set_key(Vector3i(0, 0, 0));
-	set_size(Vector3i(8, 8, 8));
 	set_use_custom_datas(false);
 }
 
