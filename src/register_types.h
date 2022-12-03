@@ -1,7 +1,6 @@
 #ifndef REGISTER_TYPES_H
 #define REGISTER_TYPES_H
 
-#include "simple_voxel_block_data.h"
 #include "standard_voxel_block_data.h"
 
 using namespace godot;

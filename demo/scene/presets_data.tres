@@ -1,7 +1,7 @@
-[gd_resource type="PresetsData" load_steps=30 format=3 uid="uid://chayxk85agbwg"]
+[gd_resource type="PresetsData" load_steps=28 format=3 uid="uid://chayxk85agbwg"]
 
+[ext_resource type="ArrayMesh" uid="uid://bvbgj37680ewv" path="res://scene/demo_3/custom_voxel.obj" id="1_g5ayy"]
 [ext_resource type="PackedScene" uid="uid://g3uk5scij37h" path="res://scene/demo_0/device.tscn" id="1_o54l1"]
-[ext_resource type="ArrayMesh" uid="uid://bvbgj37680ewv" path="res://scene/demo_3/custom_voxel.obj" id="1_s36vw"]
 [ext_resource type="Texture2D" uid="uid://c544neghlnu1i" path="res://art/grass.jpg" id="1_uhpaf"]
 [ext_resource type="Texture2D" uid="uid://b6dkvp385si3v" path="res://art/ground.jpg" id="2_jx4vk"]
 [ext_resource type="Texture2D" uid="uid://buroik0w6s3d2" path="res://art/bark.jpg" id="3_josmp"]
@@ -32,11 +32,12 @@ back_material_id = 3
 left_material_id = 3
 right_material_id = 3
 
-[sub_resource type="BasicsMesh" id="BasicsMesh_t6irc"]
-mesh = ExtResource("1_s36vw")
+[sub_resource type="MeshPreset" id="MeshPreset_gbwu3"]
+mesh = ExtResource("1_g5ayy")
+material = [null, null, null, null, null, null]
 
 [sub_resource type="BasicsPreset" id="BasicsPreset_sor7l"]
-basics_mesh = SubResource("BasicsMesh_t6irc")
+mesh_preset = SubResource("MeshPreset_gbwu3")
 up_material_id = 5
 down_material_id = 5
 front_material_id = 5
@@ -48,7 +49,6 @@ right_material_id = 5
 packed_scene = ExtResource("1_o54l1")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dhv1c"]
-load_path = "res://.godot/imported/vol_2_3_Wood_Normal.png-4acc920007ca8c1a3b3014a84dbbb0c9.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_22kje"]
 albedo_texture = ExtResource("1_uhpaf")
@@ -76,44 +76,30 @@ refraction_texture_channel = 4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nixoh"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_m4cvj"]
-top_radius = 0.25
-bottom_radius = 0.25
+[sub_resource type="CylinderMesh" id="CylinderMesh_ycjlv"]
 height = 1.0
-radial_segments = 16
-rings = 1
+radial_segments = 32
 cap_bottom = false
 
-[sub_resource type="ModelMesh" id="ModelMesh_uia0t"]
-mesh = SubResource("CylinderMesh_m4cvj")
+[sub_resource type="MeshPreset" id="MeshPreset_uqtyu"]
+mesh = SubResource("CylinderMesh_ycjlv")
 material = [3]
 
 [sub_resource type="ModelPreset" id="ModelPreset_0b7je"]
-model_meshs = [SubResource("ModelMesh_uia0t")]
+mesh_presets = [SubResource("MeshPreset_uqtyu")]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_l2dvo"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_37t4n"]
 height = 1.0
 radial_segments = 16
-cap_bottom = false
 
-[sub_resource type="ModelMesh" id="ModelMesh_v258o"]
-mesh = SubResource("CylinderMesh_l2dvo")
+[sub_resource type="MeshPreset" id="MeshPreset_koscj"]
+mesh = SubResource("CylinderMesh_37t4n")
 material = [2]
 
 [sub_resource type="ModelPreset" id="ModelPreset_hmiap"]
-model_meshs = [SubResource("ModelMesh_v258o")]
-
-[sub_resource type="TextMesh" id="TextMesh_rcxtf"]
-text = "Godot-VoxelExtension"
-font_size = 24
-depth = 0.0
-
-[sub_resource type="ModelMesh" id="ModelMesh_tpxpf"]
-mesh = SubResource("TextMesh_rcxtf")
-material = [1]
+mesh_presets = [SubResource("MeshPreset_koscj")]
 
 [sub_resource type="ModelPreset" id="ModelPreset_w81ho"]
-model_meshs = [SubResource("ModelMesh_tpxpf")]
 
 [resource]
 materials = [SubResource("StandardMaterial3D_22kje"), SubResource("StandardMaterial3D_4doid"), SubResource("StandardMaterial3D_onsnf"), SubResource("StandardMaterial3D_ifsr8"), SubResource("StandardMaterial3D_lfkwo"), SubResource("StandardMaterial3D_nixoh")]

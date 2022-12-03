@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dj0uo07irq1gw"]
+[gd_scene load_steps=9 format=3 uid="uid://dj0uo07irq1gw"]
 
 [ext_resource type="Script" path="res://scene/demo_3/demo_3.gd" id="1_xgqcr"]
 [ext_resource type="PackedScene" uid="uid://2w3r3o4pddd5" path="res://packed_scene/gd_controller/gd_controller.tscn" id="2_xqi0m"]
+[ext_resource type="PresetsData" uid="uid://chayxk85agbwg" path="res://scene/presets_data.tres" id="2_ytw38"]
+
+[sub_resource type="StandardVoxelBlockData" id="StandardVoxelBlockData_fw6ek"]
+presets_data = ExtResource("2_ytw38")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_wjequ"]
 
@@ -21,6 +25,7 @@ ssil_enabled = true
 
 [node name="Demo3" type="Node3D"]
 script = ExtResource("1_xgqcr")
+voxel_block_data = SubResource("StandardVoxelBlockData_fw6ek")
 noise = SubResource("FastNoiseLite_wjequ")
 
 [node name="VoxelBlock_0" type="MeshInstance3D" parent="."]

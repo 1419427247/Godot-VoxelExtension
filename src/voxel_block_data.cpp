@@ -254,8 +254,9 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 		Array arrays;
 		arrays.resize(Mesh::ARRAY_MAX);
 		arrays[Mesh::ARRAY_VERTEX] = Array();
-		arrays[Mesh::ARRAY_TEX_UV] = Array();
 		arrays[Mesh::ARRAY_NORMAL] = Array();
+		arrays[Mesh::ARRAY_TANGENT] = Array();
+		arrays[Mesh::ARRAY_TEX_UV] = Array();
 		mesh_arrays[i] = arrays;
 	}
 
@@ -302,13 +303,15 @@ ArrayMesh* VoxelBlockData::generate_mesh(const int& filter)
 	for (int i = 0; i < mesh_arrays.size(); i++)
 	{
 		Array arrays = mesh_arrays[i];
-		Array vertex_array = (Array)arrays[ArrayMesh::ARRAY_VERTEX];
-		Array normal_array = (Array)arrays[ArrayMesh::ARRAY_NORMAL];
-		Array tex_uv_array = (Array)arrays[ArrayMesh::ARRAY_TEX_UV];
+		Array vertex_array = (Array)arrays[Mesh::ARRAY_VERTEX];
+		Array normal_array = (Array)arrays[Mesh::ARRAY_NORMAL];
+		Array tangent_array = (Array)arrays[Mesh::ARRAY_TANGENT];
+		Array tex_uv_array = (Array)arrays[Mesh::ARRAY_TEX_UV];
 		if (vertex_array.size() > 0) {
-			arrays[ArrayMesh::ARRAY_VERTEX] = PackedVector3Array(vertex_array);
-			arrays[ArrayMesh::ARRAY_NORMAL] = PackedVector3Array(normal_array);
-			arrays[ArrayMesh::ARRAY_TEX_UV] = PackedVector2Array(tex_uv_array);
+			arrays[Mesh::ARRAY_VERTEX] = PackedVector3Array(vertex_array);
+			arrays[Mesh::ARRAY_NORMAL] = PackedVector3Array(normal_array);
+			arrays[Mesh::ARRAY_TANGENT] = PackedFloat32Array(tangent_array);
+			arrays[Mesh::ARRAY_TEX_UV] = PackedVector2Array(tex_uv_array);
 			result->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
 			result->surface_set_material(result->get_surface_count() - 1, materials[i]);
 		}

@@ -75,9 +75,6 @@ public:
 
 	void set_script(const Ref<Script>& value);
 	Ref<Script> get_script() const;
-
-	static Vector3 rotate_vertex(const Vector3& vertex, const Vector3i& rotation);
-	static Vector3 get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c);
 };
 
 VARIANT_ENUM_CAST(Preset, Dirction);

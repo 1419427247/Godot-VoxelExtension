@@ -18,8 +18,6 @@ func _ready():
 		
 	$MeshInstance3D.mesh = voxel_block_data.generate_mesh()
 	
-	
 	var devices : Array[Device] = voxel_block_data.generate_device()
 	for device in devices:
 		add_child(device)
-

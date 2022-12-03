@@ -25,12 +25,13 @@ void StandardVoxelBlockData::_bind_methods()
 	ClassDB::bind_static_method("StandardVoxelBlockData", D_METHOD("device_voxel", "id", "rotation"), &StandardVoxelBlockData::device_voxel, Vector3i());
 }
 
-void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation)
+void StandardVoxelBlockData::_basics_mesh(const Ref<MeshPreset>& mesh_preset, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation)
 {
 	struct MemorandumData
 	{
 		Vector3 vertexs[6][6];
 		Vector3 normals[6];
+		float tangents[6][4];
 	};
 	static Vector2 basics_uvs[] = {
 		Vector2(0, 0),
@@ -42,20 +43,20 @@ void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, co
 	};
 	static Vector3 basics_vertexs[][6] = {
 		{
-			Vector3(-0.5, 0.5, -0.5),
-			Vector3(0.5, 0.5, -0.5),
-			Vector3(0.5, 0.5, 0.5),
-			Vector3(-0.5, 0.5, -0.5),
 			Vector3(0.5, 0.5, 0.5),
 			Vector3(-0.5, 0.5, 0.5),
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(0.5, 0.5, 0.5),
+			Vector3(-0.5, 0.5, -0.5),
+			Vector3(0.5, 0.5, -0.5),
 		},
 		{
-			Vector3(0.5, -0.5, -0.5),
-			Vector3(-0.5, -0.5, -0.5),
-			Vector3(-0.5, -0.5, 0.5),
-			Vector3(0.5, -0.5, -0.5),
 			Vector3(-0.5, -0.5, 0.5),
 			Vector3(0.5, -0.5, 0.5),
+			Vector3(0.5, -0.5, -0.5),
+			Vector3(-0.5, -0.5, 0.5),
+			Vector3(0.5, -0.5, -0.5),
+			Vector3(-0.5, -0.5, -0.5),
 		},
 		{
 			Vector3(-0.5, 0.5, 0.5),
@@ -91,12 +92,9 @@ void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, co
 		}
 	};
 
-	Ref<SurfaceTool> surface_tool;
-	surface_tool.instantiate();
-
 	static MemorandumData* memorandum[24 * 24 * 24] = { nullptr };
 
-	if (basics_mesh.is_null()) {
+	if (mesh_preset.is_null()) {
 		int index = (rotation.x / 15 * 24 * 24 + rotation.y / 15 * 24 + rotation.z / 15);
 		MemorandumData* data = memorandum[index];
 		if (data == nullptr)
@@ -104,37 +102,62 @@ void StandardVoxelBlockData::_basics_mesh(const Ref<BasicsMesh>& basics_mesh, co
 			data = (MemorandumData*)memalloc(sizeof(MemorandumData));
 			for (int i = 0; i < 6; i++)
 			{
-				Vector3 vertexs[6];
-				for (int j = 0; j < 6; j++)
-				{
-					data->vertexs[i][j] = (vertexs[j] = Preset::rotate_vertex(basics_vertexs[i][j], rotation));
-				}
-				data->normals[i] = Preset::get_triangle_normal(vertexs[0], vertexs[1], vertexs[2]);
+				Vector3 vertexs[3] = {
+					data->vertexs[i][0] = MeshPreset::rotate_vertex(basics_vertexs[i][0],rotation),
+					data->vertexs[i][1] = MeshPreset::rotate_vertex(basics_vertexs[i][1],rotation),	
+					data->vertexs[i][2] = MeshPreset::rotate_vertex(basics_vertexs[i][2],rotation),
+				};
+				Vector2 uvs[3] = {
+					basics_uvs[0],
+					basics_uvs[1],
+					basics_uvs[2],
+				};
+				Vector3 tangent;
+				Vector3 binormal;
+				Vector3 normal;
+				MeshPreset::get_tbn(vertexs, uvs, &tangent, &binormal, &normal);
+
+				data->normals[i] = normal;
+
+				data->tangents[i][0] = tangent.x;
+				data->tangents[i][1] = tangent.y;
+				data->tangents[i][2] = tangent.z;
+				data->tangents[i][3] = binormal.dot(normal.cross(tangent)) < 0 ? -1 : 1;
+
+				data->vertexs[i][3] = MeshPreset::rotate_vertex(basics_vertexs[i][3], rotation);
+				data->vertexs[i][4] = MeshPreset::rotate_vertex(basics_vertexs[i][4], rotation);
+				data->vertexs[i][5] = MeshPreset::rotate_vertex(basics_vertexs[i][5], rotation);
 			}
-			memorandum[index] = data;
 		}
+		memorandum[index] = data;
 		Array array_vertex = mesh_arrays[Mesh::ARRAY_VERTEX];
 		Array array_normal = mesh_arrays[Mesh::ARRAY_NORMAL];
+		Array tangent_array = mesh_arrays[Mesh::ARRAY_TANGENT];
 		Array array_tex_uv = mesh_arrays[Mesh::ARRAY_TEX_UV];
+
 		for (int i = 0; i < 6; i++)
 		{
 			array_vertex.push_back(data->vertexs[direction][i] + position);
 			array_normal.push_back(data->normals[direction]);
+			for (int j = 0; j < 4; j++)
+			{
+				tangent_array.push_back(data->tangents[direction][j]);
+			}
 			array_tex_uv.push_back(basics_uvs[i]);
 		}
 	}
 	else {
-		basics_mesh->build_mesh(mesh_arrays, direction, position, rotation);
+		mesh_preset->build_mesh(mesh_arrays, direction, position, rotation);
 	}
 }
 
 void StandardVoxelBlockData::_model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation)
 {
-	TypedArray<ModelMesh> model_meshs = model_preset->get_model_meshs();
-	Ref<ModelMesh> model_mesh = model_meshs[mask];
+	TypedArray<MeshPreset> mesh_presets = model_preset->get_mesh_preset();
+	Ref<MeshPreset> model_mesh = mesh_presets[mask];
 	if (model_mesh == nullptr)
 	{
-		model_mesh = model_meshs[0];
+		model_mesh = mesh_presets[0];
 	}
 	ERR_FAIL_NULL(model_mesh);
 	Ref<Mesh> mesh = model_mesh->get_mesh();
@@ -154,7 +177,7 @@ void StandardVoxelBlockData::_model_mesh(const Ref<ModelPreset>& model_preset, c
 
 void StandardVoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) {
 	TypedArray<BasicsPreset> basics_presets = presets_data->get_basics_presets();
-	Ref<BasicsMesh> basics_mesh = basics_preset->get_basics_mesh();
+	Ref<MeshPreset> mesh_preset = basics_preset->get_basics_mesh();
 	Vector3i rotation = get_voxel_rotation(voxel);
 	if (rotation.x % 90 != 0 || rotation.y % 90 != 0 || rotation.z % 90 != 0)
 	{
@@ -163,7 +186,7 @@ void StandardVoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_
 			int material_id = basics_preset->get_material_id(direction);
 			ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 			Array arrays = mesh_arrays[material_id];
-			_basics_mesh(basics_mesh, arrays, direction, position, rotation);
+			_basics_mesh(mesh_preset, arrays, direction, position, rotation);
 		}
 	}
 	else {
@@ -176,7 +199,7 @@ void StandardVoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_
 				int material_id = basics_preset->get_material_id(direction);
 				ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 				Array arrays = mesh_arrays[material_id];
-				_basics_mesh(basics_mesh, arrays, direction, position, rotation);
+				_basics_mesh(mesh_preset, arrays, direction, position, rotation);
 			}
 			else {
 				Vector3i relative_voxel_rotation = get_voxel_rotation(voxel);
@@ -184,7 +207,7 @@ void StandardVoxelBlockData::_build_basics_mesh(const Ref<PresetsData>& presets_
 					int material_id = basics_preset->get_material_id(direction);
 					ERR_FAIL_INDEX(material_id, mesh_arrays.size());
 					Array arrays = mesh_arrays[material_id];
-					_basics_mesh(basics_mesh, arrays, direction, position, rotation);
+					_basics_mesh(mesh_preset, arrays, direction, position, rotation);
 				}
 			}
 		}

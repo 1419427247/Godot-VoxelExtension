@@ -1,7 +1,7 @@
 #ifndef MODEL_PRESET_H
 #define MODEL_PRESET_H
 
-#include "model_mesh.h"
+#include "mesh_preset.h"
 
 class ModelPreset : public Preset
 {
@@ -10,7 +10,7 @@ protected:
 	static void _bind_methods();
 private:
 	bool use_mask;
-	Array model_meshs;
+	TypedArray<MeshPreset> mesh_presets;
 public:
 	ModelPreset();
 	~ModelPreset();
@@ -18,8 +18,8 @@ public:
 	void set_use_mask(const bool& value);
 	bool is_use_mask() const;
 
-	void set_model_meshs(const Array& value);
-	Array get_model_meshs() const;
+	void set_mesh_preset(const TypedArray<MeshPreset>& value);
+	TypedArray<MeshPreset> get_mesh_preset() const;
 };
 
 #endif // !MODEL_PRESET_H

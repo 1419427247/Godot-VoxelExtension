@@ -16,7 +16,7 @@ void Preset::_bind_methods()
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transparent"), "set_transparent", "get_transparent");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "filter",PROPERTY_HINT_LAYERS_3D_RENDER), "set_filter", "get_filter");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "filter", PROPERTY_HINT_LAYERS_3D_RENDER), "set_filter", "get_filter");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "script", PROPERTY_HINT_RESOURCE_TYPE, "Script"), "set_script", "get_script");
 
 	BIND_ENUM_CONSTANT(UP);
@@ -75,18 +75,4 @@ void Preset::set_script(const Ref<Script>& value)
 Ref<Script> Preset::get_script() const
 {
 	return script;
-}
-
-Vector3 Preset::rotate_vertex(const Vector3& vertex, const Vector3i& rotation)
-{
-	Vector3 result = vertex;
-	result.rotate(Vector3(0, 1, 0), UtilityFunctions::deg_to_rad(rotation.y));
-	result.rotate(Vector3(1, 0, 0), UtilityFunctions::deg_to_rad(rotation.x));
-	result.rotate(Vector3(0, 0, 1), UtilityFunctions::deg_to_rad(rotation.z));
-	return result;
-}
-
-Vector3 Preset::get_triangle_normal(const Vector3& a, const Vector3& b, const Vector3& c)
-{
-	return (c - a).cross(b - a);
 }

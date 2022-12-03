@@ -18,7 +18,7 @@ void BasicsPreset::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_right_material_id", "value"), &BasicsPreset::set_right_material_id);
 	ClassDB::bind_method(D_METHOD("get_right_material_id"), &BasicsPreset::get_right_material_id);
 
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "basics_mesh", PROPERTY_HINT_RESOURCE_TYPE, "BasicsMesh"), "set_basics_mesh", "get_basics_mesh");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh_preset", PROPERTY_HINT_RESOURCE_TYPE, "MeshPreset"), "set_basics_mesh", "get_basics_mesh");
 
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "up_material_id"), "set_up_material_id", "get_up_material_id");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "down_material_id"), "set_down_material_id", "get_down_material_id");
@@ -37,14 +37,14 @@ BasicsPreset::~BasicsPreset()
 {
 }
 
-void BasicsPreset::set_basics_mesh(const Ref<BasicsMesh>& value)
+void BasicsPreset::set_basics_mesh(const Ref<MeshPreset>& value)
 {
-	basics_mesh = value;
+	mesh_preset = value;
 }
 
-Ref<BasicsMesh> BasicsPreset::get_basics_mesh() const
+Ref<MeshPreset> BasicsPreset::get_basics_mesh() const
 {
-	return basics_mesh;
+	return mesh_preset;
 }
 
 void BasicsPreset::set_up_material_id(const int& value)

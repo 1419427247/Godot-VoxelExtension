@@ -9,7 +9,6 @@ func _ready():
 #	standard_voxel_block_data.size = Vector3i(32,32,32)
 #
 #	standard_voxel_block_data.fill(standard_voxel_block_data.basics_voxel(0))
-	
 
 func _on_gd_voxel_world_on_load_voxel_block(gd_standard_voxel_block : GDStandardVoxelBlock):
 	var key : Vector3i = gd_standard_voxel_block.get_key()

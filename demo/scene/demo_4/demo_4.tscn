@@ -73,6 +73,7 @@ noise = SubResource("FastNoiseLite_xnsj0")
 [node name="GDVoxelWorld" parent="." instance=ExtResource("2_iidcd")]
 presets_data = ExtResource("3_gxiqe")
 voxel_block_size = Vector3i(16, 32, 16)
+sight_distance = Vector3i(14, 2, 14)
 
 [node name="Player" type="Node" parent="GDVoxelWorld"]
 script = SubResource("GDScript_75ifo")

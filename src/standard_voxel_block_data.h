@@ -17,7 +17,7 @@ private:
 protected:
 	static void _bind_methods();
 
-	_inline void _basics_mesh(const Ref<BasicsMesh>& basics_mesh, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation);
+	_inline void _basics_mesh(const Ref<MeshPreset>& mesh_preset, const Array& mesh_arrays, const int& direction, const Vector3& position, const Vector3& rotation);
 	_inline void _model_mesh(const Ref<ModelPreset>& model_preset, const Array& mesh_arrays, const int& mask, const Vector3& position, const Vector3& rotation);
 
 	virtual void _build_basics_mesh(const Ref<PresetsData>& presets_data, const Ref<BasicsPreset>& basics_preset, const Voxel& voxel, const Array& mesh_arrays, const Vector3i& position) override;
