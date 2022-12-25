@@ -23,8 +23,8 @@ void VoxelContainer::_bind_methods()
 
 	ClassDB::bind_method(D_METHOD("get_voxel_block_key", "position"), &VoxelContainer::get_voxel_block_key);
 
-	ClassDB::bind_method(D_METHOD("copy", "from", "to"), &VoxelContainer::copy);
-	ClassDB::bind_method(D_METHOD("paste", "voxel_block_data", "position", "direction"), &VoxelContainer::paste);
+	//ClassDB::bind_method(D_METHOD("copy", "from", "to"), &VoxelContainer::copy);
+	//ClassDB::bind_method(D_METHOD("paste", "voxel_block_data", "position", "direction"), &VoxelContainer::paste);
 	ClassDB::bind_method(D_METHOD("fill", "voxel", "from", "to"), &VoxelContainer::fill);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "presets_data", PROPERTY_HINT_RESOURCE_TYPE, "PresetsData"), "set_presets_data", "get_presets_data");

@@ -9,6 +9,9 @@ class MeshPreset : public Resource
 private:
 	Ref<Mesh> mesh;
 	TypedArray<int> materials;
+	Vector3 offset;
+	Vector3 rotation;
+	Vector3 scale;
 	mutable Array prototype;
 	mutable TypedArray<Array> memorandum;
 protected:

@@ -102,7 +102,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(ProjectDir)..\godot-cpp\include;$(ProjectDir)..\godot-cpp\src;$(ProjectDir)..\godot-cpp\gen\src;$(ProjectDir)..\godot-cpp\gen\include;$(ProjectDir)..\godot-cpp\godot-headers;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(ProjectDir)..\godot-cpp\include;$(ProjectDir)..\godot-cpp\src;$(ProjectDir)..\godot-cpp\gen\src;$(ProjectDir)..\godot-cpp\gen\include;$(ProjectDir)..\godot-cpp\godot-headers;$(ProjectDir)..\godot-cpp\gdextension;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

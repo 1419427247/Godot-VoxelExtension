@@ -2,7 +2,6 @@
 
 void VoxelBlockData::_bind_methods()
 {
-	//ClassDB::bind_method(D_METHOD("set_size", "value"), &VoxelBlockData::set_key);
 	ClassDB::bind_method(D_METHOD("get_key"), &VoxelBlockData::get_key);
 
 	ClassDB::bind_method(D_METHOD("set_size", "value"), &VoxelBlockData::set_size);

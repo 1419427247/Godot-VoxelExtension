@@ -26,8 +26,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/typed_array.hpp>
 #include <godot_cpp/variant/plane.hpp>
-#include <godot_cpp/godot.hpp>
-#include <godot/gdnative_interface.h>
+#include <gdextension_interface.h>
 #include <godot_cpp/templates/hash_map.hpp>
 #include <godot_cpp/templates/self_list.hpp>
 
